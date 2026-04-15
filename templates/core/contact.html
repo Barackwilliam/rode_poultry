@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Contact Us" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <span>{% trans "Contact" %}</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{% trans "Get in Touch" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "We are here to help. Send us a message or call us directly." %}</p>
+    </div>
+
+    <div class="pg-2col">
+      <!-- Contact Info -->
+      <div>
+        <div class="contact-info-card" style="background:var(--navy);color:white;border-radius:16px;padding:2rem;">
+          <h3 style="color:var(--gold);margin-bottom:1.5rem;">{% trans "Contact Information" %}</h3>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;">
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <span style="font-size:1.5rem;">📍</span>
+              <div>
+                <p style="font-weight:700;margin:0;font-size:0.85rem;color:var(--gold-light);">{% trans "Location" %}</p>
+                <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.9rem;">Morogoro, Tanzania</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <span style="font-size:1.5rem;">📞</span>
+              <div>
+                <p style="font-weight:700;margin:0;font-size:0.85rem;color:var(--gold-light);">{% trans "Phone / WhatsApp" %}</p>
+                <a href="tel:+255738262660" style="color:rgba(255,255,255,0.8);font-size:0.9rem;">+255 738 262 660</a>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <span style="font-size:1.5rem;">✉️</span>
+              <div>
+                <p style="font-weight:700;margin:0;font-size:0.85rem;color:var(--gold-light);">{% trans "Email" %}</p>
+                <a href="mailto:jjbacketa@gmail.com" style="color:rgba(255,255,255,0.8);font-size:0.9rem;">jjbacketa@gmail.com</a>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <span style="font-size:1.5rem;">🕐</span>
+              <div>
+                <p style="font-weight:700;margin:0;font-size:0.85rem;color:var(--gold-light);">{% trans "Working Hours" %}</p>
+                <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.9rem;">{% trans "Mon–Sat: 7AM – 6PM" %}</p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);">
+            <a href="https://wa.me/255738262660" target="_blank"
+               style="display:flex;align-items:center;gap:0.75rem;background:#25D366;color:white;padding:0.9rem 1.5rem;border-radius:8px;font-weight:700;justify-content:center;">
+              💬 {% trans "Chat on WhatsApp" %}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div style="background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);">
+        <h3 style="margin-bottom:1.5rem;">{% trans "Send us a Message" %}</h3>
+        <form method="post" action="{% url 'core:contact' %}">
+          {% csrf_token %}
+          <div class="pg-form-2">
+            <div class="form-group">
+              <label class="form-label">{% trans "Full Name" %} *</label>
+              <input type="text" name="name" class="form-control" required placeholder="{% trans 'Your name' %}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">{% trans "Phone Number" %}</label>
+              <input type="tel" name="phone" class="form-control" placeholder="+255 7XX XXX XXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">{% trans "Email Address" %} *</label>
+            <input type="email" name="email" class="form-control" required placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">{% trans "Message" %} *</label>
+            <textarea name="message" class="form-control" required placeholder="{% trans 'Your message...' %}"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">
+            ✉️ {% trans "Send Message" %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

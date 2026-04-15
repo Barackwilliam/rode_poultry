@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container" style="max-width:440px;">
+    <div style="background:white;border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div style="font-size:3rem;">🐓</div>
+        <h2 style="margin-bottom:0.3rem;">{% trans "Welcome Back" %}</h2>
+        <p style="color:var(--gray);">{% trans "Login to your account" %}</p>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+          <label class="form-label">{{ field.label }}</label>
+          <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}"
+                 class="form-control {% if field.errors %}border-danger{% endif %}"
+                 {% if field.value %}value="{{ field.value }}"{% endif %}
+                 placeholder="{{ field.label }}">
+          {% for err in field.errors %}
+          <p style="color:var(--danger);font-size:0.8rem;margin-top:0.3rem;">{{ err }}</p>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem;">
+          {% trans "Login" %}
+        </button>
+      </form>
+      <p style="text-align:center;margin-top:1.5rem;font-size:0.875rem;color:var(--gray);">
+        {% trans "Don't have an account?" %}
+        <a href="{% url 'accounts:register' %}" style="color:var(--navy-mid);font-weight:700;">{% trans "Register" %}</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

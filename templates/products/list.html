@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+
+{% block title %}{% trans "Shop" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <span>{% trans "Shop" %}</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;">
+      <div>
+        <h2 style="margin-bottom:0.3rem;">{% trans "Our Products" %}</h2>
+        <p style="color:var(--gray);margin:0;">{{ products.count }} {% trans "products available" %}</p>
+      </div>
+      <!-- Search -->
+      <form method="get" class="products-search-bar" style="display:flex;gap:0.5rem;">
+        <input type="text" name="q" value="{{ search_query }}" class="form-control"
+               placeholder="{% trans 'Search products...' %}" style="width:220px;max-width:100%;">
+        {% if active_category %}<input type="hidden" name="category" value="{{ active_category.slug }}">{% endif %}
+        <button type="submit" class="btn btn-primary btn-sm">🔍</button>
+      </form>
+    </div>
+
+    <!-- Category filter -->
+    <div class="category-filter">
+      <a href="{% url 'products:list' %}" class="category-pill {% if not active_category %}active{% endif %}">
+        {% trans "All" %}
+      </a>
+      {% for cat in categories %}
+      <a href="{% url 'products:list' %}?category={{ cat.slug }}"
+         class="category-pill {% if active_category == cat %}active{% endif %}">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if products %}
+    <div class="products-grid">
+      {% for product in products %}
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image }}" alt="{{ product.name }}" class="product-card-img">
+        </a>
+        <div class="product-card-body">
+          {% if product.category %}
+          <p class="product-card-category">{{ product.category.name }}</p>
+          {% endif %}
+          <h3 class="product-card-title">
+            <a href="{{ product.get_absolute_url }}" style="color:inherit;">{{ product.name }}</a>
+          </h3>
+          <p style="font-size:0.875rem;color:var(--gray);flex:1;">{{ product.description|truncatewords:15 }}</p>
+          <div class="product-card-price">
+            TSH {{ product.price|intcomma }}
+            <span>/ {{ product.unit }}</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm" style="flex:1;">{% trans "Details" %}</a>
+          {% if product.stock > 0 %}
+          <button class="btn btn-primary btn-sm ajax-add-cart" data-product-id="{{ product.id }}" style="flex:2;">
+            🛒 {% trans "Add to Cart" %}
+          </button>
+          {% else %}
+          <span class="btn btn-sm" style="flex:2;background:var(--gray-light);color:var(--gray);cursor:not-allowed;text-align:center;">
+            {% trans "Out of Stock" %}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:4rem 2rem;">
+      <div style="font-size:4rem;margin-bottom:1rem;">🐓</div>
+      <h3>{% trans "No products found" %}</h3>
+      <p style="color:var(--gray);">{% trans "Try a different category or search term." %}</p>
+      <a href="{% url 'products:list' %}" class="btn btn-primary mt-3">{% trans "View All Products" %}</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

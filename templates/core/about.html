@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "About Us" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <span>{% trans "About Us" %}</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="pg-equal">
+      <div>
+        <p style="color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;margin-bottom:0.5rem;">{% trans "Our Story" %}</p>
+        <h2>{% trans "Rode Poultry Tanzania Limited" %}</h2>
+        <div class="section-divider" style="margin:1rem 0;"></div>
+        <p>{% trans "Based in Morogoro, Tanzania, Rode Poultry Tanzania Limited is a dedicated poultry farm committed to producing healthy, high-quality birds and products for families and businesses across Tanzania." %}</p>
+        <p>{% trans "We specialize in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and supplying quality chicken meat — all from our own farm, ensuring freshness and traceability at every step." %}</p>
+        <p>{% trans "Our mission is to make quality poultry products accessible, affordable, and easy to order for every Tanzanian household." %}</p>
+        <div class="pg-info-2">
+          <div style="padding:1.5rem;background:var(--off-white);border-radius:12px;border-left:4px solid var(--gold);">
+            <h3 style="font-size:1rem;margin-bottom:0.3rem;">📍 {% trans "Location" %}</h3>
+            <p style="font-size:0.875rem;color:var(--gray);margin:0;">Morogoro, Tanzania</p>
+          </div>
+          <div style="padding:1.5rem;background:var(--off-white);border-radius:12px;border-left:4px solid var(--gold);">
+            <h3 style="font-size:1rem;margin-bottom:0.3rem;">📞 {% trans "Phone" %}</h3>
+            <p style="font-size:0.875rem;color:var(--gray);margin:0;">+255 738 262 660</p>
+          </div>
+        </div>
+      </div>
+      <div class="pg-about-cards">
+        <div style="background:var(--navy);color:white;padding:2rem;border-radius:16px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🐣</div>
+          <h3 style="color:var(--gold);font-size:1rem;">{% trans "Day-old Chicks" %}</h3>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin:0;">{% trans "Vaccinated & healthy" %}</p>
+        </div>
+        <div style="background:var(--gold);color:var(--navy);padding:2rem;border-radius:16px;text-align:center;margin-top:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🥚</div>
+          <h3 style="font-size:1rem;">{% trans "Fresh Eggs" %}</h3>
+          <p style="font-size:0.85rem;opacity:0.8;margin:0;">{% trans "Collected daily" %}</p>
+        </div>
+        <div style="background:var(--gold);color:var(--navy);padding:2rem;border-radius:16px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🐔</div>
+          <h3 style="font-size:1rem;">{% trans "Live Chickens" %}</h3>
+          <p style="font-size:0.85rem;opacity:0.8;margin:0;">{% trans "Farm raised" %}</p>
+        </div>
+        <div style="background:var(--navy);color:white;padding:2rem;border-radius:16px;text-align:center;margin-top:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🍗</div>
+          <h3 style="color:var(--gold);font-size:1rem;">{% trans "Chicken Meat" %}</h3>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin:0;">{% trans "Fresh & quality" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

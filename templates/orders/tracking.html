@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% load order_extras %}
+{% block title %}{% trans "Track Your Order" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <span>{% trans "Track Order" %}</span>
+  </div>
+</div>
+<section class="section">
+  <div class="container" style="max-width:600px;">
+    <div style="background:white;border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);">
+      <h2 style="margin-bottom:0.5rem;">🔍 {% trans "Track Your Order" %}</h2>
+      <p style="color:var(--gray);margin-bottom:2rem;">{% trans "Enter your Order ID and phone number to check status." %}</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label">{% trans "Order ID" %} *</label>
+          <input type="number" name="order_id" class="form-control" required
+                 placeholder="e.g. 12" value="{{ request.POST.order_id }}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">{% trans "Phone Number" %} *</label>
+          <input type="tel" name="phone" class="form-control" required
+                 placeholder="+255 7XX XXX XXX" value="{{ request.POST.phone }}">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">{% trans "Track Order" %}</button>
+      </form>
+
+      {% if order %}
+      <div style="margin-top:2rem;border-top:1px solid var(--gray-light);padding-top:2rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <h3 style="margin:0;">{% trans "Order" %} #{{ order.pk }}</h3>
+          <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
+        </div>
+
+        <!-- Status progress bar -->
+        {% with statuses="pending,confirmed,processing,ready,delivered" %}
+        <div style="display:flex;align-items:center;gap:0;margin-bottom:2rem;overflow-x:auto;">
+          {% for s in "pending,confirmed,processing,ready,delivered"|split:"," %}
+          {% endfor %}
+        </div>
+        {% endwith %}
+
+        <div class="pg-track-info">
+          <div style="padding:1rem;background:var(--off-white);border-radius:8px;">
+            <span style="color:var(--gray);">{% trans "Order Date" %}</span>
+            <p style="margin:0;font-weight:700;">{{ order.created_at|date:"d M Y" }}</p>
+          </div>
+          <div style="padding:1rem;background:var(--off-white);border-radius:8px;">
+            <span style="color:var(--gray);">{% trans "Payment" %}</span>
+            <p style="margin:0;font-weight:700;">{% trans "Cash on Delivery" %}</p>
+          </div>
+          <div style="padding:1rem;background:var(--off-white);border-radius:8px;" class="col-span-2">
+            <span style="color:var(--gray);">{% trans "Delivery To" %}</span>
+            <p style="margin:0;font-weight:700;">{{ order.address }}, {{ order.region }}</p>
+          </div>
+        </div>
+
+        <h4 style="margin-bottom:1rem;">{% trans "Items Ordered" %}</h4>
+        {% for item in order.items.all %}
+        <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
+          <span>{{ item.product_name }} × {{ item.quantity }}</span>
+          <span style="font-weight:700;">TSH {{ item.get_total_price|intcomma }}</span>
+        </div>
+        {% endfor %}
+        <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1rem;">
+          <span>TOTAL</span>
+          <span>TSH {{ order.total_amount|intcomma }}</span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

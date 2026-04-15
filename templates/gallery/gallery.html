@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Farm Gallery" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <span>{% trans "Gallery" %}</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{% trans "Farm Gallery" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "Photos and videos from Rode Poultry Farm, Morogoro" %}</p>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;justify-content:center;">
+      <a href="{% url 'gallery:gallery' %}"
+         class="category-pill {% if not media_type and not active_category %}active{% endif %}">
+        {% trans "All" %}
+      </a>
+      <a href="{% url 'gallery:gallery' %}?type=image"
+         class="category-pill {% if media_type == 'image' %}active{% endif %}">
+        🖼 {% trans "Photos" %}
+      </a>
+      <a href="{% url 'gallery:gallery' %}?type=youtube"
+         class="category-pill {% if media_type == 'youtube' %}active{% endif %}">
+        ▶ {% trans "Videos" %}
+      </a>
+      {% for cat in categories %}
+      <a href="{% url 'gallery:gallery' %}?category={{ cat.slug }}"
+         class="category-pill {% if active_category == cat %}active{% endif %}">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if media %}
+    <div class="gallery-grid">
+      {% for item in media %}
+        {% if item.media_type == 'image' and item.image %}
+        <div class="gallery-item" data-type="image"
+             data-src="{{ item.image.url }}" data-title="{{ item.title }}">
+          <img src="{{ item.image }}" alt="{{ item.title }}">
+          <div class="overlay">
+            <p>📷 {{ item.title }}</p>
+          </div>
+        </div>
+
+        {% elif item.media_type == 'youtube' %}
+        <div class="gallery-item video-thumb" data-type="youtube"
+             data-embed="{{ item.get_youtube_embed_url }}">
+          <img src="https://img.youtube.com/vi/{{ item.get_youtube_id }}/hqdefault.jpg"
+               alt="{{ item.title }}" style="width:100%;height:220px;object-fit:cover;">
+          <div class="video-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="overlay">
+            <p>▶ {{ item.title }}</p>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:4rem;color:var(--gray);">
+      <div style="font-size:4rem;margin-bottom:1rem;">🖼</div>
+      <h3>{% trans "No media yet" %}</h3>
+      <p>{% trans "Gallery content will appear here soon." %}</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Social Links Banner -->
+<section style="background:var(--navy);padding:3rem 0;text-align:center;">
+  <div class="container">
+    <h3 style="color:white;margin-bottom:0.5rem;">{% trans "Follow Our Farm Journey" %}</h3>
+    <p style="color:rgba(255,255,255,0.7);margin-bottom:1.5rem;">{% trans "Subscribe to our YouTube channel for farm updates and tips." %}</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://wa.me/255738262660" target="_blank"
+         class="btn btn-lg" style="background:#25D366;color:white;border:none;">
+        💬 WhatsApp
+      </a>
+      <a href="https://youtube.com" target="_blank"
+         class="btn btn-lg" style="background:#FF0000;color:white;border:none;">
+        ▶ YouTube
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

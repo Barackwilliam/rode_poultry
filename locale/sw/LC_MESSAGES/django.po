@@ -1,0 +1,450 @@
+# Swahili translations for Rode Poultry Tanzania
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sw\n"
+
+msgid "About"
+msgstr "Kuhusu"
+
+msgid "About Us"
+msgstr "Kuhusu Sisi"
+
+msgid "Account"
+msgstr "Akaunti"
+
+msgid "Add some products from our shop."
+msgstr "Ongeza bidhaa kutoka dukani kwetu."
+
+msgid "Add to Cart"
+msgstr "Weka Kwenye Kikapu"
+
+msgid "All"
+msgstr "Zote"
+
+msgid "All day-old chicks are vaccinated and hatched on-farm for maximum health."
+msgstr "Vifaranga wote wa siku moja wamechanjwa na kuanguliwa shambani kwa afya bora."
+
+msgid "All rights reserved."
+msgstr "Haki zote zimehifadhiwa."
+
+msgid "Already have an account?"
+msgstr "Una akaunti tayari?"
+
+msgid "Based in Morogoro, Tanzania, Rode Poultry Tanzania Limited is a dedicated poultry farm committed to producing healthy, high-quality birds and products for families and businesses across Tanzania."
+msgstr "Ikiwa Morogoro, Tanzania, Rode Poultry Tanzania Limited ni shamba la kuku linalojitoa kuzalisha ndege na bidhaa bora kwa familia na biashara kote Tanzania."
+
+msgid "Browse our products and place your order online. We deliver fresh to your location."
+msgstr "Angalia bidhaa zetu na weka agizo lako mtandaoni. Tunawasilisha safi hadi kwako."
+
+msgid "Built by"
+msgstr "Developed by"
+
+msgid "Buy Now"
+msgstr "Nunua Sasa"
+
+msgid "By placing your order you agree to our terms."
+msgstr "Kwa kuweka agizo unakubali masharti yetu."
+
+msgid "Cart"
+msgstr "Kikapu"
+
+msgid "Cash on Delivery"
+msgstr "Lipa Unapopokea"
+
+msgid "Cash on Delivery available"
+msgstr "Malipo ya wakati wa kupokea yanapatikana"
+
+msgid "Chat on WhatsApp"
+msgstr "Ongea kwenye WhatsApp"
+
+msgid "Checkout"
+msgstr "Lipia"
+
+msgid "Chicken Meat"
+msgstr "Nyama ya Kuku"
+
+msgid "Chicks Per Month"
+msgstr "Vifaranga kwa Mwezi"
+
+msgid "Collected daily"
+msgstr "Inakusanywa kila siku"
+
+msgid "Collected fresh every day from our free-range hens in Morogoro."
+msgstr "Inakusanywa safi kila siku kutoka kwa kuku wetu wa huru Morogoro."
+
+msgid "Contact"
+msgstr "Wasiliana"
+
+msgid "Contact Information"
+msgstr "Maelezo ya Mawasiliano"
+
+msgid "Contact Us"
+msgstr "Wasiliana Nasi"
+
+msgid "Continue Shopping"
+msgstr "Endelea Kununua"
+
+msgid "Create Account"
+msgstr "Fungua Akaunti"
+
+msgid "Day-old Chicks"
+msgstr "Vifaranga wa Siku Moja"
+
+msgid "Delivery"
+msgstr "Uwasilishaji"
+
+msgid "Delivery Address"
+msgstr "Anwani ya Uwasilishaji"
+
+msgid "Delivery Information"
+msgstr "Maelezo ya Uwasilishaji"
+
+msgid "Delivery To"
+msgstr "Wasilisha Kwa"
+
+msgid "Details"
+msgstr "Maelezo"
+
+msgid "Don't have an account?"
+msgstr "Huna akaunti?"
+
+msgid "Easy Ordering"
+msgstr "Kuagiza kwa Urahisi"
+
+msgid "Eggs"
+msgstr "Mayai"
+
+msgid "Email"
+msgstr "Barua Pepe"
+
+msgid "Email Address"
+msgstr "Anwani ya Barua Pepe"
+
+msgid "Enter your Order ID and phone number to check status."
+msgstr "Weka Namba ya Agizo na namba ya simu kuangalia hali."
+
+msgid "Farm Fresh"
+msgstr "Safi Kutoka Shambani"
+
+msgid "Farm Gallery"
+msgstr "Picha za Shamba"
+
+msgid "Farm raised"
+msgstr "Ilelelwa Shambani"
+
+msgid "Follow Our Farm Journey"
+msgstr "Fuata Safari ya Shamba Letu"
+
+msgid "Fresh & quality"
+msgstr "Safi na bora"
+
+msgid "Fresh Eggs"
+msgstr "Mayai Mapya"
+
+msgid "Fresh Eggs Daily"
+msgstr "Mayai Mapya Kila Siku"
+
+msgid "Fresh Farm Quality"
+msgstr "Ubora wa Shamba Safi"
+
+msgid "Fresh poultry products available for order and delivery"
+msgstr "Bidhaa za kuku safi zinapatikana kwa agizo na uwasilishaji"
+
+msgid "Full Name"
+msgstr "Jina Kamili"
+
+msgid "Gallery"
+msgstr "Picha"
+
+msgid "Gallery content will appear here soon."
+msgstr "Maudhui ya picha yataonekana hapa hivi karibuni."
+
+msgid "Get in Touch"
+msgstr "Wasiliana Nasi"
+
+msgid "Healthy Chicks"
+msgstr "Vifaranga Wenye Afya"
+
+msgid "Home"
+msgstr "Nyumbani"
+
+msgid "In Stock"
+msgstr "Ipo"
+
+msgid "Items Ordered"
+msgstr "Vitu Vilivyoagizwa"
+
+msgid "Join Rode Poultry Tanzania"
+msgstr "Jiunge na Rode Poultry Tanzania"
+
+msgid "Live Chickens"
+msgstr "Kuku Hai"
+
+msgid "Location"
+msgstr "Mahali"
+
+msgid "Login"
+msgstr "Ingia"
+
+msgid "Login to your account"
+msgstr "Ingia kwenye akaunti yako"
+
+msgid "Logout"
+msgstr "Toka"
+
+msgid "Message"
+msgstr "Ujumbe"
+
+msgid "Mon–Sat: 7AM – 6PM"
+msgstr "Jumatatu–Jumamosi: 7AM – 6PM"
+
+msgid "Morogoro, Tanzania"
+msgstr "Morogoro, Tanzania"
+
+msgid "My Account"
+msgstr "Akaunti Yangu"
+
+msgid "My Orders"
+msgstr "Maagizo Yangu"
+
+msgid "No media yet"
+msgstr "Hakuna picha bado"
+
+msgid "No orders yet"
+msgstr "Hakuna maagizo bado"
+
+msgid "No products found"
+msgstr "Hakuna bidhaa zilizopatikana"
+
+msgid "Order"
+msgstr "Agizo"
+
+msgid "Order Date"
+msgstr "Tarehe ya Agizo"
+
+msgid "Order Details"
+msgstr "Maelezo ya Agizo"
+
+msgid "Order ID"
+msgstr "Namba ya Agizo"
+
+msgid "Order Notes"
+msgstr "Maelezo ya Ziada"
+
+msgid "Order Placed Successfully!"
+msgstr "Agizo Limewekwa Kwa Mafanikio!"
+
+msgid "Order Placed!"
+msgstr "Agizo Limewekwa!"
+
+msgid "Order Summary"
+msgstr "Muhtasari wa Agizo"
+
+msgid "Order online, pay when your products arrive at your door."
+msgstr "Agiza mtandaoni, lipa bidhaa zako zinapofika mlangoni kwako."
+
+msgid "Order via website or WhatsApp. Track your order status in real time."
+msgstr "Agiza kupitia tovuti au WhatsApp. Fuatilia hali ya agizo lako moja kwa moja."
+
+msgid "Other"
+msgstr "Nyingine"
+
+msgid "Our Products"
+msgstr "Bidhaa Zetu"
+
+msgid "Our Story"
+msgstr "Hadithi Yetu"
+
+msgid "Our mission is to make quality poultry products accessible, affordable, and easy to order for every Tanzanian household."
+msgstr "Dhamira yetu ni kufanya bidhaa bora za kuku ziwe rahisi kupatikana, bei nafuu, na rahisi kuagiza kwa kila kaya ya Kitanzania."
+
+msgid "Out of Stock"
+msgstr "Imeisha"
+
+msgid "Pay when your order arrives"
+msgstr "Lipa agizo lako linapofika"
+
+msgid "Payment"
+msgstr "Malipo"
+
+msgid "Payment Method"
+msgstr "Njia ya Malipo"
+
+msgid "Phone"
+msgstr "Simu"
+
+msgid "Phone / WhatsApp"
+msgstr "Simu / WhatsApp"
+
+msgid "Phone Number"
+msgstr "Namba ya Simu"
+
+msgid "Photos"
+msgstr "Picha"
+
+msgid "Photos and videos from Rode Poultry Farm, Morogoro"
+msgstr "Picha na video kutoka Rode Poultry Farm, Morogoro"
+
+msgid "Photos and videos from our farm"
+msgstr "Picha na video kutoka shambani kwetu"
+
+msgid "Place Order"
+msgstr "Weka Agizo"
+
+msgid "Premium quality poultry farming in Morogoro, Tanzania. We raise healthy chickens and provide fresh eggs, quality chicks, and full-grown birds directly to your door."
+msgstr "Ufugaji wa kuku wa ubora wa juu Morogoro, Tanzania. Tunalisha kuku wenye afya na kutoa mayai safi, vifaranga bora, na ndege wazima moja kwa moja hadi mlangoni kwako."
+
+msgid "Price"
+msgstr "Bei"
+
+msgid "Proceed to Checkout"
+msgstr "Endelea Kulipa"
+
+msgid "Product"
+msgstr "Bidhaa"
+
+msgid "Product Types"
+msgstr "Aina za Bidhaa"
+
+msgid "Products"
+msgstr "Bidhaa"
+
+msgid "Qty"
+msgstr "Idadi"
+
+msgid "Quantity"
+msgstr "Kiasi"
+
+msgid "Quick Links"
+msgstr "Viungo vya Haraka"
+
+msgid "Ready to Order?"
+msgstr "Uko Tayari Kuagiza?"
+
+msgid "Region"
+msgstr "Mkoa"
+
+msgid "Register"
+msgstr "Jisajili"
+
+msgid "Related Products"
+msgstr "Bidhaa Zinazohusiana"
+
+msgid "Rode Poultry Tanzania Limited"
+msgstr "Rode Poultry Tanzania Limited"
+
+msgid "Save your Order ID"
+msgstr "Hifadhi Namba yako ya Agizo"
+
+msgid "Secure order — Pay on delivery"
+msgstr "Agizo salama — Lipa unapopokea"
+
+msgid "Send Message"
+msgstr "Tuma Ujumbe"
+
+msgid "Send us a Message"
+msgstr "Tutumie Ujumbe"
+
+msgid "Shop"
+msgstr "Duka"
+
+msgid "Shop Now"
+msgstr "Nunua Sasa"
+
+msgid "Status"
+msgstr "Hali"
+
+msgid "Straight to You"
+msgstr "Moja Kwa Moja Kwako"
+
+msgid "Subscribe to our YouTube channel for farm updates and tips."
+msgstr "Jiandikishe kwenye channel yetu ya YouTube kwa masasisho na vidokezo vya shamba."
+
+msgid "Subtotal"
+msgstr "Jumla Ndogo"
+
+msgid "TOTAL"
+msgstr "JUMLA"
+
+msgid "Thank you"
+msgstr "Asante"
+
+msgid "To be confirmed"
+msgstr "Kuthibitishwa"
+
+msgid "Total"
+msgstr "Jumla"
+
+msgid "Track Order"
+msgstr "Fuatilia Agizo"
+
+msgid "Track Your Order"
+msgstr "Fuatilia Agizo Lako"
+
+msgid "Try a different category or search term."
+msgstr "Jaribu kategoria au neno tofauti la kutafuta."
+
+msgid "Vaccinated & healthy"
+msgstr "Wamechanjwa na wenye afya"
+
+msgid "Videos"
+msgstr "Video"
+
+msgid "View"
+msgstr "Angalia"
+
+msgid "View All Products"
+msgstr "Angalia Bidhaa Zote"
+
+msgid "View Farm"
+msgstr "Angalia Shamba"
+
+msgid "View Full Gallery"
+msgstr "Angalia Picha Zote"
+
+msgid "We are here to help. Send us a message or call us directly."
+msgstr "Tuko hapa kusaidia. Tutumie ujumbe au tupigie simu moja kwa moja."
+
+msgid "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro."
+msgstr "Tunaangua, tunalisha na kuuza vifaranga wenye afya wa siku moja, mayai safi, kuku hai na nyama bora ya kuku — moja kwa moja kutoka shambani kwetu Morogoro."
+
+msgid "We have received your order and will contact you shortly."
+msgstr "Tumepokea agizo lako na tutawasiliana nawe hivi karibuni."
+
+msgid "We specialize in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and supplying quality chicken meat — all from our own farm, ensuring freshness and traceability at every step."
+msgstr "Tunabobea katika kuangulia vifaranga wa siku moja, kuzalisha mayai safi kila siku, kulisha kuku hai, na kutoa nyama bora ya kuku — yote kutoka shambani kwetu, kuhakikisha ubichi na ufuatiliaji kila hatua."
+
+msgid "Welcome Back"
+msgstr "Karibu Tena"
+
+msgid "WhatsApp Us"
+msgstr "Tutumie WhatsApp"
+
+msgid "Why Choose Rode Poultry?"
+msgstr "Kwa Nini Chagua Rode Poultry?"
+
+msgid "Working Hours"
+msgstr "Masaa ya Kazi"
+
+msgid "You haven't placed any orders."
+msgstr "Bado hujaweka maagizo yoyote."
+
+msgid "Your Cart"
+msgstr "Kikapu Chako"
+
+msgid "Your Order"
+msgstr "Agizo Lako"
+
+msgid "Your cart is empty"
+msgstr "Kikapu chako kiko tupu"
+
+msgid "optional"
+msgstr "si lazima"
+
+msgid "products available"
+msgstr "bidhaa zinapatikana"
+
+msgid "use it to track your order."
+msgstr "itumie kufuatilia agizo lako."

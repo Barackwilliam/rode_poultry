@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: rode-poultry
+    env: python
+    region: frankfurt
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn rode_poultry.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: rode_poultry.settings
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rode-poultry-db
+          property: connectionString
+      - key: ALLOWED_HOSTS
+        value: "rode-poultry.onrender.com,www.rodepoultry.co.tz,rodepoultry.co.tz"
+      - key: DB_SSL
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+
+databases:
+  - name: rode-poultry-db
+    databaseName: rode_poultry
+    user: rode_poultry
+    region: frankfurt

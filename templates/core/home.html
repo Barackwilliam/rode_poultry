@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+
+{% block title %}Rode Poultry Tanzania — Fresh Chicks, Eggs & Chicken | Morogoro{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p style="color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:0.9rem;margin-bottom:0.75rem;">
+        🐓 {% trans "Morogoro, Tanzania" %}
+      </p>
+      <h1>{% trans "Fresh Farm Quality" %}<br><span>{% trans "Straight to You" %}</span></h1>
+      <p>{% trans "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro." %}</p>
+      <div class="hero-actions">
+        <a href="{% url 'products:list' %}" class="btn btn-gold btn-lg">{% trans "Shop Now" %}</a>
+        <a href="{% url 'gallery:gallery' %}" class="btn btn-outline btn-lg" style="color:white;border-color:rgba(255,255,255,0.5);">{% trans "View Farm" %}</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="{% static 'images/logo.png' %}" alt="Rode Poultry Tanzania">
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>1,000+</h3>
+        <p>{% trans "Chicks Per Month" %}</p>
+      </div>
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>{% trans "Farm Fresh" %}</p>
+      </div>
+      <div class="stat-item">
+        <h3>4+</h3>
+        <p>{% trans "Product Types" %}</p>
+      </div>
+      <div class="stat-item">
+        <h3>🚚</h3>
+        <p>{% trans "Cash on Delivery" %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURED PRODUCTS ── -->
+{% if featured_products %}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{% trans "Our Products" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "Fresh poultry products available for order and delivery" %}</p>
+    </div>
+    <div class="products-grid">
+      {% for product in featured_products %}
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card-img">
+        </a>
+        <div class="product-card-body">
+          <p class="product-card-category">{{ product.category.name }}</p>
+          <h3 class="product-card-title">
+            <a href="{{ product.get_absolute_url }}" style="color:inherit;">{{ product.name }}</a>
+          </h3>
+          <p style="font-size:0.875rem;color:var(--gray);flex:1;">{{ product.description|truncatewords:18 }}</p>
+          <div class="product-card-price">
+            TSH {{ product.price|intcomma }}
+            <span>/ {{ product.unit }}</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm" style="flex:1;">{% trans "View" %}</a>
+          {% if product.stock > 0 %}
+          <button class="btn btn-primary btn-sm ajax-add-cart" data-product-id="{{ product.id }}" style="flex:2;">
+            🛒 {% trans "Add to Cart" %}
+          </button>
+          {% else %}
+          <span class="btn btn-sm" style="flex:2;background:var(--gray-light);color:var(--gray);cursor:not-allowed;">{% trans "Out of Stock" %}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'products:list' %}" class="btn btn-primary btn-lg">{% trans "View All Products" %} →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── WHY CHOOSE US ── -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>{% trans "Why Choose Rode Poultry?" %}</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;">
+      {% for icon, title, desc in features %}
+      {% endfor %}
+      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
+        <div style="font-size:3rem;margin-bottom:1rem;">🐣</div>
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Healthy Chicks" %}</h3>
+        <p style="font-size:0.875rem;color:var(--gray);">{% trans "All day-old chicks are vaccinated and hatched on-farm for maximum health." %}</p>
+      </div>
+      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
+        <div style="font-size:3rem;margin-bottom:1rem;">🥚</div>
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Fresh Eggs Daily" %}</h3>
+        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Collected fresh every day from our free-range hens in Morogoro." %}</p>
+      </div>
+      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
+        <div style="font-size:3rem;margin-bottom:1rem;">🚚</div>
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Cash on Delivery" %}</h3>
+        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Order online, pay when your products arrive at your door." %}</p>
+      </div>
+      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
+        <div style="font-size:3rem;margin-bottom:1rem;">📱</div>
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Easy Ordering" %}</h3>
+        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Order via website or WhatsApp. Track your order status in real time." %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY PREVIEW ── -->
+{% if latest_media %}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{% trans "Farm Gallery" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "Photos and videos from our farm" %}</p>
+    </div>
+    <div class="gallery-grid">
+      {% for media in latest_media %}
+      {% if media.media_type == 'image' and media.image %}
+      <div class="gallery-item" data-type="image" data-src="{{ media.image.url }}" data-title="{{ media.title }}">
+        <img src="{{ media.image.url }}" alt="{{ media.title }}">
+        <div class="overlay"><p>{{ media.title }}</p></div>
+      </div>
+      {% elif media.media_type == 'youtube' %}
+      <div class="gallery-item video-thumb" data-type="youtube" data-embed="{{ media.get_youtube_embed_url }}">
+        <img src="https://img.youtube.com/vi/{{ media.get_youtube_id }}/hqdefault.jpg" alt="{{ media.title }}">
+        <div class="video-play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="overlay"><p>▶ {{ media.title }}</p></div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'gallery:gallery' %}" class="btn btn-primary">{% trans "View Full Gallery" %} →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── CTA BANNER ── -->
+<section style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:4rem 0;text-align:center;">
+  <div class="container">
+    <h2 style="color:white;margin-bottom:1rem;">{% trans "Ready to Order?" %}</h2>
+    <p style="color:rgba(255,255,255,0.8);font-size:1.1rem;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;">
+      {% trans "Browse our products and place your order online. We deliver fresh to your location." %}
+    </p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="{% url 'products:list' %}" class="btn btn-gold btn-lg">{% trans "Shop Now" %}</a>
+      <a href="https://wa.me/255738262660" target="_blank" class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
+        💬 {% trans "WhatsApp Us" %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

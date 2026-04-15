@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+
+{% block title %}{% trans "Checkout" %} — Rode Poultry Tanzania{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
+    <a href="{% url 'orders:cart' %}">{% trans "Cart" %}</a> /
+    <span>{% trans "Checkout" %}</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom:2rem;">{% trans "Checkout" %}</h2>
+
+    <form method="post" action="{% url 'orders:checkout' %}">
+      {% csrf_token %}
+      <div class="pg-checkout">
+
+        <!-- Delivery Details -->
+        <div style="background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);">
+          <h3 style="margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
+            📦 {% trans "Delivery Information" %}
+          </h3>
+          <div class="pg-form-2">
+            <div class="form-group col-span-2">
+              <label class="form-label">{% trans "Full Name" %} *</label>
+              <input type="text" name="full_name" class="form-control" required
+                     placeholder="{% trans 'Your full name' %}"
+                     {% if user.is_authenticated %}value="{{ user.get_full_name }}"{% endif %}>
+            </div>
+            <div class="form-group">
+              <label class="form-label">{% trans "Email Address" %} *</label>
+              <input type="email" name="email" class="form-control" required
+                     placeholder="your@email.com"
+                     {% if user.is_authenticated %}value="{{ user.email }}"{% endif %}>
+            </div>
+            <div class="form-group">
+              <label class="form-label">{% trans "Phone Number" %} *</label>
+              <input type="tel" name="phone" class="form-control" required
+                     placeholder="+255 7XX XXX XXX">
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">{% trans "Delivery Address" %} *</label>
+              <textarea name="address" class="form-control" required rows="2"
+                        placeholder="{% trans 'Street, area, landmark...' %}"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">{% trans "Region" %} *</label>
+              <select name="region" class="form-control" required>
+                <option value="Morogoro">Morogoro</option>
+                <option value="Dar es Salaam">Dar es Salaam</option>
+                <option value="Dodoma">Dodoma</option>
+                <option value="Arusha">Arusha</option>
+                <option value="Mwanza">Mwanza</option>
+                <option value="Other">{% trans "Other" %}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">{% trans "Order Notes" %} ({% trans "optional" %})</label>
+              <input type="text" name="notes" class="form-control"
+                     placeholder="{% trans 'Special instructions...' %}">
+            </div>
+          </div>
+
+          <div style="background:var(--off-white);border-radius:8px;padding:1.25rem;margin-top:0.5rem;">
+            <h4 style="font-size:0.9rem;margin-bottom:0.5rem;">💳 {% trans "Payment Method" %}</h4>
+            <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;">
+              <input type="radio" name="payment_method" value="cod" checked style="accent-color:var(--navy);">
+              <div>
+                <span style="font-weight:700;">🚚 {% trans "Cash on Delivery" %}</span>
+                <p style="font-size:0.8rem;color:var(--gray);margin:0;">{% trans "Pay when your order arrives" %}</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div>
+          <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:var(--shadow);position:sticky;top:90px;">
+            <h3 style="margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
+              {% trans "Your Order" %}
+            </h3>
+            {% for item in cart %}
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:0.75rem 0;border-bottom:1px solid var(--gray-light);gap:0.5rem;">
+              <div style="flex:1;">
+                <p style="font-weight:700;font-size:0.9rem;margin:0;color:var(--navy);">{{ item.name }}</p>
+                <p style="font-size:0.78rem;color:var(--gray);margin:0;">× {{ item.quantity }} {{ item.unit }}</p>
+              </div>
+              <span style="font-weight:700;white-space:nowrap;font-size:0.9rem;">TSH {{ item.total_price|intcomma }}</span>
+            </div>
+            {% endfor %}
+            <div style="padding:1rem 0 0;">
+              <div class="cart-total-row grand-total" style="font-size:1.15rem;">
+                <span>{% trans "TOTAL" %}</span>
+                <span style="color:var(--navy-mid);">TSH {{ cart.get_total_price|intcomma }}</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-gold btn-lg" style="width:100%;justify-content:center;margin-top:1.25rem;">
+              ✅ {% trans "Place Order" %}
+            </button>
+            <p style="text-align:center;font-size:0.78rem;color:var(--gray);margin-top:0.75rem;">
+              {% trans "By placing your order you agree to our terms." %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

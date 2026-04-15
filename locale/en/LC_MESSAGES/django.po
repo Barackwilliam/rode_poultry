@@ -1,0 +1,450 @@
+# Swahili translations for Rode Poultry Tanzania
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sw\n"
+
+msgid "About"
+msgstr "About"
+
+msgid "About Us"
+msgstr "About Us"
+
+msgid "Account"
+msgstr "Account"
+
+msgid "Add some products from our shop."
+msgstr "Add some products from our shop."
+
+msgid "Add to Cart"
+msgstr "Add to Cart"
+
+msgid "All"
+msgstr "All"
+
+msgid "All day-old chicks are vaccinated and hatched on-farm for maximum health."
+msgstr "All day-old chicks are vaccinated and hatched on-farm for maximum health."
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+msgid "Based in Morogoro, Tanzania, Rode Poultry Tanzania Limited is a dedicated poultry farm committed to producing healthy, high-quality birds and products for families and businesses across Tanzania."
+msgstr "Based in Morogoro, Tanzania, Rode Poultry Tanzania Limited is a dedicated poultry farm committed to producing healthy, high-quality birds and products for families and businesses across Tanzania."
+
+msgid "Browse our products and place your order online. We deliver fresh to your location."
+msgstr "Browse our products and place your order online. We deliver fresh to your location."
+
+msgid "Built by"
+msgstr "Built by"
+
+msgid "Buy Now"
+msgstr "Buy Now"
+
+msgid "By placing your order you agree to our terms."
+msgstr "By placing your order you agree to our terms."
+
+msgid "Cart"
+msgstr "Cart"
+
+msgid "Cash on Delivery"
+msgstr "Cash on Delivery"
+
+msgid "Cash on Delivery available"
+msgstr "Cash on Delivery available"
+
+msgid "Chat on WhatsApp"
+msgstr "Chat on WhatsApp"
+
+msgid "Checkout"
+msgstr "Checkout"
+
+msgid "Chicken Meat"
+msgstr "Chicken Meat"
+
+msgid "Chicks Per Month"
+msgstr "Chicks Per Month"
+
+msgid "Collected daily"
+msgstr "Collected daily"
+
+msgid "Collected fresh every day from our free-range hens in Morogoro."
+msgstr "Collected fresh every day from our free-range hens in Morogoro."
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Contact Information"
+msgstr "Contact Information"
+
+msgid "Contact Us"
+msgstr "Contact Us"
+
+msgid "Continue Shopping"
+msgstr "Continue Shopping"
+
+msgid "Create Account"
+msgstr "Create Account"
+
+msgid "Day-old Chicks"
+msgstr "Day-old Chicks"
+
+msgid "Delivery"
+msgstr "Delivery"
+
+msgid "Delivery Address"
+msgstr "Delivery Address"
+
+msgid "Delivery Information"
+msgstr "Delivery Information"
+
+msgid "Delivery To"
+msgstr "Delivery To"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+msgid "Easy Ordering"
+msgstr "Easy Ordering"
+
+msgid "Eggs"
+msgstr "Eggs"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "Enter your Order ID and phone number to check status."
+msgstr "Enter your Order ID and phone number to check status."
+
+msgid "Farm Fresh"
+msgstr "Farm Fresh"
+
+msgid "Farm Gallery"
+msgstr "Farm Gallery"
+
+msgid "Farm raised"
+msgstr "Farm raised"
+
+msgid "Follow Our Farm Journey"
+msgstr "Follow Our Farm Journey"
+
+msgid "Fresh & quality"
+msgstr "Fresh & quality"
+
+msgid "Fresh Eggs"
+msgstr "Fresh Eggs"
+
+msgid "Fresh Eggs Daily"
+msgstr "Fresh Eggs Daily"
+
+msgid "Fresh Farm Quality"
+msgstr "Fresh Farm Quality"
+
+msgid "Fresh poultry products available for order and delivery"
+msgstr "Fresh poultry products available for order and delivery"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Gallery"
+msgstr "Gallery"
+
+msgid "Gallery content will appear here soon."
+msgstr "Gallery content will appear here soon."
+
+msgid "Get in Touch"
+msgstr "Get in Touch"
+
+msgid "Healthy Chicks"
+msgstr "Healthy Chicks"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "In Stock"
+msgstr "In Stock"
+
+msgid "Items Ordered"
+msgstr "Items Ordered"
+
+msgid "Join Rode Poultry Tanzania"
+msgstr "Join Rode Poultry Tanzania"
+
+msgid "Live Chickens"
+msgstr "Live Chickens"
+
+msgid "Location"
+msgstr "Location"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Login to your account"
+msgstr "Login to your account"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Mon–Sat: 7AM – 6PM"
+msgstr "Mon–Sat: 7AM – 6PM"
+
+msgid "Morogoro, Tanzania"
+msgstr "Morogoro, Tanzania"
+
+msgid "My Account"
+msgstr "My Account"
+
+msgid "My Orders"
+msgstr "My Orders"
+
+msgid "No media yet"
+msgstr "No media yet"
+
+msgid "No orders yet"
+msgstr "No orders yet"
+
+msgid "No products found"
+msgstr "No products found"
+
+msgid "Order"
+msgstr "Order"
+
+msgid "Order Date"
+msgstr "Order Date"
+
+msgid "Order Details"
+msgstr "Order Details"
+
+msgid "Order ID"
+msgstr "Order ID"
+
+msgid "Order Notes"
+msgstr "Order Notes"
+
+msgid "Order Placed Successfully!"
+msgstr "Order Placed Successfully!"
+
+msgid "Order Placed!"
+msgstr "Order Placed!"
+
+msgid "Order Summary"
+msgstr "Order Summary"
+
+msgid "Order online, pay when your products arrive at your door."
+msgstr "Order online, pay when your products arrive at your door."
+
+msgid "Order via website or WhatsApp. Track your order status in real time."
+msgstr "Order via website or WhatsApp. Track your order status in real time."
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Our Products"
+msgstr "Our Products"
+
+msgid "Our Story"
+msgstr "Our Story"
+
+msgid "Our mission is to make quality poultry products accessible, affordable, and easy to order for every Tanzanian household."
+msgstr "Our mission is to make quality poultry products accessible, affordable, and easy to order for every Tanzanian household."
+
+msgid "Out of Stock"
+msgstr "Out of Stock"
+
+msgid "Pay when your order arrives"
+msgstr "Pay when your order arrives"
+
+msgid "Payment"
+msgstr "Payment"
+
+msgid "Payment Method"
+msgstr "Payment Method"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Phone / WhatsApp"
+msgstr "Phone / WhatsApp"
+
+msgid "Phone Number"
+msgstr "Phone Number"
+
+msgid "Photos"
+msgstr "Photos"
+
+msgid "Photos and videos from Rode Poultry Farm, Morogoro"
+msgstr "Photos and videos from Rode Poultry Farm, Morogoro"
+
+msgid "Photos and videos from our farm"
+msgstr "Photos and videos from our farm"
+
+msgid "Place Order"
+msgstr "Place Order"
+
+msgid "Premium quality poultry farming in Morogoro, Tanzania. We raise healthy chickens and provide fresh eggs, quality chicks, and full-grown birds directly to your door."
+msgstr "Premium quality poultry farming in Morogoro, Tanzania. We raise healthy chickens and provide fresh eggs, quality chicks, and full-grown birds directly to your door."
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Proceed to Checkout"
+msgstr "Proceed to Checkout"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Product Types"
+msgstr "Product Types"
+
+msgid "Products"
+msgstr "Products"
+
+msgid "Qty"
+msgstr "Qty"
+
+msgid "Quantity"
+msgstr "Quantity"
+
+msgid "Quick Links"
+msgstr "Quick Links"
+
+msgid "Ready to Order?"
+msgstr "Ready to Order?"
+
+msgid "Region"
+msgstr "Region"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "Related Products"
+msgstr "Related Products"
+
+msgid "Rode Poultry Tanzania Limited"
+msgstr "Rode Poultry Tanzania Limited"
+
+msgid "Save your Order ID"
+msgstr "Save your Order ID"
+
+msgid "Secure order — Pay on delivery"
+msgstr "Secure order — Pay on delivery"
+
+msgid "Send Message"
+msgstr "Send Message"
+
+msgid "Send us a Message"
+msgstr "Send us a Message"
+
+msgid "Shop"
+msgstr "Shop"
+
+msgid "Shop Now"
+msgstr "Shop Now"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Straight to You"
+msgstr "Straight to You"
+
+msgid "Subscribe to our YouTube channel for farm updates and tips."
+msgstr "Subscribe to our YouTube channel for farm updates and tips."
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "TOTAL"
+msgstr "TOTAL"
+
+msgid "Thank you"
+msgstr "Thank you"
+
+msgid "To be confirmed"
+msgstr "To be confirmed"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Track Order"
+msgstr "Track Order"
+
+msgid "Track Your Order"
+msgstr "Track Your Order"
+
+msgid "Try a different category or search term."
+msgstr "Try a different category or search term."
+
+msgid "Vaccinated & healthy"
+msgstr "Vaccinated & healthy"
+
+msgid "Videos"
+msgstr "Videos"
+
+msgid "View"
+msgstr "View"
+
+msgid "View All Products"
+msgstr "View All Products"
+
+msgid "View Farm"
+msgstr "View Farm"
+
+msgid "View Full Gallery"
+msgstr "View Full Gallery"
+
+msgid "We are here to help. Send us a message or call us directly."
+msgstr "We are here to help. Send us a message or call us directly."
+
+msgid "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro."
+msgstr "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro."
+
+msgid "We have received your order and will contact you shortly."
+msgstr "We have received your order and will contact you shortly."
+
+msgid "We specialize in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and supplying quality chicken meat — all from our own farm, ensuring freshness and traceability at every step."
+msgstr "We specialize in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and supplying quality chicken meat — all from our own farm, ensuring freshness and traceability at every step."
+
+msgid "Welcome Back"
+msgstr "Welcome Back"
+
+msgid "WhatsApp Us"
+msgstr "WhatsApp Us"
+
+msgid "Why Choose Rode Poultry?"
+msgstr "Why Choose Rode Poultry?"
+
+msgid "Working Hours"
+msgstr "Working Hours"
+
+msgid "You haven't placed any orders."
+msgstr "You haven't placed any orders."
+
+msgid "Your Cart"
+msgstr "Your Cart"
+
+msgid "Your Order"
+msgstr "Your Order"
+
+msgid "Your cart is empty"
+msgstr "Your cart is empty"
+
+msgid "optional"
+msgstr "optional"
+
+msgid "products available"
+msgstr "products available"
+
+msgid "use it to track your order."
+msgstr "use it to track your order."
