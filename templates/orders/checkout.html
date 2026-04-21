@@ -3,6 +3,38 @@
 
 {% block title %}{% trans "Checkout" %} — Rode Poultry Tanzania{% endblock %}
 
+{% block extra_css %}
+<style>
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 2px solid var(--gray-light);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-bottom: 0.6rem;
+  background: white;
+}
+.payment-option:hover { border-color: var(--navy-mid); background: var(--off-white); }
+.payment-option.selected { border-color: var(--gold); background: #fffbef; }
+.payment-option input[type=radio] { margin-top: 3px; accent-color: var(--gold); flex-shrink: 0; }
+.payment-option-label { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.payment-option-desc { font-size: 0.8rem; color: var(--gray); margin: 0.15rem 0 0; }
+.payment-logo { font-size: 1.5rem; }
+.promo-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.promo-row input { flex: 1; }
+#promoMsg { font-size: 0.82rem; margin-top: 0.35rem; min-height: 1.2em; }
+.promo-ok { color: var(--success); font-weight: 700; }
+.promo-err { color: var(--danger); font-weight: 700; }
+.summary-row { display: flex; justify-content: space-between; padding: 0.55rem 0; font-size: 0.9rem; border-bottom: 1px solid var(--gray-light); }
+.summary-row.grand { font-size: 1.1rem; font-weight: 900; color: var(--navy); border-bottom: none; padding-top: 0.75rem; }
+.deposit-note { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.82rem; margin-top: 0.75rem; display: none; }
+.deposit-note.show { display: block; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
@@ -16,99 +48,243 @@
   <div class="container">
     <h2 style="margin-bottom:2rem;">{% trans "Checkout" %}</h2>
 
-    <form method="post" action="{% url 'orders:checkout' %}">
+    <form method="post" action="{% url 'orders:checkout' %}" id="checkoutForm">
       {% csrf_token %}
       <div class="pg-checkout">
 
-        <!-- Delivery Details -->
-        <div style="background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);">
-          <h3 style="margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
-            📦 {% trans "Delivery Information" %}
-          </h3>
-          <div class="pg-form-2">
-            <div class="form-group col-span-2">
-              <label class="form-label">{% trans "Full Name" %} *</label>
-              <input type="text" name="full_name" class="form-control" required
-                     placeholder="{% trans 'Your full name' %}"
-                     {% if user.is_authenticated %}value="{{ user.get_full_name }}"{% endif %}>
-            </div>
-            <div class="form-group">
-              <label class="form-label">{% trans "Email Address" %} *</label>
-              <input type="email" name="email" class="form-control" required
-                     placeholder="your@email.com"
-                     {% if user.is_authenticated %}value="{{ user.email }}"{% endif %}>
-            </div>
-            <div class="form-group">
-              <label class="form-label">{% trans "Phone Number" %} *</label>
-              <input type="tel" name="phone" class="form-control" required
-                     placeholder="+255 7XX XXX XXX">
-            </div>
-            <div class="form-group col-span-2">
-              <label class="form-label">{% trans "Delivery Address" %} *</label>
-              <textarea name="address" class="form-control" required rows="2"
-                        placeholder="{% trans 'Street, area, landmark...' %}"></textarea>
-            </div>
-            <div class="form-group">
-              <label class="form-label">{% trans "Region" %} *</label>
-              <select name="region" class="form-control" required>
-                <option value="Morogoro">Morogoro</option>
-                <option value="Dar es Salaam">Dar es Salaam</option>
-                <option value="Dodoma">Dodoma</option>
-                <option value="Arusha">Arusha</option>
-                <option value="Mwanza">Mwanza</option>
-                <option value="Other">{% trans "Other" %}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">{% trans "Order Notes" %} ({% trans "optional" %})</label>
-              <input type="text" name="notes" class="form-control"
-                     placeholder="{% trans 'Special instructions...' %}">
+        <!-- LEFT -->
+        <div>
+
+          <!-- Delivery Details -->
+          <div style="background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);margin-bottom:1.5rem;">
+            <h3 style="margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
+              📦 {% trans "Delivery Information" %}
+            </h3>
+            <div class="pg-form-2">
+              <div class="form-group col-span-2">
+                <label class="form-label">{% trans "Full Name" %} *</label>
+                <input type="text" name="full_name" class="form-control" required
+                       placeholder="{% trans 'Your full name' %}"
+                       {% if user.is_authenticated %}value="{{ user.get_full_name }}"{% endif %}>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{% trans "Email Address" %} <span style="color:var(--gray);font-weight:400;">({% trans "optional" %})</span></label>
+                <input type="email" name="email" class="form-control"
+                       placeholder="your@email.com"
+                       {% if user.is_authenticated %}value="{{ user.email }}"{% endif %}>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{% trans "Phone Number" %} *</label>
+                <input type="tel" name="phone" class="form-control" required placeholder="+255 7XX XXX XXX">
+              </div>
+              <div class="form-group col-span-2">
+                <label class="form-label">{% trans "Delivery Address" %} *</label>
+                <textarea name="address" class="form-control" required rows="2"
+                          placeholder="{% trans 'Street, area, landmark...' %}"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{% trans "Region" %} *</label>
+                <select name="region" class="form-control" required>
+                  <option value="Morogoro">Morogoro</option>
+                  <option value="Dar es Salaam">Dar es Salaam</option>
+                  <option value="Dodoma">Dodoma</option>
+                  <option value="Arusha">Arusha</option>
+                  <option value="Mwanza">Mwanza</option>
+                  <option value="Mbeya">Mbeya</option>
+                  <option value="Tanga">Tanga</option>
+                  <option value="Other">{% trans "Other" %}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{% trans "Order Notes" %} ({% trans "optional" %})</label>
+                <input type="text" name="notes" class="form-control" placeholder="{% trans 'Special instructions...' %}">
+              </div>
             </div>
           </div>
 
-          <div style="background:var(--off-white);border-radius:8px;padding:1.25rem;margin-top:0.5rem;">
-            <h4 style="font-size:0.9rem;margin-bottom:0.5rem;">💳 {% trans "Payment Method" %}</h4>
-            <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;">
-              <input type="radio" name="payment_method" value="cod" checked style="accent-color:var(--navy);">
+          <!-- Payment Method -->
+          <div style="background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);">
+            <h3 style="margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
+              💳 {% trans "Payment Method" %}
+            </h3>
+
+            <label class="payment-option" onclick="selectPayment(this,'mpesa')">
+              <input type="radio" name="payment_method" value="mpesa">
+              <span class="payment-logo">📱</span>
               <div>
-                <span style="font-weight:700;">🚚 {% trans "Cash on Delivery" %}</span>
-                <p style="font-size:0.8rem;color:var(--gray);margin:0;">{% trans "Pay when your order arrives" %}</p>
+                <div class="payment-option-label">M-Pesa</div>
+                <div class="payment-option-desc">Lipa kupitia M-Pesa (Vodacom Tanzania)</div>
               </div>
             </label>
+
+            <label class="payment-option" onclick="selectPayment(this,'tigopesa')">
+              <input type="radio" name="payment_method" value="tigopesa">
+              <span class="payment-logo">📱</span>
+              <div>
+                <div class="payment-option-label">Tigo Pesa</div>
+                <div class="payment-option-desc">Lipa kupitia Tigo Pesa (MIC Tanzania)</div>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPayment(this,'airtelmoney')">
+              <input type="radio" name="payment_method" value="airtelmoney">
+              <span class="payment-logo">📱</span>
+              <div>
+                <div class="payment-option-label">Airtel Money</div>
+                <div class="payment-option-desc">Lipa kupitia Airtel Money</div>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPayment(this,'halopesa')">
+              <input type="radio" name="payment_method" value="halopesa">
+              <span class="payment-logo">📱</span>
+              <div>
+                <div class="payment-option-label">HaloPesa</div>
+                <div class="payment-option-desc">Lipa kupitia HaloPesa (TTCL)</div>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPayment(this,'deposit')">
+              <input type="radio" name="payment_method" value="deposit">
+              <span class="payment-logo">💰</span>
+              <div>
+                <div class="payment-option-label">Amana 70% — Lipa 30% ukipokea</div>
+                <div class="payment-option-desc">Lipa asilimia 70 sasa, asilimia 30 iliyobaki utalipa siku ya kupokea mzigo wako</div>
+              </div>
+            </label>
+
+            <label class="payment-option selected" onclick="selectPayment(this,'cod')">
+              <input type="radio" name="payment_method" value="cod" checked>
+              <span class="payment-logo">🚚</span>
+              <div>
+                <div class="payment-option-label">Lipa ukipokea mzigo (Cash on Delivery)</div>
+                <div class="payment-option-desc">Lipa pesa taslimu mzigo ukifika kwako</div>
+              </div>
+            </label>
+
+            <div class="deposit-note" id="depositNote">
+              💡 <strong>Jinsi Amana 70/30 inavyofanya kazi:</strong><br>
+              Utalipa <strong id="depositAmt">—</strong> sasa (70%), kisha
+              <strong id="balanceAmt">—</strong> utakalipa siku ya kupokea mzigo wako.
+              Mstari wa malipo utakuwa sent baada ya kuthibitisha oda.
+            </div>
           </div>
         </div>
 
-        <!-- Order Summary -->
+        <!-- RIGHT: Order Summary -->
         <div>
           <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:var(--shadow);position:sticky;top:90px;">
             <h3 style="margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-light);">
               {% trans "Your Order" %}
             </h3>
             {% for item in cart %}
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:0.75rem 0;border-bottom:1px solid var(--gray-light);gap:0.5rem;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:0.65rem 0;border-bottom:1px solid var(--gray-light);gap:0.5rem;">
               <div style="flex:1;">
-                <p style="font-weight:700;font-size:0.9rem;margin:0;color:var(--navy);">{{ item.name }}</p>
-                <p style="font-size:0.78rem;color:var(--gray);margin:0;">× {{ item.quantity }} {{ item.unit }}</p>
+                <p style="font-weight:700;font-size:0.88rem;margin:0;color:var(--navy);">{{ item.name }}</p>
+                <p style="font-size:0.76rem;color:var(--gray);margin:0;">× {{ item.quantity }} {{ item.unit }}</p>
               </div>
-              <span style="font-weight:700;white-space:nowrap;font-size:0.9rem;">TSH {{ item.total_price|intcomma }}</span>
+              <span style="font-weight:700;white-space:nowrap;font-size:0.88rem;">TSH {{ item.total_price|intcomma }}</span>
             </div>
             {% endfor %}
-            <div style="padding:1rem 0 0;">
-              <div class="cart-total-row grand-total" style="font-size:1.15rem;">
-                <span>{% trans "TOTAL" %}</span>
-                <span style="color:var(--navy-mid);">TSH {{ cart.get_total_price|intcomma }}</span>
+
+            <!-- Promo Code -->
+            <div style="margin-top:1rem;padding:1rem;background:var(--off-white);border-radius:8px;">
+              <label style="font-size:0.85rem;font-weight:700;display:block;margin-bottom:0.4rem;">
+                🏷️ {% trans "Discount Code / Promo" %}
+              </label>
+              <div class="promo-row">
+                <input type="text" id="promoInput" name="promo_code" class="form-control"
+                       placeholder="Weka kodi ya punguzo" style="text-transform:uppercase;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="checkPromo()">Thibitisha</button>
+              </div>
+              <div id="promoMsg"></div>
+            </div>
+
+            <!-- Totals -->
+            <div style="margin-top:1rem;">
+              <div class="summary-row">
+                <span>{% trans "Subtotal" %}</span>
+                <span id="summSubtotal">TSH {{ cart.get_total_price|intcomma }}</span>
+              </div>
+              <div class="summary-row">
+                <span>🚚 Usafiri (nusu ya gharama)</span>
+                <span id="summDelivery" style="color:var(--navy);font-weight:700;">—</span>
+              </div>
+              <div class="summary-row" id="discountRow" style="display:none;">
+                <span style="color:var(--success);">🏷️ Punguzo</span>
+                <span id="summDiscount" style="color:var(--success);font-weight:700;"></span>
+              </div>
+              <div class="summary-row grand">
+                <span>JUMLA</span>
+                <span id="summTotal" style="color:var(--navy-mid);">—</span>
               </div>
             </div>
+
             <button type="submit" class="btn btn-gold btn-lg" style="width:100%;justify-content:center;margin-top:1.25rem;">
-              ✅ {% trans "Place Order" %}
+              ✅ Tuma Oda
             </button>
             <p style="text-align:center;font-size:0.78rem;color:var(--gray);margin-top:0.75rem;">
-              {% trans "By placing your order you agree to our terms." %}
+              Oda itakuwa <strong>Completed</strong> baada ya kufanya malipo.
             </p>
           </div>
         </div>
+
       </div>
     </form>
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const SUBTOTAL = parseFloat("{{ cart.get_total_price }}");
+const DELIVERY_RATE = 0.05;
+let discountAmount = 0;
+
+function fmt(n) { return 'TSH ' + Math.round(n).toLocaleString(); }
+
+function calcTotals() {
+  const delivery = Math.round(SUBTOTAL * DELIVERY_RATE);
+  const total = SUBTOTAL + delivery - discountAmount;
+  const deposit70 = Math.round(total * 0.70);
+  const balance30 = total - deposit70;
+  document.getElementById('summDelivery').textContent = fmt(delivery);
+  document.getElementById('summTotal').textContent = fmt(total);
+  document.getElementById('depositAmt').textContent = fmt(deposit70);
+  document.getElementById('balanceAmt').textContent = fmt(balance30);
+}
+
+function selectPayment(el, method) {
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input[type=radio]').checked = true;
+  const note = document.getElementById('depositNote');
+  if (method === 'deposit') { note.classList.add('show'); calcTotals(); }
+  else { note.classList.remove('show'); }
+}
+
+async function checkPromo() {
+  const code = document.getElementById('promoInput').value.trim().toUpperCase();
+  const msg = document.getElementById('promoMsg');
+  if (!code) { msg.innerHTML = ''; return; }
+  msg.innerHTML = '<span style="color:var(--gray);">Inaangalia...</span>';
+  try {
+    const res = await fetch(`/orders/promo/validate/?code=${encodeURIComponent(code)}&subtotal=${SUBTOTAL}`);
+    const data = await res.json();
+    if (data.valid) {
+      discountAmount = data.discount;
+      msg.innerHTML = `<span class="promo-ok">✓ ${data.message}</span>`;
+      document.getElementById('discountRow').style.display = 'flex';
+      document.getElementById('summDiscount').textContent = `− ${fmt(data.discount)}`;
+    } else {
+      discountAmount = 0;
+      msg.innerHTML = `<span class="promo-err">✗ ${data.message}</span>`;
+      document.getElementById('discountRow').style.display = 'none';
+    }
+    calcTotals();
+  } catch { msg.innerHTML = '<span class="promo-err">Hitilafu. Jaribu tena.</span>'; }
+}
+
+calcTotals();
+</script>
 {% endblock %}

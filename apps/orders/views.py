@@ -8,7 +8,7 @@ from django.conf import settings
 
 from apps.products.models import Product
 from .cart import Cart
-from .models import Order, OrderItem
+from .models import Order, OrderItem, PromoCode
 
 
 def cart_detail(request):
@@ -25,7 +25,7 @@ def cart_add(request, product_id):
     cart.add(product=product, quantity=quantity, override_quantity=bool(override))
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({'cart_count': len(cart), 'message': 'Added to cart'})
-    messages.success(request, f'{product.name} added to cart.')
+    messages.success(request, f'{product.name} imeongezwa kwenye Cart.')
     return redirect('orders:cart')
 
 
@@ -37,10 +37,29 @@ def cart_remove(request, product_id):
     return redirect('orders:cart')
 
 
+def validate_promo(request):
+    """AJAX endpoint to validate a promo code."""
+    if request.method == 'GET':
+        code = request.GET.get('code', '').strip().upper()
+        subtotal = float(request.GET.get('subtotal', 0))
+        try:
+            promo = PromoCode.objects.get(code=code, is_active=True)
+            discount = round(subtotal * promo.discount_percent / 100, 2)
+            return JsonResponse({
+                'valid': True,
+                'percent': promo.discount_percent,
+                'discount': discount,
+                'message': f'Kodi sahihi! Punguzo la {promo.discount_percent}% — TSH {discount:,.0f}'
+            })
+        except PromoCode.DoesNotExist:
+            return JsonResponse({'valid': False, 'message': 'Kodi si sahihi au imekwisha.'})
+    return JsonResponse({'valid': False})
+
+
 def checkout(request):
     cart = Cart(request)
     if len(cart) == 0:
-        messages.warning(request, 'Your cart is empty.')
+        messages.warning(request, 'Cart yako iko tupu.')
         return redirect('products:list')
 
     if request.method == 'POST':
@@ -50,10 +69,34 @@ def checkout(request):
         address = request.POST.get('address', '').strip()
         region = request.POST.get('region', 'Morogoro').strip()
         notes = request.POST.get('notes', '').strip()
+        payment_method = request.POST.get('payment_method', 'cod').strip()
+        promo_code = request.POST.get('promo_code', '').strip().upper()
 
-        if not all([full_name, email, phone, address]):
-            messages.error(request, 'Please fill all required fields.')
+        if not all([full_name, phone, address]):
+            messages.error(request, 'Tafadhali jaza sehemu zote zinazohitajika (*).')
             return render(request, 'orders/checkout.html', {'cart': cart})
+
+        subtotal = cart.get_total_price()
+        delivery_fee = round(float(subtotal) * 0.05, 2)  # 5% ya thamani - owner anabadilisha
+        discount_amount = 0
+
+        # Validate promo code
+        if promo_code:
+            try:
+                promo = PromoCode.objects.get(code=promo_code, is_active=True)
+                discount_amount = round(float(subtotal) * promo.discount_percent / 100, 2)
+            except PromoCode.DoesNotExist:
+                messages.warning(request, 'Kodi ya punguzo si sahihi, inaendelea bila punguzo.')
+                promo_code = ''
+
+        total = float(subtotal) + delivery_fee - discount_amount
+
+        # Deposit calculation for 70/30 option
+        deposit_amount = 0
+        balance_due = 0
+        if payment_method == 'deposit':
+            deposit_amount = round(total * 0.70, 2)
+            balance_due = round(total * 0.30, 2)
 
         order = Order.objects.create(
             full_name=full_name,
@@ -62,7 +105,14 @@ def checkout(request):
             address=address,
             region=region,
             notes=notes,
-            total_amount=cart.get_total_price(),
+            payment_method=payment_method,
+            subtotal=subtotal,
+            delivery_fee=delivery_fee,
+            discount_amount=discount_amount,
+            discount_code=promo_code,
+            total_amount=total,
+            deposit_amount=deposit_amount,
+            balance_due=balance_due,
         )
 
         for item in cart:
@@ -82,24 +132,29 @@ def checkout(request):
                 f"- {oi.product_name} x{oi.quantity} @ TSH {oi.price:,.0f}"
                 for oi in order.items.all()
             )
+            payment_label = dict(Order.PAYMENT_METHOD_CHOICES).get(payment_method, payment_method)
+            deposit_note = f'\nAmana ya kulipa: TSH {deposit_amount:,.0f}\nBaki siku ya kupokea: TSH {balance_due:,.0f}' if payment_method == 'deposit' else ''
             send_mail(
-                subject=f'New Order #{order.pk} from {order.full_name}',
+                subject=f'Oda Mpya #{order.pk} kutoka {order.full_name}',
                 message=(
-                    f'Order #{order.pk}\n'
-                    f'Customer: {order.full_name}\n'
-                    f'Phone: {order.phone}\n'
+                    f'Oda #{order.pk}\n'
+                    f'Mteja: {order.full_name}\n'
+                    f'Simu: {order.phone}\n'
                     f'Email: {order.email}\n'
-                    f'Address: {order.address}, {order.region}\n'
-                    f'Notes: {order.notes}\n\n'
-                    f'Items:\n{items_text}\n\n'
-                    f'TOTAL: TSH {order.total_amount:,.0f}\n'
-                    f'Payment: Cash on Delivery'
+                    f'Anwani: {order.address}, {order.region}\n'
+                    f'Maelezo: {order.notes}\n\n'
+                    f'Bidhaa:\n{items_text}\n\n'
+                    f'Jumla Ndogo: TSH {subtotal:,.0f}\n'
+                    f'Gharama za Usafiri: TSH {delivery_fee:,.0f}\n'
+                    f'Punguzo: TSH {discount_amount:,.0f} (Kodi: {promo_code})\n'
+                    f'JUMLA: TSH {total:,.0f}\n'
+                    f'Malipo: {payment_label}{deposit_note}'
                 ),
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.COMPANY_EMAIL],
             )
         except Exception:
-            pass  # Don't block order on email failure
+            pass
 
         return redirect('orders:order_success', order_id=order.pk)
 
@@ -119,5 +174,6 @@ def order_tracking(request):
         try:
             order = Order.objects.get(pk=order_id, phone=phone)
         except Order.DoesNotExist:
-            messages.error(request, 'Order not found. Please check your Order ID and phone number.')
+            messages.error(request, 'Oda haikupatikana. Angalia namba ya oda na simu yako.')
     return render(request, 'orders/tracking.html', {'order': order})
+

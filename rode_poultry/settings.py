@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'sw'
 LANGUAGES = [
     ('en', 'English'),
     ('sw', 'Swahili'),

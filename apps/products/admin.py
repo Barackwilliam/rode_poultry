@@ -33,17 +33,19 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
-    list_display = ['name', 'category', 'price', 'unit', 'stock', 'is_available', 'is_featured']
-    list_filter = ['category', 'is_available', 'is_featured']
-    list_editable = ['price', 'stock', 'is_available', 'is_featured']
+    list_display = ['name', 'category', 'price', 'offer_price', 'stock', 'is_available', 'is_featured', 'is_upcoming']
+    list_filter = ['category', 'is_available', 'is_featured', 'is_upcoming']
+    list_editable = ['price', 'stock', 'is_available', 'is_featured', 'is_upcoming']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'name_sw']
     fieldsets = (
         ('English', {'fields': ('name', 'slug', 'description', 'category')}),
         ('Swahili', {'fields': ('name_sw', 'description_sw')}),
         ('Pricing & Stock', {'fields': ('price', 'unit', 'unit_sw', 'stock', 'minimum_order')}),
+        ('🏷️ Ofa / Sale', {'fields': ('offer_price', 'offer_label', 'offer_label_sw'),
+                            'classes': ('collapse',)}),
         ('Images', {'fields': ('image', 'image2', 'image3')}),
-        ('Visibility', {'fields': ('is_available', 'is_featured')}),
+        ('Visibility', {'fields': ('is_available', 'is_featured', 'is_upcoming', 'upcoming_date')}),
     )
     def formfield_for_dbfield(self, db_field, **kwargs):
             formfield = super().formfield_for_dbfield(db_field, **kwargs)

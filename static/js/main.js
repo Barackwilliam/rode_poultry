@@ -63,7 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
         nextInput.name = 'next';
         form.appendChild(nextInput);
       }
-      nextInput.value = window.location.pathname + window.location.search;
+      // Strip any existing language prefix (/en/ or /sw/) from the path
+      let nextPath = window.location.pathname + window.location.search;
+      nextPath = nextPath.replace(/^\/(en|sw)(\/|$)/, '/');
+      nextInput.value = nextPath;
 
       form.submit();
     });
@@ -91,6 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
           badge.textContent = data.cart_count;
           badge.style.transform = 'scale(1.4)';
           setTimeout(() => badge.style.transform = '', 300);
+        }
+        // Update floating cart
+        const fc = document.getElementById('floatingCart');
+        const fcCount = document.getElementById('fcCount');
+        if (fc && data.cart_count > 0) {
+          fc.classList.remove('empty');
+          if (fcCount) { fcCount.textContent = data.cart_count; fcCount.style.display = 'flex'; }
         }
         showToast('Added to cart! 🛒', 'success');
         btn.textContent = 'Added ✓';

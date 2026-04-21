@@ -4,6 +4,477 @@
 {% block title %}{{ product.name }} — Rode Poultry Tanzania{% endblock %}
 {% block meta_desc %}{{ product.description|truncatewords:25 }}{% endblock %}
 
+{% block extra_css %}
+<style>
+/* ═══════════════════════════════════════════
+   PRODUCT DETAIL — fully responsive
+   mobile-first, then desktop overrides
+═══════════════════════════════════════════ */
+
+/* ── Layout grid ── */
+.pg-product {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .pg-product {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pg-product {
+    grid-template-columns: 5fr 6fr;
+    gap: 3rem;
+  }
+}
+
+/* ── Main image ── */
+.product-main-img-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--gray-light);
+}
+
+.product-main-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.product-main-img-wrap:hover img {
+  transform: scale(1.03);
+}
+
+/* ── Thumbnails ── */
+.product-thumbs {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid var(--gray-light);
+  transition: border-color 0.18s;
+  flex-shrink: 0;
+}
+
+.product-thumb.active,
+.product-thumb:hover {
+  border-color: var(--navy-mid, #2c4a6e);
+}
+
+@media (max-width: 400px) {
+  .product-thumb {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* ── Info section ── */
+.product-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.product-category-label {
+  color: var(--gold, #c9962a);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+
+.product-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.offer-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--danger, #c0392b);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.72rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 50px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* ── Price row ── */
+.product-price-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.product-price-main {
+  font-size: clamp(1.5rem, 5vw, 1.9rem);
+  font-weight: 900;
+  font-family: var(--font-heading, inherit);
+  color: var(--navy-mid, #2c4a6e);
+  white-space: nowrap;
+}
+
+.product-price-main.is-offer {
+  color: var(--danger, #c0392b);
+}
+
+.product-price-original {
+  font-size: 0.95rem;
+  color: var(--gray, #888);
+  text-decoration: line-through;
+  white-space: nowrap;
+}
+
+.product-price-unit {
+  color: var(--gray, #888);
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.stock-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.stock-badge.instock {
+  background: #eafaf1;
+  color: var(--success, #1a7a5e);
+}
+
+.stock-badge.outofstock {
+  background: #fdf2f2;
+  color: var(--danger, #c0392b);
+}
+
+/* ── Tabs ── */
+.product-tabs-wrap {
+  border: 1px solid var(--gray-light, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--gray-light, #e5e7eb);
+  margin-bottom: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.product-tabs::-webkit-scrollbar { display: none; }
+
+.product-tab-btn {
+  padding: 0.8rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gray, #888);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.18s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.product-tab-btn.active {
+  color: var(--navy, #1a2e4a);
+  border-bottom-color: var(--gold, #c9962a);
+  background: var(--off-white, #fafaf8);
+}
+
+.product-tab-btn:hover:not(.active) {
+  color: var(--navy-mid, #2c4a6e);
+  background: var(--off-white, #fafaf8);
+}
+
+.product-tab-panel { display: none; }
+.product-tab-panel.active { display: block; }
+
+/* ── Tab: Maelezo ── */
+.tab-desc-content {
+  padding: 1.25rem 1.25rem 1rem;
+}
+
+.tab-desc-content p {
+  color: var(--text-body, #444);
+  line-height: 1.85;
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+}
+
+.tab-contact-bar {
+  background: var(--off-white, #fafaf8);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: var(--gray, #888);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.tab-contact-bar a {
+  color: var(--navy-mid, #2c4a6e);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tab-contact-bar a:hover { text-decoration: underline; }
+
+/* ── Tab: Nunua ── */
+.tab-buy-content {
+  padding: 1.25rem;
+}
+
+/* Quantity row */
+.qty-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.qty-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  color: var(--text-body, #444);
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--gray-light, #e5e7eb);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qty-btn {
+  padding: 0.55rem 0.9rem;
+  background: var(--gray-light, #f3f4f6);
+  border: none;
+  font-size: 1.05rem;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--navy, #1a2e4a);
+  transition: background 0.15s;
+  touch-action: manipulation;
+}
+
+.qty-btn:hover { background: #e0e0e0; }
+.qty-btn:active { background: #d0d0d0; }
+
+.qty-input {
+  width: 54px;
+  border: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  background: transparent;
+  color: var(--navy, #1a2e4a);
+}
+
+.qty-min-note {
+  font-size: 0.75rem;
+  color: var(--gray, #888);
+  white-space: nowrap;
+}
+
+/* Price preview */
+.price-preview {
+  background: var(--off-white, #fafaf8);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-preview-label {
+  font-size: 0.85rem;
+  color: var(--gray, #888);
+}
+
+.price-preview-total {
+  font-weight: 900;
+  color: var(--navy, #1a2e4a);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* CTA buttons */
+.cta-row {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.cta-row .btn {
+  flex: 1 1 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  min-width: 0;
+  padding: 0.7rem 1rem;
+}
+
+@media (max-width: 400px) {
+  .cta-row {
+    flex-direction: column;
+  }
+  .cta-row .btn {
+    flex: unset;
+    width: 100%;
+  }
+}
+
+.payment-note {
+  margin-top: 0.9rem;
+  padding: 0.8rem 1rem;
+  background: var(--off-white, #fafaf8);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--gray, #888);
+  line-height: 1.6;
+}
+
+/* ── Related products ── */
+.related-section {
+  margin-top: 3.5rem;
+}
+
+.related-section h3 {
+  margin-bottom: 1.25rem;
+  font-size: 1.2rem;
+}
+
+/* Uses .products-grid from products_list styles */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.product-card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card-body {
+  padding: 0.7rem 0.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.product-card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.product-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+}
+
+.product-card-footer {
+  display: flex;
+  gap: 0.45rem;
+  padding: 0.6rem 0.8rem;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.product-card-footer .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.4rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.product-card-footer .btn-outline { flex: 1; }
+.product-card-footer .btn-primary { flex: 2; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
@@ -17,123 +488,233 @@
   <div class="container">
     <div class="pg-product">
 
-      <!-- Images -->
+      <!-- ── Column 1: Images ── -->
       <div>
-        <div id="mainImg" style="border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/3;">
-          <img src="{{ product.image }}" alt="{{ product.name }}"
-               style="width:100%;height:100%;object-fit:cover;" id="mainImgEl">
+        <div class="product-main-img-wrap">
+          <img src="{{ product.image }}" alt="{{ product.name }}" id="mainImgEl">
         </div>
+
         {% if product.image2 or product.image3 %}
-        <div class="product-thumbs" style="display:flex;gap:0.75rem;margin-top:0.75rem;">
-          <img src="{{ product.image }}" alt="" onclick="switchImg(this)"
-               style="width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid var(--navy-mid);">
+        <div class="product-thumbs">
+          <img src="{{ product.image }}" alt="" class="product-thumb active"
+               onclick="switchImg(this)">
           {% if product.image2 %}
-          <img src="{{ product.image2 }}" alt="" onclick="switchImg(this)"
-               style="width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid var(--gray-light);">
+          <img src="{{ product.image2 }}" alt="" class="product-thumb"
+               onclick="switchImg(this)">
           {% endif %}
           {% if product.image3 %}
-          <img src="{{ product.image3 }}" alt="" onclick="switchImg(this)"
-               style="width:80px;height:80px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid var(--gray-light);">
+          <img src="{{ product.image3 }}" alt="" class="product-thumb"
+               onclick="switchImg(this)">
           {% endif %}
         </div>
         {% endif %}
       </div>
 
-      <!-- Product Info -->
-      <div>
-        {% if product.category %}
-        <p style="color:var(--gold);font-weight:700;text-transform:uppercase;font-size:0.8rem;letter-spacing:0.08em;margin-bottom:0.5rem;">
-          {{ product.category.name }}
-        </p>
-        {% endif %}
-        <h1 style="font-size:2rem;margin-bottom:0.5rem;">{{ product.name }}</h1>
+      <!-- ── Column 2: Info ── -->
+      <div class="product-info-section">
 
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
-          <span style="font-size:1.8rem;font-weight:900;color:var(--navy-mid);font-family:var(--font-heading);">
-            TSH {{ product.price|intcomma }}
+        {% if product.category %}
+        <p class="product-category-label">{{ product.category.name }}</p>
+        {% endif %}
+
+        <h1 class="product-title">
+          {{ product.name }}
+          {% if product.is_on_offer %}
+          <span class="offer-badge">
+            −{{ product.discount_percent }}%
+            {% if product.offer_label %}{{ product.offer_label }}{% else %}OFA{% endif %}
           </span>
-          <span style="color:var(--gray);font-size:0.9rem;">/ {{ product.unit }}</span>
-          {% if product.stock > 0 %}
-          <span style="background:#eafaf1;color:var(--success);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.78rem;font-weight:700;">
-            ✓ {% trans "In Stock" %} ({{ product.stock }})
-          </span>
+          {% endif %}
+        </h1>
+
+        <!-- Price -->
+        <div class="product-price-row">
+          {% if product.is_on_offer %}
+          <span class="product-price-main is-offer">TSH {{ product.offer_price|floatformat:0|intcomma }}</span>
+          <span class="product-price-original">TSH {{ product.price|intcomma }}</span>
           {% else %}
-          <span style="background:#fdf2f2;color:var(--danger);padding:0.25rem 0.75rem;border-radius:50px;font-size:0.78rem;font-weight:700;">
-            {% trans "Out of Stock" %}
-          </span>
+          <span class="product-price-main">TSH {{ product.price|intcomma }}</span>
+          {% endif %}
+          <span class="product-price-unit">/ {{ product.unit }}</span>
+
+          {% if product.stock > 0 %}
+          <span class="stock-badge instock">✓ {% trans "In Stock" %} ({{ product.stock }})</span>
+          {% else %}
+          <span class="stock-badge outofstock">{% trans "Out of Stock" %}</span>
           {% endif %}
         </div>
 
-        <div style="border-top:1px solid var(--gray-light);border-bottom:1px solid var(--gray-light);padding:1.25rem 0;margin-bottom:1.5rem;">
-          <p style="color:var(--text-body);line-height:1.8;margin:0;">{{ product.description }}</p>
-        </div>
+        <!-- ── Tabs ── -->
+        <div class="product-tabs-wrap">
+          <div class="product-tabs">
+            <button class="product-tab-btn active" onclick="switchTab(this,'tab-desc')">
+              📋 {% trans "Maelezo" %}
+            </button>
+            {% if product.stock > 0 %}
+            <button class="product-tab-btn" onclick="switchTab(this,'tab-buy')">
+              🛒 {% trans "Nunua" %}
+            </button>
+            {% endif %}
+          </div>
 
-        {% if product.stock > 0 %}
-        <form method="post" action="{% url 'orders:cart_add' product.id %}">
-          {% csrf_token %}
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;">
-            <label class="form-label" style="margin:0;white-space:nowrap;">{% trans "Quantity" %}:</label>
-            <div style="display:flex;align-items:center;gap:0.5rem;border:2px solid var(--gray-light);border-radius:8px;overflow:hidden;">
-              <button type="button" class="qty-btn" data-action="dec"
-                style="padding:0.6rem 1rem;background:var(--gray-light);border:none;font-size:1.1rem;cursor:pointer;font-weight:700;">−</button>
-              <input type="number" name="quantity" id="qty-{{ product.id }}" value="{{ product.minimum_order }}"
-                     min="{{ product.minimum_order }}" max="{{ product.stock }}"
-                     class="qty-input" style="width:60px;border:none;text-align:center;font-size:1rem;font-weight:700;padding:0.5rem 0;">
-              <button type="button" class="qty-btn" data-action="inc"
-                style="padding:0.6rem 1rem;background:var(--gray-light);border:none;font-size:1.1rem;cursor:pointer;font-weight:700;">+</button>
+          <!-- Tab: Maelezo -->
+          <div class="product-tab-panel active" id="tab-desc">
+            <div class="tab-desc-content">
+              <p>{{ product.description|linebreaksbr }}</p>
+              <div class="tab-contact-bar">
+                <span>🚚 {% trans "Delivery available" %}</span>
+                <span>📞 <a href="tel:+255738262660">+255 738 262 660</a></span>
+                <span>💬 <a href="https://wa.me/255738262660" target="_blank">WhatsApp</a></span>
+              </div>
             </div>
           </div>
-          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-            <button type="submit" class="btn btn-primary btn-lg" style="flex:2;">
-              🛒 {% trans "Add to Cart" %}
-            </button>
-            <a href="{% url 'orders:checkout' %}" class="btn btn-gold btn-lg" style="flex:1;">
-              {% trans "Buy Now" %}
-            </a>
+
+          <!-- Tab: Nunua -->
+          {% if product.stock > 0 %}
+          <div class="product-tab-panel" id="tab-buy">
+            <div class="tab-buy-content">
+              <form method="post" action="{% url 'orders:cart_add' product.id %}">
+                {% csrf_token %}
+
+                <!-- Quantity -->
+                <div class="qty-row">
+                  <label class="qty-label">{% trans "Quantity" %}:</label>
+                  <div class="qty-control">
+                    <button type="button" class="qty-btn" data-action="dec">−</button>
+                    <input type="number" name="quantity" id="qty-{{ product.id }}"
+                           value="{{ product.minimum_order }}"
+                           min="{{ product.minimum_order }}" max="{{ product.stock }}"
+                           class="qty-input">
+                    <button type="button" class="qty-btn" data-action="inc">+</button>
+                  </div>
+                  {% if product.minimum_order > 1 %}
+                  <span class="qty-min-note">(min. {{ product.minimum_order }} {{ product.unit }})</span>
+                  {% endif %}
+                </div>
+
+                <!-- Price preview -->
+                <div class="price-preview">
+                  <span class="price-preview-label">Jumla ya Gharama:</span>
+                  <span class="price-preview-total" id="previewTotal">
+                    TSH {{ product.display_price|floatformat:0|intcomma }}
+                  </span>
+                </div>
+
+                <!-- CTA buttons -->
+                <div class="cta-row">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    🛒 {% trans "Ongeza kwenye Cart" %}
+                  </button>
+                  <a href="{% url 'orders:checkout' %}" class="btn btn-gold btn-lg">
+                    ⚡ {% trans "Oda Moja Kwa Moja" %}
+                  </a>
+                </div>
+
+              </form>
+
+              <div class="payment-note">
+                ℹ️ Oda itakuwa <strong>Completed</strong> baada ya malipo kukamilika.
+                Unaweza kulipa kwa <strong>M-Pesa</strong>, Tigo Pesa, Airtel Money,
+                HaloPesa, au Lipa ukipokea.
+              </div>
+            </div>
           </div>
-        </form>
-        {% endif %}
+          {% endif %}
 
-        <div style="margin-top:1.5rem;padding:1rem;background:var(--off-white);border-radius:8px;font-size:0.875rem;color:var(--gray);">
-          🚚 {% trans "Cash on Delivery available" %} &nbsp;|&nbsp;
-          📞 <a href="tel:+255738262660">+255 738 262 660</a> &nbsp;|&nbsp;
-          💬 <a href="https://wa.me/255738262660" target="_blank">WhatsApp</a>
-        </div>
-      </div>
-    </div>
+        </div><!-- end .product-tabs-wrap -->
 
-    <!-- Related Products -->
+      </div><!-- end info column -->
+    </div><!-- end .pg-product -->
+
+    <!-- ── Related Products ── -->
     {% if related %}
-    <div style="margin-top:4rem;">
-      <h3 style="margin-bottom:1.5rem;">{% trans "Related Products" %}</h3>
+    <div class="related-section">
+      <h3>{% trans "Bidhaa Zinazofanana" %}</h3>
       <div class="products-grid">
         {% for rp in related %}
         <div class="product-card">
           <a href="{{ rp.get_absolute_url }}">
-            <img src="{{ rp.image }}" alt="{{ rp.name }}" class="product-card-img">
+            <img src="{{ rp.image }}" alt="{{ rp.name }}" class="product-card-img" loading="lazy">
           </a>
           <div class="product-card-body">
-            <h3 class="product-card-title"><a href="{{ rp.get_absolute_url }}" style="color:inherit;">{{ rp.name }}</a></h3>
-            <div class="product-card-price">TSH {{ rp.price|intcomma }} <span>/ {{ rp.unit }}</span></div>
+            <h3 class="product-card-title">
+              <a href="{{ rp.get_absolute_url }}">{{ rp.name }}</a>
+            </h3>
+            <div class="product-card-price">
+              {% if rp.is_on_offer %}
+              <span style="color:var(--danger);">TSH {{ rp.offer_price|floatformat:0|intcomma }}</span>
+              <span style="text-decoration:line-through;font-size:0.75rem;color:var(--gray);">{{ rp.price|intcomma }}</span>
+              {% else %}
+              TSH {{ rp.price|intcomma }}
+              {% endif %}
+              <span style="font-size:0.75rem;color:var(--gray);font-weight:400;">/ {{ rp.unit }}</span>
+            </div>
           </div>
           <div class="product-card-footer">
-            <a href="{{ rp.get_absolute_url }}" class="btn btn-primary btn-sm" style="flex:1;">{% trans "View" %}</a>
+            <a href="{{ rp.get_absolute_url }}" class="btn btn-outline btn-sm">{% trans "Maelezo" %}</a>
+            <a href="{{ rp.get_absolute_url }}#tab-buy" class="btn btn-primary btn-sm">🛒 {% trans "Nunua" %}</a>
           </div>
         </div>
         {% endfor %}
       </div>
     </div>
     {% endif %}
+
   </div>
 </section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+/* ── Image switcher ── */
 function switchImg(el) {
   document.getElementById('mainImgEl').src = el.src;
-  document.querySelectorAll('[onclick]').forEach(t => t.style.borderColor = 'var(--gray-light)');
-  el.style.borderColor = 'var(--navy-mid)';
+  document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ── Tab switcher ── */
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.product-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+/* ── Price preview ── */
+const unitPrice = parseFloat("{{ product.display_price }}");
+const qtyInput  = document.getElementById('qty-{{ product.id }}');
+const previewEl = document.getElementById('previewTotal');
+
+function updatePreview() {
+  if (!qtyInput || !previewEl) return;
+  const qty   = parseInt(qtyInput.value) || 1;
+  const total = qty * unitPrice;
+  previewEl.textContent = 'TSH ' + Math.round(total).toLocaleString();
+}
+
+if (qtyInput) {
+  qtyInput.addEventListener('input', updatePreview);
+
+  /* qty +/− buttons */
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.qty-btn');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    let val = parseInt(qtyInput.value) || 1;
+    const min = parseInt(qtyInput.min) || 1;
+    const max = parseInt(qtyInput.max) || 9999;
+    if (action === 'inc') val = Math.min(val + 1, max);
+    if (action === 'dec') val = Math.max(val - 1, min);
+    qtyInput.value = val;
+    updatePreview();
+  });
+}
+
+/* ── Auto-open #tab-buy from URL hash ── */
+if (window.location.hash === '#tab-buy') {
+  const buyBtn = document.querySelector('[onclick*="tab-buy"]');
+  if (buyBtn) switchTab(buyBtn, 'tab-buy');
 }
 </script>
 {% endblock %}

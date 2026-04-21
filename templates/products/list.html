@@ -3,6 +3,273 @@
 
 {% block title %}{% trans "Shop" %} — Rode Poultry Tanzania{% endblock %}
 
+{% block extra_css %}
+<style>
+  /* ── Products page styles ── */
+
+  .products-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .products-search-form {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .products-search-form input[type="text"] {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── Product grid ── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── Product card ── */
+  .product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .product-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
+    transform: translateY(-2px);
+  }
+
+  .product-discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: var(--danger, #c0392b);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 50px;
+    letter-spacing: 0.02em;
+  }
+
+  .product-card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .product-card-body {
+    padding: 0.85rem 0.9rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .product-card-category {
+    font-size: 0.68rem;
+    color: var(--gray, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .product-card-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .product-card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-card-title a:hover {
+    text-decoration: underline;
+  }
+
+  .product-card-desc {
+    font-size: 0.8rem;
+    color: var(--gray, #888);
+    line-height: 1.45;
+    flex: 1;
+    margin: 0;
+  }
+
+  .product-card-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.35rem;
+  }
+
+  .product-card-price .price-original {
+    text-decoration: line-through;
+    font-size: 0.75rem;
+    color: var(--gray, #888);
+    font-weight: 400;
+  }
+
+  .product-card-price .price-unit {
+    font-size: 0.75rem;
+    color: var(--gray, #888);
+    font-weight: 400;
+  }
+
+  /* ── Card footer (buttons) ── */
+  .product-card-footer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    border-top: 1px solid var(--border-color, #e5e7eb);
+  }
+
+  .product-card-footer .btn-details {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .product-card-footer .btn-buy {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .product-card-footer .btn-outofstock {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    background: var(--gray-light, #f3f4f6);
+    color: var(--gray, #9ca3af);
+    border-radius: 6px;
+    cursor: not-allowed;
+    border: 1px solid var(--border-color, #e5e7eb);
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  /* ── Empty state ── */
+  .products-empty {
+    text-align: center;
+    padding: 5rem 1rem;
+  }
+
+  .products-empty .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  /* ── Responsive breakpoints ── */
+
+  /* Tablet: 2-3 kadi kwa mstari */
+  @media (max-width: 900px) {
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  /* Simu kubwa: kadi 2 kwa mstari */
+  @media (max-width: 600px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .products-page-header {
+      flex-direction: column;
+    }
+
+    .products-search-form {
+      max-width: 100%;
+    }
+
+    .product-card-body {
+      padding: 0.65rem 0.7rem;
+    }
+
+    .product-card-title {
+      font-size: 0.82rem;
+    }
+
+    .product-card-price {
+      font-size: 0.82rem;
+    }
+
+    .product-card-footer {
+      padding: 0.55rem 0.7rem;
+      gap: 0.35rem;
+    }
+
+    .product-card-footer .btn-details,
+    .product-card-footer .btn-buy,
+    .product-card-footer .btn-outofstock {
+      font-size: 0.73rem;
+      padding: 0.45rem 0.3rem;
+    }
+  }
+
+  /* Simu ndogo sana: kadi 2 bado, text ndogo zaidi */
+  @media (max-width: 380px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+
+    .product-card-footer .btn-details,
+    .product-card-footer .btn-buy,
+    .product-card-footer .btn-outofstock {
+      font-size: 0.68rem;
+      padding: 0.4rem 0.2rem;
+    }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
@@ -13,23 +280,32 @@
 
 <section class="section">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;">
+
+    <!-- Header + Search -->
+    <div class="products-page-header">
       <div>
         <h2 style="margin-bottom:0.3rem;">{% trans "Our Products" %}</h2>
         <p style="color:var(--gray);margin:0;">{{ products.count }} {% trans "products available" %}</p>
       </div>
-      <!-- Search -->
-      <form method="get" class="products-search-bar" style="display:flex;gap:0.5rem;">
-        <input type="text" name="q" value="{{ search_query }}" class="form-control"
-               placeholder="{% trans 'Search products...' %}" style="width:220px;max-width:100%;">
-        {% if active_category %}<input type="hidden" name="category" value="{{ active_category.slug }}">{% endif %}
+
+      <form method="get" class="products-search-form">
+        <input
+          type="text"
+          name="q"
+          value="{{ search_query }}"
+          class="form-control"
+          placeholder="{% trans 'Search products...' %}">
+        {% if active_category %}
+          <input type="hidden" name="category" value="{{ active_category.slug }}">
+        {% endif %}
         <button type="submit" class="btn btn-primary btn-sm">🔍</button>
       </form>
     </div>
 
-    <!-- Category filter -->
+    <!-- Category filter pills -->
     <div class="category-filter">
-      <a href="{% url 'products:list' %}" class="category-pill {% if not active_category %}active{% endif %}">
+      <a href="{% url 'products:list' %}"
+         class="category-pill {% if not active_category %}active{% endif %}">
         {% trans "All" %}
       </a>
       {% for cat in categories %}
@@ -40,49 +316,81 @@
       {% endfor %}
     </div>
 
+    <!-- Products grid -->
     {% if products %}
     <div class="products-grid">
       {% for product in products %}
       <div class="product-card">
+
+        {% if product.is_on_offer %}
+        <div class="product-discount-badge">−{{ product.discount_percent }}%</div>
+        {% endif %}
+
         <a href="{{ product.get_absolute_url }}">
-          <img src="{{ product.image }}" alt="{{ product.name }}" class="product-card-img">
+          <img
+            src="{{ product.image }}"
+            alt="{{ product.name }}"
+            class="product-card-img"
+            loading="lazy">
         </a>
+
         <div class="product-card-body">
           {% if product.category %}
           <p class="product-card-category">{{ product.category.name }}</p>
           {% endif %}
+
           <h3 class="product-card-title">
-            <a href="{{ product.get_absolute_url }}" style="color:inherit;">{{ product.name }}</a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
           </h3>
-          <p style="font-size:0.875rem;color:var(--gray);flex:1;">{{ product.description|truncatewords:15 }}</p>
+
+          <p class="product-card-desc">{{ product.description|truncatewords:14 }}</p>
+
           <div class="product-card-price">
-            TSH {{ product.price|intcomma }}
-            <span>/ {{ product.unit }}</span>
+            {% if product.is_on_offer %}
+              <span style="color:var(--danger);">TSH {{ product.offer_price|floatformat:0|intcomma }}</span>
+              <span class="price-original">{{ product.price|intcomma }}</span>
+            {% else %}
+              <span>TSH {{ product.price|intcomma }}</span>
+            {% endif %}
+            <span class="price-unit">/ {{ product.unit }}</span>
           </div>
         </div>
+
+        <!-- Footer: Maelezo + Nunua buttons -->
         <div class="product-card-footer">
-          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm" style="flex:1;">{% trans "Details" %}</a>
+          <a href="{{ product.get_absolute_url }}"
+             class="btn btn-outline btn-sm btn-details">
+            {% trans "Maelezo" %}
+          </a>
+
           {% if product.stock > 0 %}
-          <button class="btn btn-primary btn-sm ajax-add-cart" data-product-id="{{ product.id }}" style="flex:2;">
-            🛒 {% trans "Add to Cart" %}
-          </button>
+          <a href="{{ product.get_absolute_url }}#tab-buy"
+             class="btn btn-primary btn-sm btn-buy">
+            🛒 {% trans "Nunua" %}
+          </a>
           {% else %}
-          <span class="btn btn-sm" style="flex:2;background:var(--gray-light);color:var(--gray);cursor:not-allowed;text-align:center;">
-            {% trans "Out of Stock" %}
-          </span>
+          <span class="btn-outofstock">{% trans "Imeisha" %}</span>
           {% endif %}
         </div>
+
       </div>
       {% endfor %}
     </div>
+
     {% else %}
-    <div style="text-align:center;padding:4rem 2rem;">
-      <div style="font-size:4rem;margin-bottom:1rem;">🐓</div>
+    <!-- Empty state -->
+    <div class="products-empty">
+      <span class="empty-icon">🐓</span>
       <h3>{% trans "No products found" %}</h3>
-      <p style="color:var(--gray);">{% trans "Try a different category or search term." %}</p>
-      <a href="{% url 'products:list' %}" class="btn btn-primary mt-3">{% trans "View All Products" %}</a>
+      <p style="color:var(--gray);margin:0.5rem 0 1.5rem;">
+        {% trans "Try a different category or search term." %}
+      </p>
+      <a href="{% url 'products:list' %}" class="btn btn-primary">
+        {% trans "View All Products" %}
+      </a>
     </div>
     {% endif %}
+
   </div>
 </section>
 {% endblock %}

@@ -1,79 +1,210 @@
 {% extends 'base.html' %}
-{% load i18n humanize %}
-{% load order_extras %}
-{% block title %}{% trans "Track Your Order" %} — Rode Poultry Tanzania{% endblock %}
+{% load i18n humanize order_extras %}
+
+{% block title %}Fuatilia Oda — Rode Poultry Tanzania{% endblock %}
+
+{% block extra_css %}
+<style>
+.track-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  text-align: center;
+}
+.track-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  border: 2px solid var(--gray-light);
+  background: white;
+  color: var(--gray);
+}
+.track-dot.done {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+.track-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+.track-line {
+  flex: 1;
+  height: 3px;
+  background: var(--gray-light);
+  margin: 0 -0.25rem;
+  align-self: flex-start;
+  margin-top: 14px;
+}
+.track-line.done { background: var(--success); }
+.track-label { font-size: 0.7rem; color: var(--gray); margin-top: 0.3rem; line-height: 1.2; }
+.track-label.active { color: var(--navy); font-weight: 700; }
+
+.status-pending   { background:#fff3cd;color:#856404; }
+.status-confirmed { background:#d1ecf1;color:#0c5460; }
+.status-processing{ background:#d4edda;color:#155724; }
+.status-ready     { background:#d0e8ff;color:#004085; }
+.status-delivered { background:#d4edda;color:#155724; }
+.status-cancelled { background:#f8d7da;color:#721c24; }
+.status-badge { display:inline-block;padding:0.3rem 0.85rem;border-radius:50px;font-size:0.82rem;font-weight:700; }
+.pay-unpaid      { background:#fdf2f2;color:var(--danger); }
+.pay-deposit_paid{ background:#fff3cd;color:#856404; }
+.pay-paid        { background:#d4edda;color:#155724; }
+</style>
+{% endblock %}
 
 {% block content %}
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
     <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
-    <span>{% trans "Track Order" %}</span>
+    <span>Fuatilia Oda</span>
   </div>
 </div>
+
 <section class="section">
-  <div class="container" style="max-width:600px;">
+  <div class="container" style="max-width:620px;">
     <div style="background:white;border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);">
-      <h2 style="margin-bottom:0.5rem;">🔍 {% trans "Track Your Order" %}</h2>
-      <p style="color:var(--gray);margin-bottom:2rem;">{% trans "Enter your Order ID and phone number to check status." %}</p>
+      <h2 style="margin-bottom:0.5rem;">🔍 Fuatilia Oda Yako</h2>
+      <p style="color:var(--gray);margin-bottom:2rem;">Weka namba ya oda na simu yako ili kuona hali ya oda.</p>
 
       <form method="post">
         {% csrf_token %}
         <div class="form-group">
-          <label class="form-label">{% trans "Order ID" %} *</label>
+          <label class="form-label">Namba ya Oda *</label>
           <input type="number" name="order_id" class="form-control" required
-                 placeholder="e.g. 12" value="{{ request.POST.order_id }}">
+                 placeholder="mfano: 12" value="{{ request.POST.order_id }}">
         </div>
         <div class="form-group">
-          <label class="form-label">{% trans "Phone Number" %} *</label>
+          <label class="form-label">Namba ya Simu *</label>
           <input type="tel" name="phone" class="form-control" required
                  placeholder="+255 7XX XXX XXX" value="{{ request.POST.phone }}">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">{% trans "Track Order" %}</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;">🔍 Tafuta Oda</button>
       </form>
 
       {% if order %}
-      <div style="margin-top:2rem;border-top:1px solid var(--gray-light);padding-top:2rem;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-          <h3 style="margin:0;">{% trans "Order" %} #{{ order.pk }}</h3>
-          <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
+      <div style="margin-top:2rem;border-top:2px solid var(--gray-light);padding-top:2rem;">
+
+        <!-- Order header -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
+          <div>
+            <h3 style="margin:0 0 0.25rem;">Oda #{{ order.pk }}</h3>
+            <p style="color:var(--gray);font-size:0.8rem;margin:0;">{{ order.created_at|date:"d M Y, H:i" }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;">
+            <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
+            <span class="status-badge pay-{{ order.payment_status }}" style="font-size:0.72rem;">
+              {{ order.get_payment_status_display }}
+            </span>
+          </div>
         </div>
 
-        <!-- Status progress bar -->
-        {% with statuses="pending,confirmed,processing,ready,delivered" %}
-        <div style="display:flex;align-items:center;gap:0;margin-bottom:2rem;overflow-x:auto;">
-          {% for s in "pending,confirmed,processing,ready,delivered"|split:"," %}
+        <!-- Progress tracker -->
+        {% if order.status != 'cancelled' %}
+        {% with steps="pending,confirmed,processing,ready,delivered" %}
+        {% with status_list=steps|split:"," %}
+        <div style="display:flex;align-items:flex-start;margin-bottom:2rem;overflow-x:auto;padding:0.5rem 0;">
+          {% for s in status_list %}
+          {% with is_done=order.status|status_reached:s %}
+          <div class="track-step">
+            <div class="track-dot {% if s == order.status %}active{% elif is_done %}done{% endif %}">
+              {% if is_done and s != order.status %}✓{% elif s == order.status %}●{% else %}○{% endif %}
+            </div>
+            <div class="track-label {% if s == order.status %}active{% endif %}">
+              {% if s == 'pending' %}Imewasilishwa
+              {% elif s == 'confirmed' %}Imethibitishwa
+              {% elif s == 'processing' %}Inaandaliwa
+              {% elif s == 'ready' %}Iko Tayari
+              {% elif s == 'delivered' %}Imetolewa{% endif %}
+            </div>
+          </div>
+          {% if not forloop.last %}
+          <div class="track-line {% if is_done %}done{% endif %}" style="margin-top:15px;"></div>
+          {% endif %}
+          {% endwith %}
           {% endfor %}
         </div>
         {% endwith %}
+        {% endwith %}
+        {% else %}
+        <div style="background:#fdf2f2;border-radius:8px;padding:1rem;text-align:center;margin-bottom:1.5rem;color:var(--danger);font-weight:700;">
+          ❌ Oda hii imefutwa
+        </div>
+        {% endif %}
 
-        <div class="pg-track-info">
-          <div style="padding:1rem;background:var(--off-white);border-radius:8px;">
-            <span style="color:var(--gray);">{% trans "Order Date" %}</span>
-            <p style="margin:0;font-weight:700;">{{ order.created_at|date:"d M Y" }}</p>
+        <!-- Order info grid -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.875rem;margin-bottom:1.5rem;">
+          <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;">
+            <span style="color:var(--gray);font-size:0.78rem;">Njia ya Malipo</span>
+            <p style="font-weight:700;margin:0.2rem 0 0;font-size:0.9rem;">{{ order.get_payment_method_display }}</p>
           </div>
-          <div style="padding:1rem;background:var(--off-white);border-radius:8px;">
-            <span style="color:var(--gray);">{% trans "Payment" %}</span>
-            <p style="margin:0;font-weight:700;">{% trans "Cash on Delivery" %}</p>
+          <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;">
+            <span style="color:var(--gray);font-size:0.78rem;">Hali ya Malipo</span>
+            <p style="font-weight:700;margin:0.2rem 0 0;font-size:0.9rem;">{{ order.get_payment_status_display }}</p>
           </div>
-          <div style="padding:1rem;background:var(--off-white);border-radius:8px;" class="col-span-2">
-            <span style="color:var(--gray);">{% trans "Delivery To" %}</span>
-            <p style="margin:0;font-weight:700;">{{ order.address }}, {{ order.region }}</p>
+          <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;grid-column:span 2;">
+            <span style="color:var(--gray);font-size:0.78rem;">Anwani ya Kupeleka</span>
+            <p style="font-weight:700;margin:0.2rem 0 0;">{{ order.address }}, {{ order.region }}</p>
           </div>
         </div>
 
-        <h4 style="margin-bottom:1rem;">{% trans "Items Ordered" %}</h4>
+        <!-- Deposit info if applicable -->
+        {% if order.payment_method == 'deposit' %}
+        <div style="background:#fff8e1;border:1px solid var(--gold);border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:0.875rem;">
+          <strong>💰 Mfumo wa Amana 70/30:</strong><br>
+          Amana (70%): <strong>TSH {{ order.deposit_amount|intcomma }}</strong> |
+          Baki siku ya kupokea (30%): <strong>TSH {{ order.balance_due|intcomma }}</strong>
+        </div>
+        {% endif %}
+
+        <!-- Items -->
+        <h4 style="margin-bottom:0.75rem;font-size:0.95rem;">🛒 Bidhaa Zilizoagizwa</h4>
         {% for item in order.items.all %}
-        <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
+        <div style="display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
           <span>{{ item.product_name }} × {{ item.quantity }}</span>
           <span style="font-weight:700;">TSH {{ item.get_total_price|intcomma }}</span>
         </div>
         {% endfor %}
-        <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1rem;">
-          <span>TOTAL</span>
+
+        {% if order.delivery_fee %}
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.875rem;color:var(--gray);">
+          <span>Gharama za Usafiri</span>
+          <span>TSH {{ order.delivery_fee|intcomma }}</span>
+        </div>
+        {% endif %}
+        {% if order.discount_amount %}
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.875rem;color:var(--success);">
+          <span>Punguzo {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
+          <span>− TSH {{ order.discount_amount|intcomma }}</span>
+        </div>
+        {% endif %}
+
+        <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1rem;border-top:2px solid var(--gray-light);margin-top:0.25rem;">
+          <span>JUMLA</span>
           <span>TSH {{ order.total_amount|intcomma }}</span>
+        </div>
+
+        <!-- WhatsApp button -->
+        <div style="margin-top:1.5rem;text-align:center;">
+          <a href="https://wa.me/255738262660?text=Habari%2C%20ninafuatilia%20Oda%20%23{{ order.pk }}%20—%20{{ order.full_name }}"
+             target="_blank"
+             class="btn btn-lg" style="background:#25D366;color:white;border:none;width:100%;justify-content:center;">
+            💬 Wasiliana Nasi (WhatsApp)
+          </a>
         </div>
       </div>
       {% endif %}
+
     </div>
   </div>
 </section>

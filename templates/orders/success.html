@@ -1,68 +1,194 @@
 {% extends 'base.html' %}
 {% load i18n humanize %}
 
-{% block title %}{% trans "Order Placed!" %} — Rode Poultry Tanzania{% endblock %}
+{% block title %}Oda Imepokewa! — Rode Poultry Tanzania{% endblock %}
+
+{% block extra_css %}
+<style>
+.payment-steps { counter-reset: step; }
+.payment-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--gray-light);
+  font-size: 0.875rem;
+}
+.payment-step:last-child { border-bottom: none; }
+.step-num {
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 900;
+  font-size: 0.78rem;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.status-pending  { background:#fff3cd;color:#856404; }
+.status-confirmed{ background:#d1ecf1;color:#0c5460; }
+.status-processing{ background:#d4edda;color:#155724; }
+.status-ready    { background:#d0e8ff;color:#004085; }
+.status-delivered{ background:#d4edda;color:#155724; }
+.status-cancelled{ background:#f8d7da;color:#721c24; }
+.status-badge { display:inline-block;padding:0.25rem 0.75rem;border-radius:50px;font-size:0.78rem;font-weight:700; }
+</style>
+{% endblock %}
 
 {% block content %}
 <section class="section">
-  <div class="container" style="max-width:680px;">
-    <div style="text-align:center;padding:3rem 2rem;background:white;border-radius:20px;box-shadow:var(--shadow-lg);">
-      <div style="font-size:5rem;margin-bottom:1rem;">✅</div>
-      <h2 style="color:var(--success);margin-bottom:0.5rem;">{% trans "Order Placed Successfully!" %}</h2>
-      <p style="color:var(--gray);font-size:1.05rem;margin-bottom:2rem;">
-        {% trans "Thank you" %}, <strong>{{ order.full_name }}</strong>! 
-        {% trans "We have received your order and will contact you shortly." %}
-      </p>
+  <div class="container" style="max-width:700px;">
+    <div style="background:white;border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;">
 
-      <div style="background:var(--off-white);border-radius:12px;padding:1.5rem;text-align:left;margin-bottom:2rem;">
-        <h3 style="font-size:1rem;margin-bottom:1rem;color:var(--navy);">{% trans "Order Details" %}</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.875rem;">
-          <div>
-            <span style="color:var(--gray);">{% trans "Order ID" %}</span>
-            <p style="font-weight:700;margin:0;color:var(--navy);">#{{ order.pk }}</p>
-          </div>
-          <div>
-            <span style="color:var(--gray);">{% trans "Status" %}</span>
-            <p style="margin:0;"><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></p>
-          </div>
-          <div>
-            <span style="color:var(--gray);">{% trans "Phone" %}</span>
-            <p style="font-weight:700;margin:0;">{{ order.phone }}</p>
-          </div>
-          <div>
-            <span style="color:var(--gray);">{% trans "Payment" %}</span>
-            <p style="font-weight:700;margin:0;">{% trans "Cash on Delivery" %}</p>
-          </div>
-          <div style="grid-column:span 2;">
-            <span style="color:var(--gray);">{% trans "Delivery To" %}</span>
-            <p style="font-weight:700;margin:0;">{{ order.address }}, {{ order.region }}</p>
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:2.5rem 2rem;text-align:center;color:white;">
+        <div style="font-size:4rem;margin-bottom:0.75rem;">✅</div>
+        <h2 style="color:white;margin-bottom:0.4rem;">Oda Imepokewa!</h2>
+        <p style="color:rgba(255,255,255,0.82);margin:0;">
+          Asante, <strong>{{ order.full_name }}</strong>! Tutawasiliana nawe hivi karibuni.
+        </p>
+      </div>
+
+      <div style="padding:2rem;">
+
+        <!-- Order summary box -->
+        <div style="background:var(--off-white);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+          <h3 style="font-size:1rem;margin-bottom:1rem;color:var(--navy);">📋 Maelezo ya Oda</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.875rem;">
+            <div>
+              <span style="color:var(--gray);">Namba ya Oda</span>
+              <p style="font-weight:900;margin:0;color:var(--navy);font-size:1.1rem;">#{{ order.pk }}</p>
+            </div>
+            <div>
+              <span style="color:var(--gray);">Hali ya Oda</span>
+              <p style="margin:0;"><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></p>
+            </div>
+            <div>
+              <span style="color:var(--gray);">Simu</span>
+              <p style="font-weight:700;margin:0;">{{ order.phone }}</p>
+            </div>
+            <div>
+              <span style="color:var(--gray);">Njia ya Malipo</span>
+              <p style="font-weight:700;margin:0;">{{ order.get_payment_method_display }}</p>
+            </div>
+            <div style="grid-column:span 2;">
+              <span style="color:var(--gray);">Anwani ya Kupeleka</span>
+              <p style="font-weight:700;margin:0;">{{ order.address }}, {{ order.region }}</p>
+            </div>
           </div>
         </div>
-        <div style="border-top:1px solid var(--gray-light);margin-top:1rem;padding-top:1rem;">
+
+        <!-- Items + Totals -->
+        <div style="margin-bottom:1.5rem;">
+          <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--navy);">🛒 Bidhaa Zilizoagizwa</h3>
           {% for item in order.items.all %}
-          <div style="display:flex;justify-content:space-between;font-size:0.875rem;margin-bottom:0.4rem;">
+          <div style="display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
             <span>{{ item.product_name }} × {{ item.quantity }}</span>
             <span style="font-weight:700;">TSH {{ item.get_total_price|intcomma }}</span>
           </div>
           {% endfor %}
-          <div style="display:flex;justify-content:space-between;font-size:1rem;font-weight:900;color:var(--navy);border-top:1px solid var(--gray-light);padding-top:0.75rem;margin-top:0.5rem;">
-            <span>TOTAL</span>
+
+          {% if order.delivery_fee %}
+          <div style="display:flex;justify-content:space-between;padding:0.55rem 0;font-size:0.875rem;color:var(--gray);">
+            <span>🚚 Gharama za Usafiri</span>
+            <span>TSH {{ order.delivery_fee|intcomma }}</span>
+          </div>
+          {% endif %}
+
+          {% if order.discount_amount %}
+          <div style="display:flex;justify-content:space-between;padding:0.55rem 0;font-size:0.875rem;color:var(--success);">
+            <span>🏷️ Punguzo {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
+            <span>− TSH {{ order.discount_amount|intcomma }}</span>
+          </div>
+          {% endif %}
+
+          <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1.05rem;border-top:2px solid var(--gray-light);margin-top:0.25rem;">
+            <span>JUMLA</span>
             <span>TSH {{ order.total_amount|intcomma }}</span>
           </div>
         </div>
-      </div>
 
-      <div style="background:#eafaf1;border-radius:10px;padding:1rem;margin-bottom:2rem;font-size:0.875rem;color:var(--success);">
-        📞 {% trans "Save your Order ID" %}: <strong>#{{ order.pk }}</strong> — {% trans "use it to track your order." %}
-      </div>
+        <!-- Payment instructions based on method -->
+        {% if order.payment_method == 'deposit' %}
+        <!-- 70/30 Deposit instructions -->
+        <div style="background:#fff8e1;border:2px solid var(--gold);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:1rem;">💰 Jinsi ya Kulipa — Amana 70/30</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div style="background:white;border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--gold);">
+              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">Lipa SASA (70%)</p>
+              <p style="font-size:1.4rem;font-weight:900;color:var(--navy);margin:0;">TSH {{ order.deposit_amount|intcomma }}</p>
+            </div>
+            <div style="background:white;border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--gray-light);">
+              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">Baki siku ya kupokea (30%)</p>
+              <p style="font-size:1.4rem;font-weight:900;color:var(--gray);margin:0;">TSH {{ order.balance_due|intcomma }}</p>
+            </div>
+          </div>
+          <div class="payment-steps">
+            <div class="payment-step"><span class="step-num">1</span><span>Wasiliana nasi kwa WhatsApp au simu hapa chini</span></div>
+            <div class="payment-step"><span class="step-num">2</span><span>Lipa amana ya <strong>TSH {{ order.deposit_amount|intcomma }}</strong> kupitia M-Pesa / Tigo Pesa / Airtel Money kwa namba tutakayokutumia</span></div>
+            <div class="payment-step"><span class="step-num">3</span><span>Tutakuwasilisha mzigo. Utalipa <strong>TSH {{ order.balance_due|intcomma }}</strong> ukipokea.</span></div>
+          </div>
+        </div>
 
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="{% url 'orders:tracking' %}" class="btn btn-outline">{% trans "Track Order" %}</a>
-        <a href="{% url 'products:list' %}" class="btn btn-primary">{% trans "Continue Shopping" %}</a>
-        <a href="https://wa.me/255738262660?text=Order%20%23{{ order.pk }}%20confirmation" target="_blank"
-           class="btn btn-lg" style="background:#25D366;color:white;border:none;">
-          💬 {% trans "WhatsApp Us" %}
-        </a>
+        {% elif order.payment_method == 'cod' %}
+        <!-- COD -->
+        <div style="background:#eafaf1;border:1px solid var(--success);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;">
+          <h3 style="font-size:0.95rem;color:var(--success);margin-bottom:0.5rem;">🚚 Lipa ukipokea mzigo</h3>
+          <p style="font-size:0.875rem;color:var(--gray);margin:0;">
+            Utawasiliana nawe ili kupanga wakati wa kupeleka mzigo. Lipa <strong>TSH {{ order.total_amount|intcomma }}</strong> pesa taslimu ukipokea mzigo wako.
+          </p>
+        </div>
+
+        {% else %}
+        <!-- Mobile money (M-Pesa / Tigo / Airtel / Halo) -->
+        <div style="background:#e8f4fd;border:2px solid var(--navy-mid);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:1rem;">
+            📱 Hatua za Kulipa — {{ order.get_payment_method_display }}
+          </h3>
+          <div style="background:white;border-radius:8px;padding:1rem;text-align:center;margin-bottom:1rem;border:2px solid var(--gold);">
+            <p style="font-size:0.8rem;color:var(--gray);margin:0 0 0.35rem;">Kiasi cha Kulipa</p>
+            <p style="font-size:1.6rem;font-weight:900;color:var(--navy);margin:0;">TSH {{ order.total_amount|intcomma }}</p>
+          </div>
+          <div class="payment-steps">
+            <div class="payment-step"><span class="step-num">1</span><span>Wasiliana nasi WhatsApp — tutakutumia namba ya kulipa</span></div>
+            <div class="payment-step"><span class="step-num">2</span>
+              <span>
+                Fungua {{ order.get_payment_method_display }} kwenye simu yako na lipa
+                <strong>TSH {{ order.total_amount|intcomma }}</strong>
+              </span>
+            </div>
+            <div class="payment-step"><span class="step-num">3</span><span>Tuma picha ya risiti yako kwa WhatsApp ili tuthibitishe oda yako</span></div>
+            <div class="payment-step"><span class="step-num">4</span><span>Oda itakuwa <strong>Completed</strong> baada ya malipo kuthibitishwa ✅</span></div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Save order ID reminder -->
+        <div style="background:#eafaf1;border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--success);text-align:center;">
+          📌 Hifadhi Namba ya Oda yako: <strong style="font-size:1.1rem;">#{{ order.pk }}</strong> — itumie kufuatilia oda yako.
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+          <a href="https://wa.me/255738262660?text=Habari%2C%20nina%20Oda%20%23{{ order.pk }}%20—%20{{ order.full_name }}"
+             target="_blank"
+             class="btn btn-lg" style="background:#25D366;color:white;border:none;flex:2;justify-content:center;">
+            💬 WhatsApp — Lipa / Uliza
+          </a>
+          <a href="{% url 'orders:tracking' %}" class="btn btn-outline" style="flex:1;justify-content:center;">
+            🔍 Fuatilia Oda
+          </a>
+        </div>
+        <div style="text-align:center;margin-top:1rem;">
+          <a href="{% url 'products:list' %}" style="color:var(--gray);font-size:0.875rem;">
+            ← Endelea kununua
+          </a>
+        </div>
+
       </div>
     </div>
   </div>

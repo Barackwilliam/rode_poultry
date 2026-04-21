@@ -41,9 +41,34 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(_('Stock'), default=0)
     is_available = models.BooleanField(_('Available'), default=True)
     is_featured = models.BooleanField(_('Featured on Homepage'), default=False)
+    is_upcoming = models.BooleanField(_('Upcoming Product'), default=False,
+                                      help_text='Inaonyesha kwenye sehemu ya "Inakuja Hivi Karibuni"')
+    upcoming_date = models.DateField(_('Expected Arrival Date'), null=True, blank=True,
+                                     help_text='Tarehe inayotarajiwa kufika (optional)')
+    # Offer / Sale price
+    offer_price = models.DecimalField(_('Offer Price (TSH)'), max_digits=12, decimal_places=2,
+                                       null=True, blank=True, help_text='Acha wazi kama hakuna ofa')
+    offer_label = models.CharField(_('Offer Label'), max_length=60, blank=True,
+                                    help_text='e.g. "Flash Sale", "Wiki Hii Tu", "Punguzo la 20%"')
+    offer_label_sw = models.CharField(_('Offer Label (Swahili)'), max_length=60, blank=True)
     minimum_order = models.PositiveIntegerField(_('Minimum Order Quantity'), default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def is_on_offer(self):
+        return self.offer_price is not None and self.offer_price < self.price
+
+    @property
+    def discount_percent(self):
+        if self.is_on_offer:
+            return round((self.price - self.offer_price) / self.price * 100)
+        return 0
+
+    @property
+    def display_price(self):
+        """Returns offer_price if active, else normal price."""
+        return self.offer_price if self.is_on_offer else self.price
 
     class Meta:
         verbose_name = _('Product')

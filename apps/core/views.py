@@ -1,14 +1,21 @@
 from django.shortcuts import render
+from django.db.models import F
 from apps.products.models import Product, Category
 from apps.gallery.models import GalleryMedia
 
 
 def home(request):
     featured_products = Product.objects.filter(is_available=True, is_featured=True)[:6]
+    upcoming_products = Product.objects.filter(is_upcoming=True)[:6]
+    offer_products = Product.objects.filter(
+        is_available=True, offer_price__isnull=False
+    ).filter(offer_price__lt=F('price'))[:6]
     categories = Category.objects.all()
     latest_media = GalleryMedia.objects.filter(is_active=True).order_by('-created_at')[:6]
     context = {
         'featured_products': featured_products,
+        'upcoming_products': upcoming_products,
+        'offer_products': offer_products,
         'categories': categories,
         'latest_media': latest_media,
     }

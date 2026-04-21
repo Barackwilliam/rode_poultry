@@ -448,3 +448,57 @@ msgstr "bidhaa zinapatikana"
 
 msgid "use it to track your order."
 msgstr "itumie kufuatilia agizo lako."
+
+msgid "Maelezo"
+msgstr "Maelezo"
+
+msgid "Nunua"
+msgstr "Nunua"
+
+msgid "Ofa za Sasa"
+msgstr "Ofa za Sasa"
+
+msgid "Bidhaa zenye punguzo la bei — Ofa za muda mfupi!"
+msgstr "Bidhaa zenye punguzo la bei — Ofa za muda mfupi!"
+
+msgid "Inakuja Hivi Karibuni"
+msgstr "Inakuja Hivi Karibuni"
+
+msgid "Bidhaa mpya zinazokuja — fuatilia ili usikose!"
+msgstr "Bidhaa mpya zinazokuja — fuatilia ili usikose!"
+
+msgid "Jiandikishe kwa Taarifa"
+msgstr "Jiandikishe kwa Taarifa"
+
+msgid "Niarifu"
+msgstr "Niarifu"
+
+msgid "Haijapatikana"
+msgstr "Haijapatikana"
+
+msgid "Bidhaa Zinazofanana"
+msgstr "Bidhaa Zinazofanana"
+
+msgid "Ongeza kwenye Cart"
+msgstr "Weka Kwenye Kikapu"
+
+msgid "Oda Moja Kwa Moja"
+msgstr "Oda Moja Kwa Moja"
+
+msgid "Discount Code / Promo"
+msgstr "Kodi ya Punguzo / Promo"
+
+msgid "Payment Method"
+msgstr "Njia ya Malipo"
+
+msgid "Delivery Information"
+msgstr "Taarifa za Usafirishaji"
+
+msgid "INAKUJA"
+msgstr "INAKUJA"
+
+msgid "Tuma Oda"
+msgstr "Tuma Oda"
+
+msgid "Oda itakuwa Completed baada ya kulipa."
+msgstr "Oda itakuwa Completed baada ya kulipa."

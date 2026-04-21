@@ -3,20 +3,523 @@
 
 {% block title %}Rode Poultry Tanzania — Fresh Chicks, Eggs & Chicken | Morogoro{% endblock %}
 
+{% block extra_css %}
+<style>
+/* ═══════════════════════════════════════════
+   HOME PAGE — fully responsive
+   mobile-first, desktop overrides
+═══════════════════════════════════════════ */
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy, #1a2e4a) 0%, var(--navy-mid, #2c4a6e) 100%);
+  padding: 4rem 0 3rem;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+  .hero { padding: 5rem 0 4rem; }
+}
+
+@media (min-width: 1024px) {
+  .hero-inner { grid-template-columns: 6fr 5fr; }
+}
+
+.hero-content { color: white; }
+
+.hero-eyebrow {
+  color: var(--gold, #c9962a);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.82rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero-content h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.hero-content h1 span {
+  color: var(--gold, #c9962a);
+}
+
+.hero-content > p {
+  color: rgba(255,255,255,0.82);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  line-height: 1.75;
+  margin-bottom: 1.75rem;
+  max-width: 480px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.35));
+  animation: heroFloat 4s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@media (max-width: 767px) {
+  .hero-image { order: -1; }
+  .hero-image img { max-width: 180px; }
+}
+
+/* ── STATS STRIP ── */
+.stats-strip {
+  background: var(--gold, #c9962a);
+  padding: 1.25rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1rem;
+}
+
+@media (min-width: 540px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.6rem 0.5rem;
+}
+
+.stat-item h3 {
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-weight: 900;
+  color: var(--navy, #1a2e4a);
+  margin: 0 0 0.2rem;
+  line-height: 1;
+}
+
+.stat-item p {
+  font-size: 0.75rem;
+  color: var(--navy, #1a2e4a);
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── SECTION SHARED ── */
+.section {
+  padding: 3.5rem 0;
+}
+
+.section-alt {
+  background: var(--off-white, #fafaf8);
+}
+
+@media (min-width: 768px) {
+  .section { padding: 4.5rem 0; }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.section-header h2 {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  color: var(--gray, #888);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.section-divider {
+  width: 48px;
+  height: 3px;
+  background: var(--gold, #c9962a);
+  border-radius: 2px;
+  margin: 0.75rem auto 0.85rem;
+}
+
+/* ── PRODUCT CARDS (shared across all sections) ── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+  transform: translateY(-3px);
+}
+
+.product-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card-body {
+  padding: 0.75rem 0.85rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.product-card-category {
+  font-size: 0.65rem;
+  color: var(--gray, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.product-card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.product-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card-title a:hover { text-decoration: underline; }
+
+.product-card-desc {
+  font-size: 0.78rem;
+  color: var(--gray, #888);
+  flex: 1;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.product-card-price {
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-top: 0.3rem;
+}
+
+.product-card-footer {
+  display: flex;
+  gap: 0.45rem;
+  padding: 0.6rem 0.85rem;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.product-card-footer .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.45rem 0.4rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+
+.product-card-footer .btn:last-child { flex: 2; }
+
+.product-card-footer .btn-disabled {
+  flex: 2;
+  background: var(--gray-light, #f3f4f6);
+  color: var(--gray, #9ca3af);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 6px;
+  cursor: not-allowed;
+  text-align: center;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Offer card gold border */
+.product-card.offer-card {
+  border: 2px solid var(--gold, #c9962a);
+}
+
+/* Upcoming card */
+.product-card.upcoming-card { opacity: 0.9; }
+
+/* Offer badge */
+.product-offer-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--danger, #c0392b);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.68rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 50px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.product-coming-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: var(--navy, #1a2e4a);
+  color: var(--gold, #c9962a);
+  font-weight: 900;
+  font-size: 0.65rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 50px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* ── WHY CHOOSE US ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 500px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+}
+
+.feature-card {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+.feature-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  font-size: 0.8rem;
+  color: var(--gray, #888);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── GALLERY GRID ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 500px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  background: var(--gray-light, #f3f4f6);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img { transform: scale(1.06); }
+
+.gallery-item .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 46, 74, 0.55);
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.gallery-item:hover .overlay { opacity: 1; }
+
+.gallery-item .overlay p {
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.video-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.video-play svg {
+  width: 44px;
+  height: 44px;
+  fill: white;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  opacity: 0.92;
+}
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: linear-gradient(135deg, var(--navy, #1a2e4a) 0%, var(--navy-mid, #2c4a6e) 100%);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.cta-banner h2 {
+  color: white;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  margin-bottom: 0.75rem;
+}
+
+.cta-banner p {
+  color: rgba(255,255,255,0.8);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-btn-row {
+  display: flex;
+  gap: 0.85rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn-row .btn {
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* ── Offer section background ── */
+.offers-section {
+  background: linear-gradient(135deg, #fff8e1 0%, #fffde7 100%);
+}
+
+/* ── text-center helper ── */
+.text-center { text-align: center; }
+.mt-4 { margin-top: 1.5rem; }
+</style>
+{% endblock %}
+
 {% block content %}
 
-<!-- ── HERO ── -->
+<!-- ══════════════════ HERO ══════════════════ -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <p style="color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:0.9rem;margin-bottom:0.75rem;">
-        🐓 {% trans "Morogoro, Tanzania" %}
+      <p class="hero-eyebrow">🐓 {% trans "Morogoro, Tanzania" %}</p>
+      <h1>
+        {% trans "Fresh Farm Quality" %}<br>
+        <span>{% trans "Straight to You" %}</span>
+      </h1>
+      <p>
+        {% trans "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro." %}
       </p>
-      <h1>{% trans "Fresh Farm Quality" %}<br><span>{% trans "Straight to You" %}</span></h1>
-      <p>{% trans "We hatch, raise and sell healthy day-old chicks, fresh eggs, live chickens and quality chicken meat — direct from our farm in Morogoro." %}</p>
       <div class="hero-actions">
         <a href="{% url 'products:list' %}" class="btn btn-gold btn-lg">{% trans "Shop Now" %}</a>
-        <a href="{% url 'gallery:gallery' %}" class="btn btn-outline btn-lg" style="color:white;border-color:rgba(255,255,255,0.5);">{% trans "View Farm" %}</a>
+        <a href="{% url 'gallery:gallery' %}" class="btn btn-outline btn-lg"
+           style="color:white;border-color:rgba(255,255,255,0.5);">
+          {% trans "View Farm" %}
+        </a>
       </div>
     </div>
     <div class="hero-image">
@@ -25,7 +528,7 @@
   </div>
 </section>
 
-<!-- ── STATS STRIP ── -->
+<!-- ══════════════════ STATS STRIP ══════════════════ -->
 <div class="stats-strip">
   <div class="container">
     <div class="stats-grid">
@@ -49,7 +552,123 @@
   </div>
 </div>
 
-<!-- ── FEATURED PRODUCTS ── -->
+<!-- ══════════════════ OFFER PRODUCTS ══════════════════ -->
+{% if offer_products %}
+<section class="section offers-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 style="color:var(--navy);">🏷️ {% trans "Ofa za Sasa" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "Bidhaa zenye punguzo la bei — Ofa za muda mfupi!" %}</p>
+    </div>
+    <div class="products-grid">
+      {% for product in offer_products %}
+      <div class="product-card offer-card" style="position:relative;">
+        <div class="product-offer-badge">
+          −{{ product.discount_percent }}%
+          {% if product.offer_label %}&middot; {{ product.offer_label }}{% endif %}
+        </div>
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image }}" alt="{{ product.name }}" class="product-card-img" loading="lazy">
+        </a>
+        <div class="product-card-body">
+          {% if product.category %}
+          <p class="product-card-category">{{ product.category.name }}</p>
+          {% endif %}
+          <h3 class="product-card-title">
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+          </h3>
+          <div class="product-card-price" style="flex-direction:column;gap:0.1rem;">
+            <span style="font-size:1rem;color:var(--danger);font-weight:900;">
+              TSH {{ product.offer_price|floatformat:0|intcomma }}
+              <span style="font-size:0.75rem;font-weight:400;color:var(--gray);">/ {{ product.unit }}</span>
+            </span>
+            <span style="font-size:0.75rem;color:var(--gray);text-decoration:line-through;">
+              TSH {{ product.price|intcomma }}
+            </span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm">
+            {% trans "Maelezo" %}
+          </a>
+          {% if product.stock > 0 %}
+          <button class="btn btn-primary btn-sm ajax-add-cart"
+                  data-product-id="{{ product.id }}">
+            🛒 {% trans "Nunua" %}
+          </button>
+          {% else %}
+          <span class="btn-disabled">{% trans "Imeisha" %}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ UPCOMING PRODUCTS ══════════════════ -->
+{% if upcoming_products %}
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔔 {% trans "Inakuja Hivi Karibuni" %}</h2>
+      <div class="section-divider"></div>
+      <p>{% trans "Bidhaa mpya zinazokuja — fuatilia ili usikose!" %}</p>
+    </div>
+    <div class="products-grid">
+      {% for product in upcoming_products %}
+      <div class="product-card upcoming-card" style="position:relative;">
+        <div class="product-coming-badge">⏳ {% trans "INAKUJA" %}</div>
+        {% if product.image %}
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image }}" alt="{{ product.name }}"
+               class="product-card-img" style="filter:grayscale(25%);" loading="lazy">
+        </a>
+        {% else %}
+        <div class="product-card-img"
+             style="background:var(--off-white);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">
+          🐓
+        </div>
+        {% endif %}
+        <div class="product-card-body">
+          {% if product.category %}
+          <p class="product-card-category">{{ product.category.name }}</p>
+          {% endif %}
+          <h3 class="product-card-title" style="color:var(--navy);">{{ product.name }}</h3>
+          <p class="product-card-desc">{{ product.description|truncatewords:12 }}</p>
+          {% if product.upcoming_date %}
+          <p style="font-size:0.72rem;color:var(--gold);font-weight:700;margin:0.2rem 0 0;">
+            📅 Inatarajiwa: {{ product.upcoming_date|date:"d M Y" }}
+          </p>
+          {% endif %}
+          <div class="product-card-price" style="color:var(--gray);">
+            TSH {{ product.price|intcomma }}
+            <span style="font-size:0.72rem;font-weight:400;">/ {{ product.unit }}</span>
+          </div>
+        </div>
+        <div class="product-card-footer">
+          <a href="https://wa.me/255738262660?text=Ninataka%20kujua%20zaidi%20kuhusu%20{{ product.name|urlencode }}"
+             target="_blank" class="btn btn-outline btn-sm">
+            💬 {% trans "Niarifu" %}
+          </a>
+          <span class="btn-disabled">{% trans "Haijapatikana" %}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="https://wa.me/255738262660?text=Ninataka%20kupata%20taarifa%20za%20bidhaa%20mpya"
+         target="_blank" class="btn btn-primary btn-lg">
+        🔔 {% trans "Jiandikishe kwa Taarifa" %} →
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ══════════════════ FEATURED PRODUCTS ══════════════════ -->
 {% if featured_products %}
 <section class="section">
   <div class="container">
@@ -60,76 +679,81 @@
     </div>
     <div class="products-grid">
       {% for product in featured_products %}
-      <div class="product-card">
+      <div class="product-card" style="position:relative;">
         <a href="{{ product.get_absolute_url }}">
-          <img src="{{ product.image }}" alt="{{ product.name }}" class="product-card-img">
+          <img src="{{ product.image }}" alt="{{ product.name }}"
+               class="product-card-img" loading="lazy">
         </a>
         <div class="product-card-body">
+          {% if product.category %}
           <p class="product-card-category">{{ product.category.name }}</p>
+          {% endif %}
           <h3 class="product-card-title">
-            <a href="{{ product.get_absolute_url }}" style="color:inherit;">{{ product.name }}</a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
           </h3>
-          <p style="font-size:0.875rem;color:var(--gray);flex:1;">{{ product.description|truncatewords:18 }}</p>
+          <p class="product-card-desc">{{ product.description|truncatewords:16 }}</p>
           <div class="product-card-price">
             TSH {{ product.price|intcomma }}
-            <span>/ {{ product.unit }}</span>
+            <span style="font-size:0.72rem;font-weight:400;color:var(--gray);">/ {{ product.unit }}</span>
           </div>
         </div>
         <div class="product-card-footer">
-          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm" style="flex:1;">{% trans "View" %}</a>
+          <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm">
+            {% trans "Maelezo" %}
+          </a>
           {% if product.stock > 0 %}
-          <button class="btn btn-primary btn-sm ajax-add-cart" data-product-id="{{ product.id }}" style="flex:2;">
-            🛒 {% trans "Add to Cart" %}
-          </button>
+          <a href="{{ product.get_absolute_url }}#tab-buy" class="btn btn-primary btn-sm">
+            🛒 {% trans "Nunua" %}
+          </a>
           {% else %}
-          <span class="btn btn-sm" style="flex:2;background:var(--gray-light);color:var(--gray);cursor:not-allowed;">{% trans "Out of Stock" %}</span>
+          <span class="btn-disabled">{% trans "Imeisha" %}</span>
           {% endif %}
         </div>
       </div>
       {% endfor %}
     </div>
     <div class="text-center mt-4">
-      <a href="{% url 'products:list' %}" class="btn btn-primary btn-lg">{% trans "View All Products" %} →</a>
+      <a href="{% url 'products:list' %}" class="btn btn-primary btn-lg">
+        {% trans "View All Products" %} →
+      </a>
     </div>
   </div>
 </section>
 {% endif %}
 
-<!-- ── WHY CHOOSE US ── -->
+<!-- ══════════════════ WHY CHOOSE US ══════════════════ -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-header">
       <h2>{% trans "Why Choose Rode Poultry?" %}</h2>
       <div class="section-divider"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;">
-      {% for icon, title, desc in features %}
-      {% endfor %}
-      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
-        <div style="font-size:3rem;margin-bottom:1rem;">🐣</div>
-        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Healthy Chicks" %}</h3>
-        <p style="font-size:0.875rem;color:var(--gray);">{% trans "All day-old chicks are vaccinated and hatched on-farm for maximum health." %}</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🐣</div>
+        <h3>{% trans "Healthy Chicks" %}</h3>
+        <p>{% trans "All day-old chicks are vaccinated and hatched on-farm for maximum health." %}</p>
       </div>
-      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
-        <div style="font-size:3rem;margin-bottom:1rem;">🥚</div>
-        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Fresh Eggs Daily" %}</h3>
-        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Collected fresh every day from our free-range hens in Morogoro." %}</p>
+      <div class="feature-card">
+        <div class="feature-icon">🥚</div>
+        <h3>{% trans "Fresh Eggs Daily" %}</h3>
+        <p>{% trans "Collected fresh every day from our free-range hens in Morogoro." %}</p>
       </div>
-      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
-        <div style="font-size:3rem;margin-bottom:1rem;">🚚</div>
-        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Cash on Delivery" %}</h3>
-        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Order online, pay when your products arrive at your door." %}</p>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>{% trans "Cash on Delivery" %}</h3>
+        <p>{% trans "Order online, pay when your products arrive at your door." %}</p>
       </div>
-      <div style="text-align:center;padding:2rem;background:white;border-radius:16px;box-shadow:var(--shadow);">
-        <div style="font-size:3rem;margin-bottom:1rem;">📱</div>
-        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">{% trans "Easy Ordering" %}</h3>
-        <p style="font-size:0.875rem;color:var(--gray);">{% trans "Order via website or WhatsApp. Track your order status in real time." %}</p>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>{% trans "Easy Ordering" %}</h3>
+        <p>{% trans "Order via website or WhatsApp. Track your order status in real time." %}</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── GALLERY PREVIEW ── -->
+<!-- ══════════════════ GALLERY PREVIEW ══════════════════ -->
 {% if latest_media %}
 <section class="section">
   <div class="container">
@@ -141,13 +765,16 @@
     <div class="gallery-grid">
       {% for media in latest_media %}
       {% if media.media_type == 'image' and media.image %}
-      <div class="gallery-item" data-type="image" data-src="{{ media.image.url }}" data-title="{{ media.title }}">
-        <img src="{{ media.image.url }}" alt="{{ media.title }}">
+      <div class="gallery-item" data-type="image"
+           data-src="{{ media.image }}" data-title="{{ media.title }}">
+        <img src="{{ media.image }}" alt="{{ media.title }}" loading="lazy">
         <div class="overlay"><p>{{ media.title }}</p></div>
       </div>
       {% elif media.media_type == 'youtube' %}
-      <div class="gallery-item video-thumb" data-type="youtube" data-embed="{{ media.get_youtube_embed_url }}">
-        <img src="https://img.youtube.com/vi/{{ media.get_youtube_id }}/hqdefault.jpg" alt="{{ media.title }}">
+      <div class="gallery-item video-thumb"
+           data-type="youtube" data-embed="{{ media.get_youtube_embed_url }}">
+        <img src="https://img.youtube.com/vi/{{ media.get_youtube_id }}/hqdefault.jpg"
+             alt="{{ media.title }}" loading="lazy">
         <div class="video-play">
           <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </div>
@@ -157,22 +784,27 @@
       {% endfor %}
     </div>
     <div class="text-center mt-4">
-      <a href="{% url 'gallery:gallery' %}" class="btn btn-primary">{% trans "View Full Gallery" %} →</a>
+      <a href="{% url 'gallery:gallery' %}" class="btn btn-primary">
+        {% trans "View Full Gallery" %} →
+      </a>
     </div>
   </div>
 </section>
 {% endif %}
 
-<!-- ── CTA BANNER ── -->
-<section style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:4rem 0;text-align:center;">
+<!-- ══════════════════ CTA BANNER ══════════════════ -->
+<section class="cta-banner">
   <div class="container">
-    <h2 style="color:white;margin-bottom:1rem;">{% trans "Ready to Order?" %}</h2>
-    <p style="color:rgba(255,255,255,0.8);font-size:1.1rem;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;">
+    <h2>{% trans "Ready to Order?" %}</h2>
+    <p>
       {% trans "Browse our products and place your order online. We deliver fresh to your location." %}
     </p>
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="{% url 'products:list' %}" class="btn btn-gold btn-lg">{% trans "Shop Now" %}</a>
-      <a href="https://wa.me/255738262660" target="_blank" class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
+    <div class="cta-btn-row">
+      <a href="{% url 'products:list' %}" class="btn btn-gold btn-lg">
+        {% trans "Shop Now" %}
+      </a>
+      <a href="https://wa.me/255738262660" target="_blank" class="btn btn-lg"
+         style="background:rgba(255,255,255,0.15);color:white;border:2px solid rgba(255,255,255,0.4);">
         💬 {% trans "WhatsApp Us" %}
       </a>
     </div>
