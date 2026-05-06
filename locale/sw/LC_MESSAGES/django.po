@@ -481,3 +481,177 @@ msgstr "itumie kufuatilia agizo lako."
 
 msgid "Order will be Completed after payment is confirmed."
 msgstr "Oda itakuwa Completed baada ya malipo kuthibitishwa."
+
+
+msgid "Enter your order number and phone number to check order status."
+msgstr "Weka namba ya oda na simu yako ili kuona hali ya oda."
+
+msgid "Order Number"
+msgstr "Namba ya Oda"
+
+msgid "e.g. 12"
+msgstr "mfano: 12"
+
+msgid "Search Order"
+msgstr "Tafuta Oda"
+
+msgid "Submitted"
+msgstr "Imewasilishwa"
+
+msgid "Confirmed"
+msgstr "Imethibitishwa"
+
+msgid "Processing"
+msgstr "Inaandaliwa"
+
+msgid "Ready"
+msgstr "Iko Tayari"
+
+msgid "Delivered"
+msgstr "Imetolewa"
+
+msgid "This order has been cancelled"
+msgstr "Oda hii imefutwa"
+
+msgid "Payment Status"
+msgstr "Hali ya Malipo"
+
+msgid "70/30 Deposit System:"
+msgstr "Mfumo wa Amana 70/30:"
+
+msgid "Deposit (70%):"
+msgstr "Amana (70%):"
+
+msgid "Balance on delivery (30%):"
+msgstr "Baki siku ya kupokea (30%):"
+
+msgid "Delivery Fee"
+msgstr "Gharama za Usafiri"
+
+msgid "Discount"
+msgstr "Punguzo"
+
+msgid "Contact Us (WhatsApp)"
+msgstr "Wasiliana Nasi (WhatsApp)"
+
+msgid "Order Received!"
+msgstr "Oda Imepokewa!"
+
+msgid "Order Status"
+msgstr "Hali ya Oda"
+
+msgid "How to Pay — 70/30 Deposit"
+msgstr "Jinsi ya Kulipa — Amana 70/30"
+
+msgid "Balance on delivery (30%)"
+msgstr "Baki siku ya kupokea (30%)"
+
+msgid "Contact us via WhatsApp or phone below"
+msgstr "Wasiliana nasi kwa WhatsApp au simu hapa chini"
+
+msgid "We will deliver. You pay"
+msgstr "Tutakuwasilisha mzigo. Utalipa"
+
+msgid "on receipt."
+msgstr "ukipokea."
+
+msgid "Pay on Delivery"
+msgstr "Lipa ukipokea mzigo"
+
+msgid "We will contact you to arrange delivery time. Pay"
+msgstr "Tutawasiliana nawe ili kupanga wakati wa kupeleka. Lipa"
+
+msgid "cash on receipt."
+msgstr "pesa taslimu ukipokea."
+
+msgid "Contact us on WhatsApp — we will send you the payment number"
+msgstr "Wasiliana nasi WhatsApp — tutakutumia namba ya kulipa"
+
+msgid "Send a photo of your receipt on WhatsApp to confirm your order"
+msgstr "Tuma picha ya risiti yako kwa WhatsApp ili tuthibitishe oda yako"
+
+msgid "Save your Order Number:"
+msgstr "Hifadhi Namba ya Oda yako:"
+
+msgid "WhatsApp — Pay / Ask"
+msgstr "WhatsApp — Lipa / Uliza"
+
+msgid "Deposit 70% — Pay 30% on delivery"
+msgstr "Amana 70% — Lipa 30% ukipokea"
+
+msgid "Pay 70% now, the remaining 30% on delivery day"
+msgstr "Lipa asilimia 70 sasa, asilimia 30 iliyobaki utalipa siku ya kupokea"
+
+msgid "Pay on Delivery (Cash on Delivery)"
+msgstr "Lipa ukipokea mzigo (Cash on Delivery)"
+
+msgid "Pay cash when your order arrives"
+msgstr "Lipa pesa taslimu mzigo ukifika kwako"
+
+msgid "How the 70/30 Deposit works:"
+msgstr "Jinsi Amana 70/30 inavyofanya kazi:"
+
+msgid "You will pay"
+msgstr "Utalipa"
+
+msgid "now (70%), then"
+msgstr "sasa (70%), kisha"
+
+msgid "to be paid on delivery day."
+msgstr "utakalipa siku ya kupokea mzigo wako."
+
+msgid "Payment instructions will be sent after order confirmation."
+msgstr "Mstari wa malipo utakuwa sent baada ya kuthibitisha oda."
+
+msgid "Delivery (half cost)"
+msgstr "Usafiri (nusu ya gharama)"
+
+msgid "Enter discount code"
+msgstr "Weka kodi ya punguzo"
+
+msgid "Verify"
+msgstr "Thibitisha"
+
+msgid "Coming:"
+msgstr "Inatarajiwa:"
+
+msgid "Total Cost:"
+msgstr "Jumla ya Gharama:"
+
+msgid "Thank you,"
+msgstr "Asante,"
+
+msgid "We will contact you shortly."
+msgstr "Tutawasiliana nawe hivi karibuni."
+
+msgid "Pay NOW (70%)"
+msgstr "Lipa SASA (70%)"
+
+msgid "Pay deposit of"
+msgstr "Lipa amana ya"
+
+msgid "via M-Pesa / Tigo Pesa / Airtel Money to the number we send you"
+msgstr "kupitia M-Pesa / Tigo Pesa / Airtel Money kwa namba tutakayokutumia"
+
+msgid "Payment Steps —"
+msgstr "Hatua za Kulipa —"
+
+msgid "Amount to Pay"
+msgstr "Kiasi cha Kulipa"
+
+msgid "Open"
+msgstr "Fungua"
+
+msgid "on your phone and pay"
+msgstr "kwenye simu yako na lipa"
+msgid "Rode Poultry Tanzania Limited was founded in Morogoro, Tanzania, with the goal of providing quality poultry products to families and businesses across Tanzania. Our farm operates year-round, ensuring the quality and safety of every product we supply."
+msgstr "Rode Poultry Tanzania Limited ilianzishwa Morogoro, Tanzania, kwa lengo la kutoa bidhaa bora za kuku kwa familia na biashara nchini Tanzania yote. Shamba letu linafanya kazi mwaka mzima, kuhakikisha ubora na usalama wa kila bidhaa tunayotoa."
+
+msgid "We specialise in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and distributing quality chicken meat — all from our farm, ensuring hygiene and traceability at every step."
+msgstr "Tunajitaalamu katika kuangulia vifaranga vya siku moja, kuzalisha mayai mapya kila siku, kulea kuku hai, na kusambaza nyama ya kuku bora — yote kutoka shambani kwetu, kuhakikisha usafi na ufuatiliaji katika kila hatua."
+
+msgid "Our mission is to make quality poultry products affordable and easy to order for every family in Tanzania. All our chickens are vaccinated and we follow high hygiene standards to protect the health of our customers."
+msgstr "Dhamira yetu ni kufanya bidhaa bora za kuku ziwe za bei nafuu na rahisi kuagiza kwa kila familia ya Tanzania. Kuku wetu wote wanachanjwa na tunafuata viwango vya juu vya usafi ili kulinda afya ya wateja wetu."
+
+msgid "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
+msgstr "Tunaamini katika uwazi na uaminifu — kila bidhaa unayopata kutoka Rode Poultry imezalishwa kwa heshima, na mfumo wetu wa kuagiza mtandaoni unafanya iwe rahisi kupata bidhaa moja kwa moja kutoka shambani hadi mlangoni kwako."

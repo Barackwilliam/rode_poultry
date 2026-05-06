@@ -645,7 +645,7 @@
           <p class="product-card-desc">{{ product.description|truncatewords:12 }}</p>
           {% if product.upcoming_date %}
           <p style="font-size:0.72rem;color:var(--gold);font-weight:700;margin:0.2rem 0 0;">
-            📅 Inatarajiwa: {{ product.upcoming_date|date:"d M Y" }}
+            📅 {% trans "Coming:" %} {{ product.upcoming_date|date:"d M Y" }}
           </p>
           {% endif %}
           <div class="product-card-price" style="color:var(--gray);">

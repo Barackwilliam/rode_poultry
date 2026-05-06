@@ -148,8 +148,8 @@
               <input type="radio" name="payment_method" value="deposit">
               <span class="payment-logo">💰</span>
               <div>
-                <div class="payment-option-label">Amana 70% — Lipa 30% ukipokea</div>
-                <div class="payment-option-desc">Lipa asilimia 70 sasa, asilimia 30 iliyobaki utalipa siku ya kupokea mzigo wako</div>
+                <div class="payment-option-label">{% trans "Deposit 70% — Pay 30% on delivery" %}</div>
+                <div class="payment-option-desc">{% trans "Pay 70% now, the remaining 30% on delivery day" %}</div>
               </div>
             </label>
 
@@ -157,16 +157,16 @@
               <input type="radio" name="payment_method" value="cod" checked>
               <span class="payment-logo">🚚</span>
               <div>
-                <div class="payment-option-label">Lipa ukipokea mzigo (Cash on Delivery)</div>
-                <div class="payment-option-desc">Lipa pesa taslimu mzigo ukifika kwako</div>
+                <div class="payment-option-label">{% trans "Pay on Delivery (Cash on Delivery)" %}</div>
+                <div class="payment-option-desc">{% trans "Pay cash when your order arrives" %}</div>
               </div>
             </label>
 
             <div class="deposit-note" id="depositNote">
-              💡 <strong>Jinsi Amana 70/30 inavyofanya kazi:</strong><br>
-              Utalipa <strong id="depositAmt">—</strong> sasa (70%), kisha
-              <strong id="balanceAmt">—</strong> utakalipa siku ya kupokea mzigo wako.
-              Mstari wa malipo utakuwa sent baada ya kuthibitisha oda.
+              💡 <strong>{% trans "How the 70/30 Deposit works:" %}</strong><br>
+              {% trans "You will pay" %} <strong id="depositAmt">—</strong> {% trans "now (70%), then" %}
+              <strong id="balanceAmt">—</strong> {% trans "to be paid on delivery day." %}
+              {% trans "Payment instructions will be sent after order confirmation." %}
             </div>
           </div>
         </div>
@@ -194,8 +194,8 @@
               </label>
               <div class="promo-row">
                 <input type="text" id="promoInput" name="promo_code" class="form-control"
-                       placeholder="Weka kodi ya punguzo" style="text-transform:uppercase;">
-                <button type="button" class="btn btn-outline btn-sm" onclick="checkPromo()">Thibitisha</button>
+                       placeholder="{% trans "Enter discount code" %}" style="text-transform:uppercase;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="checkPromo()">{% trans "Verify" %}</button>
               </div>
               <div id="promoMsg"></div>
             </div>
@@ -207,15 +207,15 @@
                 <span id="summSubtotal">TSH {{ cart.get_total_price|intcomma }}</span>
               </div>
               <div class="summary-row">
-                <span>🚚 Usafiri (nusu ya gharama)</span>
+                <span>🚚 {% trans "Delivery (half cost)" %}</span>
                 <span id="summDelivery" style="color:var(--navy);font-weight:700;">—</span>
               </div>
               <div class="summary-row" id="discountRow" style="display:none;">
-                <span style="color:var(--success);">🏷️ Punguzo</span>
+                <span style="color:var(--success);">🏷️ {% trans "Discount" %}</span>
                 <span id="summDiscount" style="color:var(--success);font-weight:700;"></span>
               </div>
               <div class="summary-row grand">
-                <span>JUMLA</span>
+                <span>{% trans "TOTAL" %}</span>
                 <span id="summTotal" style="color:var(--navy-mid);">—</span>
               </div>
             </div>

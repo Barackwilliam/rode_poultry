@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n humanize order_extras %}
 
-{% block title %}Fuatilia Oda — Rode Poultry Tanzania{% endblock %}
+{% block title %}{% trans "Track Order" %} — Rode Poultry Tanzania{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -67,30 +67,30 @@
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
     <a href="{% url 'core:home' %}">{% trans "Home" %}</a> /
-    <span>Fuatilia Oda</span>
+    <span>{% trans "Track Order" %}</span>
   </div>
 </div>
 
 <section class="section">
   <div class="container" style="max-width:620px;">
     <div style="background:white;border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);">
-      <h2 style="margin-bottom:0.5rem;">🔍 Fuatilia Oda Yako</h2>
-      <p style="color:var(--gray);margin-bottom:2rem;">Weka namba ya oda na simu yako ili kuona hali ya oda.</p>
+      <h2 style="margin-bottom:0.5rem;">🔍 {% trans "Track Your Order" %}</h2>
+      <p style="color:var(--gray);margin-bottom:2rem;">{% trans "Enter your order number and phone number to check order status." %}</p>
 
       <form method="post">
         {% csrf_token %}
         <div class="form-group">
-          <label class="form-label">Namba ya Oda *</label>
+          <label class="form-label">{% trans "Order Number" %} *</label>
           <small style="color:var(--gray);display:block;margin-bottom:0.4rem;">{% trans "You received this number in your order confirmation (e.g. #12, #45)" %}</small>
           <input type="number" name="order_id" class="form-control" required
-                 placeholder="mfano: 12" value="{{ request.POST.order_id }}">
+                 placeholder="{% trans "e.g. 12" %}" value="{{ request.POST.order_id }}">
         </div>
         <div class="form-group">
-          <label class="form-label">Namba ya Simu *</label>
+          <label class="form-label">{% trans "Phone Number" %} *</label>
           <input type="tel" name="phone" class="form-control" required
                  placeholder="+255 7XX XXX XXX" value="{{ request.POST.phone }}">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">🔍 Tafuta Oda</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;">🔍 {% trans "Search Order" %}</button>
       </form>
 
       {% if order %}
@@ -99,7 +99,7 @@
         <!-- Order header -->
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
           <div>
-            <h3 style="margin:0 0 0.25rem;">Oda #{{ order.pk }}</h3>
+            <h3 style="margin:0 0 0.25rem;">{% trans "Order" %} #{{ order.pk }}</h3>
             <p style="color:var(--gray);font-size:0.8rem;margin:0;">{{ order.created_at|date:"d M Y, H:i" }}</p>
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;">
@@ -122,11 +122,11 @@
               {% if is_done and s != order.status %}✓{% elif s == order.status %}●{% else %}○{% endif %}
             </div>
             <div class="track-label {% if s == order.status %}active{% endif %}">
-              {% if s == 'pending' %}Imewasilishwa
-              {% elif s == 'confirmed' %}Imethibitishwa
-              {% elif s == 'processing' %}Inaandaliwa
-              {% elif s == 'ready' %}Iko Tayari
-              {% elif s == 'delivered' %}Imetolewa{% endif %}
+              {% if s == 'pending' %}{% trans "Submitted" %}
+              {% elif s == 'confirmed' %}{% trans "Confirmed" %}
+              {% elif s == 'processing' %}{% trans "Processing" %}
+              {% elif s == 'ready' %}{% trans "Ready" %}
+              {% elif s == 'delivered' %}{% trans "Delivered" %}{% endif %}
             </div>
           </div>
           {% if not forloop.last %}
@@ -139,22 +139,22 @@
         {% endwith %}
         {% else %}
         <div style="background:#fdf2f2;border-radius:8px;padding:1rem;text-align:center;margin-bottom:1.5rem;color:var(--danger);font-weight:700;">
-          ❌ Oda hii imefutwa
+          ❌ {% trans "This order has been cancelled" %}
         </div>
         {% endif %}
 
         <!-- Order info grid -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.875rem;margin-bottom:1.5rem;">
           <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;">
-            <span style="color:var(--gray);font-size:0.78rem;">Njia ya Malipo</span>
+            <span style="color:var(--gray);font-size:0.78rem;">{% trans "Payment Method" %}</span>
             <p style="font-weight:700;margin:0.2rem 0 0;font-size:0.9rem;">{{ order.get_payment_method_display }}</p>
           </div>
           <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;">
-            <span style="color:var(--gray);font-size:0.78rem;">Hali ya Malipo</span>
+            <span style="color:var(--gray);font-size:0.78rem;">{% trans "Payment Status" %}</span>
             <p style="font-weight:700;margin:0.2rem 0 0;font-size:0.9rem;">{{ order.get_payment_status_display }}</p>
           </div>
           <div style="padding:0.85rem;background:var(--off-white);border-radius:8px;grid-column:span 2;">
-            <span style="color:var(--gray);font-size:0.78rem;">Anwani ya Kupeleka</span>
+            <span style="color:var(--gray);font-size:0.78rem;">{% trans "Delivery Address" %}</span>
             <p style="font-weight:700;margin:0.2rem 0 0;">{{ order.address }}, {{ order.region }}</p>
           </div>
         </div>
@@ -162,14 +162,14 @@
         <!-- Deposit info if applicable -->
         {% if order.payment_method == 'deposit' %}
         <div style="background:#fff8e1;border:1px solid var(--gold);border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:0.875rem;">
-          <strong>💰 Mfumo wa Amana 70/30:</strong><br>
-          Amana (70%): <strong>TSH {{ order.deposit_amount|intcomma }}</strong> |
-          Baki siku ya kupokea (30%): <strong>TSH {{ order.balance_due|intcomma }}</strong>
+          <strong>💰 {% trans "70/30 Deposit System:" %}</strong><br>
+          {% trans "Deposit (70%):" %} <strong>TSH {{ order.deposit_amount|intcomma }}</strong> |
+          {% trans "Balance on delivery (30%):" %} <strong>TSH {{ order.balance_due|intcomma }}</strong>
         </div>
         {% endif %}
 
         <!-- Items -->
-        <h4 style="margin-bottom:0.75rem;font-size:0.95rem;">🛒 Bidhaa Zilizoagizwa</h4>
+        <h4 style="margin-bottom:0.75rem;font-size:0.95rem;">🛒 {% trans "Items Ordered" %}</h4>
         {% for item in order.items.all %}
         <div style="display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
           <span>{{ item.product_name }} × {{ item.quantity }}</span>
@@ -179,19 +179,19 @@
 
         {% if order.delivery_fee %}
         <div style="display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.875rem;color:var(--gray);">
-          <span>Gharama za Usafiri</span>
+          <span>{% trans "Delivery Fee" %}</span>
           <span>TSH {{ order.delivery_fee|intcomma }}</span>
         </div>
         {% endif %}
         {% if order.discount_amount %}
         <div style="display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.875rem;color:var(--success);">
-          <span>Punguzo {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
+          <span>{% trans "Discount" %} {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
           <span>− TSH {{ order.discount_amount|intcomma }}</span>
         </div>
         {% endif %}
 
         <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1rem;border-top:2px solid var(--gray-light);margin-top:0.25rem;">
-          <span>JUMLA</span>
+          <span>{% trans "TOTAL" %}</span>
           <span>TSH {{ order.total_amount|intcomma }}</span>
         </div>
 
@@ -200,7 +200,7 @@
           <a href="https://wa.me/255738262660?text=Habari%2C%20ninafuatilia%20Oda%20%23{{ order.pk }}%20—%20{{ order.full_name }}"
              target="_blank"
              class="btn btn-lg" style="background:#25D366;color:white;border:none;width:100%;justify-content:center;">
-            💬 Wasiliana Nasi (WhatsApp)
+            💬 {% trans "Contact Us (WhatsApp)" %}
           </a>
         </div>
       </div>

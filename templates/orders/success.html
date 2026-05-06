@@ -47,9 +47,9 @@
       <!-- Header -->
       <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:2.5rem 2rem;text-align:center;color:white;">
         <div style="font-size:4rem;margin-bottom:0.75rem;">✅</div>
-        <h2 style="color:white;margin-bottom:0.4rem;">Oda Imepokewa!</h2>
+        <h2 style="color:white;margin-bottom:0.4rem;">{% trans "Order Received!" %}</h2>
         <p style="color:rgba(255,255,255,0.82);margin:0;">
-          Asante, <strong>{{ order.full_name }}</strong>! Tutawasiliana nawe hivi karibuni.
+          {% trans "Thank you," %} <strong>{{ order.full_name }}</strong>! {% trans "We will contact you shortly." %}
         </p>
       </div>
 
@@ -57,26 +57,26 @@
 
         <!-- Order summary box -->
         <div style="background:var(--off-white);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
-          <h3 style="font-size:1rem;margin-bottom:1rem;color:var(--navy);">📋 Maelezo ya Oda</h3>
+          <h3 style="font-size:1rem;margin-bottom:1rem;color:var(--navy);">📋 {% trans "Order Details" %}</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-size:0.875rem;">
             <div>
-              <span style="color:var(--gray);">Namba ya Oda</span>
+              <span style="color:var(--gray);">{% trans "Order Number" %}</span>
               <p style="font-weight:900;margin:0;color:var(--navy);font-size:1.1rem;">#{{ order.pk }}</p>
             </div>
             <div>
-              <span style="color:var(--gray);">Hali ya Oda</span>
+              <span style="color:var(--gray);">{% trans "Order Status" %}</span>
               <p style="margin:0;"><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></p>
             </div>
             <div>
-              <span style="color:var(--gray);">Simu</span>
+              <span style="color:var(--gray);">{% trans "Phone" %}</span>
               <p style="font-weight:700;margin:0;">{{ order.phone }}</p>
             </div>
             <div>
-              <span style="color:var(--gray);">Njia ya Malipo</span>
+              <span style="color:var(--gray);">{% trans "Payment Method" %}</span>
               <p style="font-weight:700;margin:0;">{{ order.get_payment_method_display }}</p>
             </div>
             <div style="grid-column:span 2;">
-              <span style="color:var(--gray);">Anwani ya Kupeleka</span>
+              <span style="color:var(--gray);">{% trans "Delivery Address" %}</span>
               <p style="font-weight:700;margin:0;">{{ order.address }}, {{ order.region }}</p>
             </div>
           </div>
@@ -84,7 +84,7 @@
 
         <!-- Items + Totals -->
         <div style="margin-bottom:1.5rem;">
-          <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--navy);">🛒 Bidhaa Zilizoagizwa</h3>
+          <h3 style="font-size:1rem;margin-bottom:0.75rem;color:var(--navy);">🛒 {% trans "Items Ordered" %}</h3>
           {% for item in order.items.all %}
           <div style="display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--gray-light);font-size:0.875rem;">
             <span>{{ item.product_name }} × {{ item.quantity }}</span>
@@ -94,20 +94,20 @@
 
           {% if order.delivery_fee %}
           <div style="display:flex;justify-content:space-between;padding:0.55rem 0;font-size:0.875rem;color:var(--gray);">
-            <span>🚚 Gharama za Usafiri</span>
+            <span>🚚 {% trans "Delivery Fee" %}</span>
             <span>TSH {{ order.delivery_fee|intcomma }}</span>
           </div>
           {% endif %}
 
           {% if order.discount_amount %}
           <div style="display:flex;justify-content:space-between;padding:0.55rem 0;font-size:0.875rem;color:var(--success);">
-            <span>🏷️ Punguzo {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
+            <span>🏷️ {% trans "Discount" %} {% if order.discount_code %}({{ order.discount_code }}){% endif %}</span>
             <span>− TSH {{ order.discount_amount|intcomma }}</span>
           </div>
           {% endif %}
 
           <div style="display:flex;justify-content:space-between;padding:0.75rem 0;font-weight:900;color:var(--navy);font-size:1.05rem;border-top:2px solid var(--gray-light);margin-top:0.25rem;">
-            <span>JUMLA</span>
+            <span>{% trans "TOTAL" %}</span>
             <span>TSH {{ order.total_amount|intcomma }}</span>
           </div>
         </div>
@@ -116,30 +116,30 @@
         {% if order.payment_method == 'deposit' %}
         <!-- 70/30 Deposit instructions -->
         <div style="background:#fff8e1;border:2px solid var(--gold);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
-          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:1rem;">💰 Jinsi ya Kulipa — Amana 70/30</h3>
+          <h3 style="font-size:1rem;color:var(--navy);margin-bottom:1rem;">💰 {% trans "How to Pay — 70/30 Deposit" %}</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
             <div style="background:white;border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--gold);">
-              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">Lipa SASA (70%)</p>
+              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">{% trans "Pay NOW (70%)" %}</p>
               <p style="font-size:1.4rem;font-weight:900;color:var(--navy);margin:0;">TSH {{ order.deposit_amount|intcomma }}</p>
             </div>
             <div style="background:white;border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--gray-light);">
-              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">Baki siku ya kupokea (30%)</p>
+              <p style="font-size:0.78rem;color:var(--gray);margin:0 0 0.35rem;">{% trans "Balance on delivery (30%)" %}</p>
               <p style="font-size:1.4rem;font-weight:900;color:var(--gray);margin:0;">TSH {{ order.balance_due|intcomma }}</p>
             </div>
           </div>
           <div class="payment-steps">
-            <div class="payment-step"><span class="step-num">1</span><span>Wasiliana nasi kwa WhatsApp au simu hapa chini</span></div>
-            <div class="payment-step"><span class="step-num">2</span><span>Lipa amana ya <strong>TSH {{ order.deposit_amount|intcomma }}</strong> kupitia M-Pesa / Tigo Pesa / Airtel Money kwa namba tutakayokutumia</span></div>
-            <div class="payment-step"><span class="step-num">3</span><span>Tutakuwasilisha mzigo. Utalipa <strong>TSH {{ order.balance_due|intcomma }}</strong> ukipokea.</span></div>
+            <div class="payment-step"><span class="step-num">1</span><span>{% trans "Contact us via WhatsApp or phone below" %}</span></div>
+            <div class="payment-step"><span class="step-num">2</span><span>{% trans "Pay deposit of" %} <strong>TSH {{ order.deposit_amount|intcomma }}</strong> {% trans "via M-Pesa / Tigo Pesa / Airtel Money to the number we send you" %}</span></div>
+            <div class="payment-step"><span class="step-num">3</span><span>{% trans "We will deliver. You pay" %} <strong>TSH {{ order.balance_due|intcomma }}</strong> {% trans "on receipt." %}</span></div>
           </div>
         </div>
 
         {% elif order.payment_method == 'cod' %}
         <!-- COD -->
         <div style="background:#eafaf1;border:1px solid var(--success);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;">
-          <h3 style="font-size:0.95rem;color:var(--success);margin-bottom:0.5rem;">🚚 Lipa ukipokea mzigo</h3>
+          <h3 style="font-size:0.95rem;color:var(--success);margin-bottom:0.5rem;">🚚 {% trans "Pay on Delivery" %}</h3>
           <p style="font-size:0.875rem;color:var(--gray);margin:0;">
-            Utawasiliana nawe ili kupanga wakati wa kupeleka mzigo. Lipa <strong>TSH {{ order.total_amount|intcomma }}</strong> pesa taslimu ukipokea mzigo wako.
+            {% trans "We will contact you to arrange delivery time. Pay" %} <strong>TSH {{ order.total_amount|intcomma }}</strong> {% trans "cash on receipt." %}
           </p>
         </div>
 
@@ -147,21 +147,21 @@
         <!-- Mobile money (M-Pesa / Tigo / Airtel / Halo) -->
         <div style="background:#e8f4fd;border:2px solid var(--navy-mid);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
           <h3 style="font-size:1rem;color:var(--navy);margin-bottom:1rem;">
-            📱 Hatua za Kulipa — {{ order.get_payment_method_display }}
+            📱 {% trans "Payment Steps —" %} {{ order.get_payment_method_display }}
           </h3>
           <div style="background:white;border-radius:8px;padding:1rem;text-align:center;margin-bottom:1rem;border:2px solid var(--gold);">
-            <p style="font-size:0.8rem;color:var(--gray);margin:0 0 0.35rem;">Kiasi cha Kulipa</p>
+            <p style="font-size:0.8rem;color:var(--gray);margin:0 0 0.35rem;">{% trans "Amount to Pay" %}</p>
             <p style="font-size:1.6rem;font-weight:900;color:var(--navy);margin:0;">TSH {{ order.total_amount|intcomma }}</p>
           </div>
           <div class="payment-steps">
-            <div class="payment-step"><span class="step-num">1</span><span>Wasiliana nasi WhatsApp — tutakutumia namba ya kulipa</span></div>
+            <div class="payment-step"><span class="step-num">1</span><span>{% trans "Contact us on WhatsApp — we will send you the payment number" %}</span></div>
             <div class="payment-step"><span class="step-num">2</span>
               <span>
-                Fungua {{ order.get_payment_method_display }} kwenye simu yako na lipa
+                {% trans "Open" %} {{ order.get_payment_method_display }} {% trans "on your phone and pay" %}
                 <strong>TSH {{ order.total_amount|intcomma }}</strong>
               </span>
             </div>
-            <div class="payment-step"><span class="step-num">3</span><span>Tuma picha ya risiti yako kwa WhatsApp ili tuthibitishe oda yako</span></div>
+            <div class="payment-step"><span class="step-num">3</span><span>{% trans "Send a photo of your receipt on WhatsApp to confirm your order" %}</span></div>
             <div class="payment-step"><span class="step-num">4</span><span>{% trans "Order will be Completed after payment is confirmed." %} ✅</span></div>
           </div>
         </div>
@@ -169,7 +169,7 @@
 
         <!-- Save order ID reminder -->
         <div style="background:#eafaf1;border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--success);text-align:center;">
-          📌 Hifadhi Namba ya Oda yako: <strong style="font-size:1.1rem;">#{{ order.pk }}</strong> — itumie kufuatilia oda yako.
+          📌 {% trans "Save your Order Number:" %} <strong style="font-size:1.1rem;">#{{ order.pk }}</strong> — {% trans "use it to track your order." %}
         </div>
 
         <!-- Action buttons -->
@@ -177,15 +177,15 @@
           <a href="https://wa.me/255738262660?text=Habari%2C%20nina%20Oda%20%23{{ order.pk }}%20—%20{{ order.full_name }}"
              target="_blank"
              class="btn btn-lg" style="background:#25D366;color:white;border:none;flex:2;justify-content:center;">
-            💬 WhatsApp — Lipa / Uliza
+            💬 {% trans "WhatsApp — Pay / Ask" %}
           </a>
           <a href="{% url 'orders:tracking' %}" class="btn btn-outline" style="flex:1;justify-content:center;">
-            🔍 Fuatilia Oda
+            🔍 {% trans "Track Order" %}
           </a>
         </div>
         <div style="text-align:center;margin-top:1rem;">
           <a href="{% url 'products:list' %}" style="color:var(--gray);font-size:0.875rem;">
-            ← Endelea kununua
+            ← {% trans "Continue Shopping" %}
           </a>
         </div>
 

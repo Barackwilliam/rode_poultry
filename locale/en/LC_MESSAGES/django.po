@@ -481,3 +481,177 @@ msgstr "use it to track your order."
 
 msgid "Order will be Completed after payment is confirmed."
 msgstr "Order will be Completed after payment is confirmed."
+
+
+msgid "Enter your order number and phone number to check order status."
+msgstr "Enter your order number and phone number to check order status."
+
+msgid "Order Number"
+msgstr "Order Number"
+
+msgid "e.g. 12"
+msgstr "e.g. 12"
+
+msgid "Search Order"
+msgstr "Search Order"
+
+msgid "Submitted"
+msgstr "Submitted"
+
+msgid "Confirmed"
+msgstr "Confirmed"
+
+msgid "Processing"
+msgstr "Processing"
+
+msgid "Ready"
+msgstr "Ready"
+
+msgid "Delivered"
+msgstr "Delivered"
+
+msgid "This order has been cancelled"
+msgstr "This order has been cancelled"
+
+msgid "Payment Status"
+msgstr "Payment Status"
+
+msgid "70/30 Deposit System:"
+msgstr "70/30 Deposit System:"
+
+msgid "Deposit (70%):"
+msgstr "Deposit (70%):"
+
+msgid "Balance on delivery (30%):"
+msgstr "Balance on delivery (30%):"
+
+msgid "Delivery Fee"
+msgstr "Delivery Fee"
+
+msgid "Discount"
+msgstr "Discount"
+
+msgid "Contact Us (WhatsApp)"
+msgstr "Contact Us (WhatsApp)"
+
+msgid "Order Received!"
+msgstr "Order Received!"
+
+msgid "Order Status"
+msgstr "Order Status"
+
+msgid "How to Pay — 70/30 Deposit"
+msgstr "How to Pay — 70/30 Deposit"
+
+msgid "Balance on delivery (30%)"
+msgstr "Balance on delivery (30%)"
+
+msgid "Contact us via WhatsApp or phone below"
+msgstr "Contact us via WhatsApp or phone below"
+
+msgid "We will deliver. You pay"
+msgstr "We will deliver. You pay"
+
+msgid "on receipt."
+msgstr "on receipt."
+
+msgid "Pay on Delivery"
+msgstr "Pay on Delivery"
+
+msgid "We will contact you to arrange delivery time. Pay"
+msgstr "We will contact you to arrange delivery time. Pay"
+
+msgid "cash on receipt."
+msgstr "cash on receipt."
+
+msgid "Contact us on WhatsApp — we will send you the payment number"
+msgstr "Contact us on WhatsApp — we will send you the payment number"
+
+msgid "Send a photo of your receipt on WhatsApp to confirm your order"
+msgstr "Send a photo of your receipt on WhatsApp to confirm your order"
+
+msgid "Save your Order Number:"
+msgstr "Save your Order Number:"
+
+msgid "WhatsApp — Pay / Ask"
+msgstr "WhatsApp — Pay / Ask"
+
+msgid "Deposit 70% — Pay 30% on delivery"
+msgstr "Deposit 70% — Pay 30% on delivery"
+
+msgid "Pay 70% now, the remaining 30% on delivery day"
+msgstr "Pay 70% now, the remaining 30% on delivery day"
+
+msgid "Pay on Delivery (Cash on Delivery)"
+msgstr "Pay on Delivery (Cash on Delivery)"
+
+msgid "Pay cash when your order arrives"
+msgstr "Pay cash when your order arrives"
+
+msgid "How the 70/30 Deposit works:"
+msgstr "How the 70/30 Deposit works:"
+
+msgid "You will pay"
+msgstr "You will pay"
+
+msgid "now (70%), then"
+msgstr "now (70%), then"
+
+msgid "to be paid on delivery day."
+msgstr "to be paid on delivery day."
+
+msgid "Payment instructions will be sent after order confirmation."
+msgstr "Payment instructions will be sent after order confirmation."
+
+msgid "Delivery (half cost)"
+msgstr "Delivery (half cost)"
+
+msgid "Enter discount code"
+msgstr "Enter discount code"
+
+msgid "Verify"
+msgstr "Verify"
+
+msgid "Coming:"
+msgstr "Coming:"
+
+msgid "Total Cost:"
+msgstr "Total Cost:"
+
+msgid "Thank you,"
+msgstr "Thank you,"
+
+msgid "We will contact you shortly."
+msgstr "We will contact you shortly."
+
+msgid "Pay NOW (70%)"
+msgstr "Pay NOW (70%)"
+
+msgid "Pay deposit of"
+msgstr "Pay deposit of"
+
+msgid "via M-Pesa / Tigo Pesa / Airtel Money to the number we send you"
+msgstr "via M-Pesa / Tigo Pesa / Airtel Money to the number we send you"
+
+msgid "Payment Steps —"
+msgstr "Payment Steps —"
+
+msgid "Amount to Pay"
+msgstr "Amount to Pay"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "on your phone and pay"
+msgstr "on your phone and pay"
+msgid "Rode Poultry Tanzania Limited was founded in Morogoro, Tanzania, with the goal of providing quality poultry products to families and businesses across Tanzania. Our farm operates year-round, ensuring the quality and safety of every product we supply."
+msgstr "Rode Poultry Tanzania Limited was founded in Morogoro, Tanzania, with the goal of providing quality poultry products to families and businesses across Tanzania. Our farm operates year-round, ensuring the quality and safety of every product we supply."
+
+msgid "We specialise in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and distributing quality chicken meat — all from our farm, ensuring hygiene and traceability at every step."
+msgstr "We specialise in hatching day-old chicks, producing fresh eggs daily, raising live chickens, and distributing quality chicken meat — all from our farm, ensuring hygiene and traceability at every step."
+
+msgid "Our mission is to make quality poultry products affordable and easy to order for every family in Tanzania. All our chickens are vaccinated and we follow high hygiene standards to protect the health of our customers."
+msgstr "Our mission is to make quality poultry products affordable and easy to order for every family in Tanzania. All our chickens are vaccinated and we follow high hygiene standards to protect the health of our customers."
+
+msgid "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
+msgstr "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
