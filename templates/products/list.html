@@ -336,11 +336,13 @@
 
         <div class="product-card-body">
           {% if product.category %}
-          <p class="product-card-category">{{ product.category.name }}</p>
+          <p class="product-card-category">{% if LANGUAGE_CODE == "sw" and product.category.name_sw %}{{ product.category.name_sw }}{% else %}{{ product.category.name }}{% endif %}</p>
           {% endif %}
 
           <h3 class="product-card-title">
-            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            <a href="{{ product.get_absolute_url }}">
+              {% if LANGUAGE_CODE == 'sw' and product.name_sw %}{{ product.name_sw }}{% else %}{{ product.name }}{% endif %}
+            </a>
           </h3>
 
           <p class="product-card-desc">{{ product.description|truncatewords:14 }}</p>
@@ -360,13 +362,13 @@
         <div class="product-card-footer">
           <a href="{{ product.get_absolute_url }}"
              class="btn btn-outline btn-sm btn-details">
-            {% trans "Maelezo" %}
+            {% trans "Details" %}
           </a>
 
           {% if product.stock > 0 %}
           <a href="{{ product.get_absolute_url }}#tab-buy"
              class="btn btn-primary btn-sm btn-buy">
-            🛒 {% trans "Nunua" %}
+            🛒 {% trans "Buy Now" %}
           </a>
           {% else %}
           <span class="btn-outofstock">{% trans "Imeisha" %}</span>

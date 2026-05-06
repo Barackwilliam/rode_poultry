@@ -24,7 +24,7 @@ def cart_add(request, product_id):
     override = request.POST.get('override', False)
     cart.add(product=product, quantity=quantity, override_quantity=bool(override))
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'cart_count': len(cart), 'message': 'Added to cart'})
+        return JsonResponse({'cart_count': len(cart), 'message': f'{product.name} imeongezwa kwenye Cart.', 'success': True})
     messages.success(request, f'{product.name} imeongezwa kwenye Cart.')
     return redirect('orders:cart')
 

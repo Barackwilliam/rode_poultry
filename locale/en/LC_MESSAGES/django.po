@@ -1,9 +1,9 @@
-# Swahili translations for Rode Poultry Tanzania
+# English translations for Rode Poultry Tanzania
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sw\n"
+"Language: en\n"
 
 msgid "About"
 msgstr "About"
@@ -74,6 +74,12 @@ msgstr "Collected daily"
 msgid "Collected fresh every day from our free-range hens in Morogoro."
 msgstr "Collected fresh every day from our free-range hens in Morogoro."
 
+msgid "Coming Soon"
+msgstr "Coming Soon"
+
+msgid "COMING SOON"
+msgstr "COMING SOON"
+
 msgid "Contact"
 msgstr "Contact"
 
@@ -88,6 +94,9 @@ msgstr "Continue Shopping"
 
 msgid "Create Account"
 msgstr "Create Account"
+
+msgid "Current Offers"
+msgstr "Current Offers"
 
 msgid "Day-old Chicks"
 msgstr "Day-old Chicks"
@@ -106,6 +115,9 @@ msgstr "Delivery To"
 
 msgid "Details"
 msgstr "Details"
+
+msgid "Discount Code / Promo"
+msgstr "Discount Code / Promo"
 
 msgid "Don't have an account?"
 msgstr "Don't have an account?"
@@ -218,6 +230,9 @@ msgstr "No orders yet"
 msgid "No products found"
 msgstr "No products found"
 
+msgid "Notify Me"
+msgstr "Notify Me"
+
 msgid "Order"
 msgstr "Order"
 
@@ -247,6 +262,12 @@ msgstr "Order online, pay when your products arrive at your door."
 
 msgid "Order via website or WhatsApp. Track your order status in real time."
 msgstr "Order via website or WhatsApp. Track your order status in real time."
+
+msgid "Order will be Completed after payment."
+msgstr "Order will be Completed after payment."
+
+msgid "or Cash on Delivery"
+msgstr "or Cash on Delivery"
 
 msgid "Other"
 msgstr "Other"
@@ -311,6 +332,9 @@ msgstr "Product Types"
 msgid "Products"
 msgstr "Products"
 
+msgid "Products with discounts — Limited time offers!"
+msgstr "Products with discounts — Limited time offers!"
+
 msgid "Qty"
 msgstr "Qty"
 
@@ -358,6 +382,9 @@ msgstr "Status"
 
 msgid "Straight to You"
 msgstr "Straight to You"
+
+msgid "Subscribe for Updates"
+msgstr "Subscribe for Updates"
 
 msgid "Subscribe to our YouTube channel for farm updates and tips."
 msgstr "Subscribe to our YouTube channel for farm updates and tips."
@@ -428,6 +455,9 @@ msgstr "Why Choose Rode Poultry?"
 msgid "Working Hours"
 msgstr "Working Hours"
 
+msgid "You can pay via"
+msgstr "You can pay via"
+
 msgid "You haven't placed any orders."
 msgstr "You haven't placed any orders."
 
@@ -448,3 +478,6 @@ msgstr "products available"
 
 msgid "use it to track your order."
 msgstr "use it to track your order."
+
+msgid "Order will be Completed after payment is confirmed."
+msgstr "Order will be Completed after payment is confirmed."

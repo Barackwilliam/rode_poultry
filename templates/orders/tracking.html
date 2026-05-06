@@ -81,6 +81,7 @@
         {% csrf_token %}
         <div class="form-group">
           <label class="form-label">Namba ya Oda *</label>
+          <small style="color:var(--gray);display:block;margin-bottom:0.4rem;">{% trans "You received this number in your order confirmation (e.g. #12, #45)" %}</small>
           <input type="number" name="order_id" class="form-control" required
                  placeholder="mfano: 12" value="{{ request.POST.order_id }}">
         </div>

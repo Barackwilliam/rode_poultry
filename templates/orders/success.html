@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n humanize %}
 
-{% block title %}Oda Imepokewa! — Rode Poultry Tanzania{% endblock %}
+{% block title %}{% trans "Order Placed!" %} — Rode Poultry Tanzania{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -162,7 +162,7 @@
               </span>
             </div>
             <div class="payment-step"><span class="step-num">3</span><span>Tuma picha ya risiti yako kwa WhatsApp ili tuthibitishe oda yako</span></div>
-            <div class="payment-step"><span class="step-num">4</span><span>Oda itakuwa <strong>Completed</strong> baada ya malipo kuthibitishwa ✅</span></div>
+            <div class="payment-step"><span class="step-num">4</span><span>{% trans "Order will be Completed after payment is confirmed." %} ✅</span></div>
           </div>
         </div>
         {% endif %}

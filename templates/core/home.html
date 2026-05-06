@@ -523,7 +523,12 @@
       </div>
     </div>
     <div class="hero-image">
-      <img src="{% static 'images/logo.png' %}" alt="Rode Poultry Tanzania">
+      {% if HERO_IMAGE %}
+      <img src="{{ HERO_IMAGE }}" alt="Rode Poultry Tanzania Farm" style="border-radius:16px;width:100%;height:auto;object-fit:cover;">
+      {% else %}
+      <img src="{% static 'images/hero_farm.jpg' %}" alt="Rode Poultry Tanzania Farm" style="border-radius:16px;width:100%;height:auto;object-fit:cover;"
+           onerror="this.onerror=null;this.src='{% static "images/logo.png" %}'">
+      {% endif %}
     </div>
   </div>
 </section>
@@ -557,9 +562,9 @@
 <section class="section offers-section">
   <div class="container">
     <div class="section-header">
-      <h2 style="color:var(--navy);">🏷️ {% trans "Ofa za Sasa" %}</h2>
+      <h2 style="color:var(--navy);">🏷️ {% trans "Current Offers" %}</h2>
       <div class="section-divider"></div>
-      <p>{% trans "Bidhaa zenye punguzo la bei — Ofa za muda mfupi!" %}</p>
+      <p>{% trans "Products with discounts — Limited time offers!" %}</p>
     </div>
     <div class="products-grid">
       {% for product in offer_products %}
@@ -590,12 +595,12 @@
         </div>
         <div class="product-card-footer">
           <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm">
-            {% trans "Maelezo" %}
+            {% trans "Details" %}
           </a>
           {% if product.stock > 0 %}
           <button class="btn btn-primary btn-sm ajax-add-cart"
                   data-product-id="{{ product.id }}">
-            🛒 {% trans "Nunua" %}
+            🛒 {% trans "Buy Now" %}
           </button>
           {% else %}
           <span class="btn-disabled">{% trans "Imeisha" %}</span>
@@ -613,14 +618,14 @@
 <section class="section section-alt">
   <div class="container">
     <div class="section-header">
-      <h2>🔔 {% trans "Inakuja Hivi Karibuni" %}</h2>
+      <h2>🔔 {% trans "Coming Soon" %}</h2>
       <div class="section-divider"></div>
       <p>{% trans "Bidhaa mpya zinazokuja — fuatilia ili usikose!" %}</p>
     </div>
     <div class="products-grid">
       {% for product in upcoming_products %}
       <div class="product-card upcoming-card" style="position:relative;">
-        <div class="product-coming-badge">⏳ {% trans "INAKUJA" %}</div>
+        <div class="product-coming-badge">⏳ {% trans "COMING SOON" %}</div>
         {% if product.image %}
         <a href="{{ product.get_absolute_url }}">
           <img src="{{ product.image }}" alt="{{ product.name }}"
@@ -651,9 +656,9 @@
         <div class="product-card-footer">
           <a href="https://wa.me/255738262660?text=Ninataka%20kujua%20zaidi%20kuhusu%20{{ product.name|urlencode }}"
              target="_blank" class="btn btn-outline btn-sm">
-            💬 {% trans "Niarifu" %}
+            💬 {% trans "Notify Me" %}
           </a>
-          <span class="btn-disabled">{% trans "Haijapatikana" %}</span>
+          <span class="btn-disabled">{% trans "Out of Stock" %}</span>
         </div>
       </div>
       {% endfor %}
@@ -661,7 +666,7 @@
     <div class="text-center mt-4">
       <a href="https://wa.me/255738262660?text=Ninataka%20kupata%20taarifa%20za%20bidhaa%20mpya"
          target="_blank" class="btn btn-primary btn-lg">
-        🔔 {% trans "Jiandikishe kwa Taarifa" %} →
+        🔔 {% trans "Subscribe for Updates" %} →
       </a>
     </div>
   </div>
@@ -699,11 +704,11 @@
         </div>
         <div class="product-card-footer">
           <a href="{{ product.get_absolute_url }}" class="btn btn-outline btn-sm">
-            {% trans "Maelezo" %}
+            {% trans "Details" %}
           </a>
           {% if product.stock > 0 %}
           <a href="{{ product.get_absolute_url }}#tab-buy" class="btn btn-primary btn-sm">
-            🛒 {% trans "Nunua" %}
+            🛒 {% trans "Buy Now" %}
           </a>
           {% else %}
           <span class="btn-disabled">{% trans "Imeisha" %}</span>

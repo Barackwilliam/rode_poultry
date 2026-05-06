@@ -548,11 +548,11 @@
         <div class="product-tabs-wrap">
           <div class="product-tabs">
             <button class="product-tab-btn active" onclick="switchTab(this,'tab-desc')">
-              📋 {% trans "Maelezo" %}
+              📋 {% trans "Details" %}
             </button>
             {% if product.stock > 0 %}
             <button class="product-tab-btn" onclick="switchTab(this,'tab-buy')">
-              🛒 {% trans "Nunua" %}
+              🛒 {% trans "Buy Now" %}
             </button>
             {% endif %}
           </div>
@@ -562,7 +562,7 @@
             <div class="tab-desc-content">
               <p>{{ product.description|linebreaksbr }}</p>
               <div class="tab-contact-bar">
-                <span>🚚 {% trans "Delivery available" %}</span>
+                <span>🚚 {% trans "Cash on Delivery available" %}</span>
                 <span>📞 <a href="tel:+255738262660">+255 738 262 660</a></span>
                 <span>💬 <a href="https://wa.me/255738262660" target="_blank">WhatsApp</a></span>
               </div>
@@ -573,8 +573,7 @@
           {% if product.stock > 0 %}
           <div class="product-tab-panel" id="tab-buy">
             <div class="tab-buy-content">
-              <form method="post" action="{% url 'orders:cart_add' product.id %}">
-                {% csrf_token %}
+              {% csrf_token %}
 
                 <!-- Quantity -->
                 <div class="qty-row">
@@ -602,20 +601,25 @@
 
                 <!-- CTA buttons -->
                 <div class="cta-row">
-                  <button type="submit" class="btn btn-primary btn-lg">
-                    🛒 {% trans "Ongeza kwenye Cart" %}
+                  <button type="button"
+                          class="btn btn-primary btn-lg ajax-add-cart"
+                          data-product-id="{{ product.id }}"
+                          data-cart-url="{% url 'orders:cart_add' product.id %}">
+                    🛒 {% trans "Add to Cart" %}
                   </button>
-                  <a href="{% url 'orders:checkout' %}" class="btn btn-gold btn-lg">
-                    ⚡ {% trans "Oda Moja Kwa Moja" %}
-                  </a>
+                  <button type="button"
+                          class="btn btn-gold btn-lg btn-direct-order"
+                          data-product-id="{{ product.id }}"
+                          data-cart-url="{% url 'orders:cart_add' product.id %}"
+                          data-checkout-url="{% url 'orders:checkout' %}">
+                    ⚡ {% trans "Buy Now" %}
+                  </button>
                 </div>
 
-              </form>
-
               <div class="payment-note">
-                ℹ️ Oda itakuwa <strong>Completed</strong> baada ya malipo kukamilika.
-                Unaweza kulipa kwa <strong>M-Pesa</strong>, Tigo Pesa, Airtel Money,
-                HaloPesa, au Lipa ukipokea.
+                ℹ️ {% trans "Order will be Completed after payment." %}
+                {% trans "You can pay via" %} <strong>M-Pesa</strong>, Tigo Pesa, Airtel Money,
+                HaloPesa, {% trans "or Cash on Delivery" %}.
               </div>
             </div>
           </div>
@@ -629,7 +633,7 @@
     <!-- ── Related Products ── -->
     {% if related %}
     <div class="related-section">
-      <h3>{% trans "Bidhaa Zinazofanana" %}</h3>
+      <h3>{% trans "Related Products" %}</h3>
       <div class="products-grid">
         {% for rp in related %}
         <div class="product-card">
@@ -651,8 +655,8 @@
             </div>
           </div>
           <div class="product-card-footer">
-            <a href="{{ rp.get_absolute_url }}" class="btn btn-outline btn-sm">{% trans "Maelezo" %}</a>
-            <a href="{{ rp.get_absolute_url }}#tab-buy" class="btn btn-primary btn-sm">🛒 {% trans "Nunua" %}</a>
+            <a href="{{ rp.get_absolute_url }}" class="btn btn-outline btn-sm">{% trans "Details" %}</a>
+            <a href="{{ rp.get_absolute_url }}#tab-buy" class="btn btn-primary btn-sm">🛒 {% trans "Buy Now" %}</a>
           </div>
         </div>
         {% endfor %}

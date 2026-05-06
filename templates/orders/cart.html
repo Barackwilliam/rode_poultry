@@ -47,7 +47,7 @@
                 </td>
                 <td style="white-space:nowrap;">TSH {{ item.price|intcomma }}</td>
                 <td>
-                  <form method="post" action="{% url 'orders:cart_add' item.product.id %}" style="display:flex;align-items:center;gap:0.4rem;">
+                  <form method="post" action="{% url 'orders:cart_add' item.product.id %}" style="display:flex;align-items:center;gap:0.4rem;" data-autosubmit="true">
                     {% csrf_token %}
                     <input type="hidden" name="override" value="true">
                     <button type="button" class="qty-btn" data-action="dec"

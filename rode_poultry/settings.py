@@ -58,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'apps.core.context_processors.cart_count',
                 'apps.core.context_processors.site_settings',
+                'apps.core.context_processors.gallery_status',
             ],
         },
     },
@@ -110,7 +111,7 @@ TIME_ZONE = 'Africa/Dar_es_Salaam'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-LOCALE_PATHS = [BASE_DIR / 'locale']
+LOCALE_PATHS = [BASE_DIR / 'locale', BASE_DIR / 'rode_poultry' / 'locale']
 
 # Static & Media
 STATIC_URL = '/static/'
@@ -145,7 +146,10 @@ COMPANY_NAME = 'Rode Poultry Tanzania Limited'
 COMPANY_EMAIL = 'jjbacketa@gmail.com'
 COMPANY_PHONE = '+255 738 262 660'
 COMPANY_LOCATION = 'Morogoro, Tanzania'
-COMPANY_DOMAIN = 'www.rodepoultry.co.tz'
+# Set COMPANY_DOMAIN to empty until the domain is live; it won't appear in footer
+COMPANY_DOMAIN = config('COMPANY_DOMAIN', default='')
+# Set to a Cloudinary/Uploadcare URL of the actual farm photo
+HERO_IMAGE = config('HERO_IMAGE', default='')
 
 
 

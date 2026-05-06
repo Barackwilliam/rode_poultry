@@ -7,3 +7,9 @@ pip install -r requirements.txt
 
 python manage.py collectstatic --noinput
 python manage.py migrate
+
+# Seed default categories (skips if already exist)
+python manage.py seed_categories
+
+# Compile translations
+python manage.py compilemessages || true

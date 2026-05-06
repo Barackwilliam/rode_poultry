@@ -35,40 +35,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Language switcher ──
   document.querySelectorAll('[data-lang]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const lang = btn.dataset.lang;
 
-      // Update active state immediately for visual feedback
+      // Skip if already active
+      if (btn.classList.contains('active')) return;
+
+      // 1. Update active state immediately on all lang buttons
       document.querySelectorAll('[data-lang]').forEach(b => b.classList.remove('active'));
       document.querySelectorAll(`[data-lang="${lang}"]`).forEach(b => b.classList.add('active'));
 
-      // Use the existing Django-rendered form (has real CSRF token)
-      const form = document.getElementById('django-lang-form');
+      // 2. Show full-screen loading overlay with spinner + label
+      showLangLoader(lang);
 
-      // Inject or update language input
-      let langInput = form.querySelector('input[name="language"]');
-      if (!langInput) {
-        langInput = document.createElement('input');
-        langInput.type = 'hidden';
-        langInput.name = 'language';
-        form.appendChild(langInput);
-      }
-      langInput.value = lang;
-
-      // Inject or update next input
-      let nextInput = form.querySelector('input[name="next"]');
-      if (!nextInput) {
-        nextInput = document.createElement('input');
-        nextInput.type = 'hidden';
-        nextInput.name = 'next';
-        form.appendChild(nextInput);
-      }
-      // Strip any existing language prefix (/en/ or /sw/) from the path
+      // 3. Prepare CSRF + path
+      const form   = document.getElementById('django-lang-form');
+      const csrf   = form.querySelector('[name=csrfmiddlewaretoken]').value;
       let nextPath = window.location.pathname + window.location.search;
-      nextPath = nextPath.replace(/^\/(en|sw)(\/|$)/, '/');
-      nextInput.value = nextPath;
+      nextPath     = nextPath.replace(/^\/(en|sw)(\/|$)/, '/');
 
-      form.submit();
+      try {
+        await fetch('/i18n/setlang/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': csrf,
+          },
+          body: `language=${lang}&next=${encodeURIComponent(nextPath)}`,
+        });
+        // Redirect — loader stays visible until new page paints
+        window.location.href = (lang === 'sw' ? '' : '/' + lang) + nextPath;
+      } catch (e) {
+        // Fallback: traditional form submit (loader still shows)
+        let langInput = form.querySelector('input[name="language"]');
+        if (!langInput) {
+          langInput = document.createElement('input');
+          langInput.type = 'hidden';
+          langInput.name = 'language';
+          form.appendChild(langInput);
+        }
+        langInput.value = lang;
+        let nextInput = form.querySelector('input[name="next"]');
+        if (!nextInput) {
+          nextInput = document.createElement('input');
+          nextInput.type = 'hidden';
+          nextInput.name = 'next';
+          form.appendChild(nextInput);
+        }
+        nextInput.value = nextPath;
+        form.submit();
+      }
     });
   });
 
@@ -77,9 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
       const productId = btn.dataset.productId;
-      const qty = document.querySelector(`#qty-${productId}`)?.value || 1;
+      const cartUrl   = btn.dataset.cartUrl;
+      const qty       = document.querySelector(`#qty-${productId}`)?.value || 1;
       try {
-        const res = await fetch(`/orders/cart/add/${productId}/`, {
+        const res = await fetch(cartUrl, {
           method: 'POST',
           headers: {
             'X-CSRFToken': getCookie('csrftoken'),
@@ -88,29 +105,72 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           body: `quantity=${qty}`,
         });
+        if (!res.ok) throw new Error('Network error');
         const data = await res.json();
-        const badge = document.querySelector('.cart-badge');
-        if (badge) {
-          badge.textContent = data.cart_count;
-          badge.style.transform = 'scale(1.4)';
-          setTimeout(() => badge.style.transform = '', 300);
+        // Update navbar badge
+        let badge = document.querySelector('.cart-badge');
+        if (data.cart_count > 0) {
+          if (!badge) {
+            const cartIcon = document.querySelector('.cart-icon');
+            if (cartIcon) {
+              badge = document.createElement('span');
+              badge.className = 'cart-badge';
+              cartIcon.appendChild(badge);
+            }
+          }
+          if (badge) {
+            badge.textContent = data.cart_count;
+            badge.style.transform = 'scale(1.4)';
+            setTimeout(() => badge.style.transform = '', 300);
+          }
         }
         // Update floating cart
-        const fc = document.getElementById('floatingCart');
+        const fc      = document.getElementById('floatingCart');
         const fcCount = document.getElementById('fcCount');
         if (fc && data.cart_count > 0) {
           fc.classList.remove('empty');
           if (fcCount) { fcCount.textContent = data.cart_count; fcCount.style.display = 'flex'; }
         }
-        showToast('Added to cart! 🛒', 'success');
-        btn.textContent = 'Added ✓';
+        showToast(data.message || 'Imeongezwa kwenye Cart! 🛒', 'success');
+        const origText = btn.innerHTML;
+        btn.innerHTML = '✓ Imeongezwa';
         btn.style.background = 'var(--success)';
         setTimeout(() => {
-          btn.textContent = 'Add to Cart';
+          btn.innerHTML = origText;
           btn.style.background = '';
         }, 2000);
       } catch (err) {
-        showToast('Something went wrong. Try again.', 'error');
+        showToast('Kuna tatizo. Jaribu tena.', 'error');
+      }
+    });
+  });
+
+  // ── Direct Order (Buy Now) — add to cart then go to checkout ──
+  document.querySelectorAll('.btn-direct-order').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const cartUrl     = btn.dataset.cartUrl;
+      const checkoutUrl = btn.dataset.checkoutUrl;
+      const productId   = btn.dataset.productId;
+      const qty         = document.querySelector(`#qty-${productId}`)?.value || 1;
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Inasubiri...';
+      try {
+        const res = await fetch(cartUrl, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `quantity=${qty}`,
+        });
+        if (!res.ok) throw new Error('Network error');
+        window.location.href = checkoutUrl;
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '⚡ Oda Moja Kwa Moja';
+        showToast('Kuna tatizo. Jaribu tena.', 'error');
       }
     });
   });
@@ -124,6 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let val     = parseInt(input.value) || 1;
       val += btn.dataset.action === 'inc' ? 1 : -1;
       input.value = Math.min(max, Math.max(min, val));
+      // Auto-submit cart update forms
+      const form = input.closest('form');
+      if (form && form.dataset.autosubmit) form.submit();
+      // Trigger change event for price preview
+      input.dispatchEvent(new Event('input'));
     });
   });
 
@@ -150,6 +215,111 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ══════════════════════════════════════════════
+// ── Language change loader overlay ──
+// ══════════════════════════════════════════════
+function showLangLoader(lang) {
+  // Remove any existing loader
+  document.getElementById('rp-lang-loader')?.remove();
+
+  const labels = {
+    sw: { loading: 'Inabadilisha lugha...', flag: '🇹🇿', name: 'Kiswahili' },
+    en: { loading: 'Switching language...', flag: '🇬🇧', name: 'English'   },
+  };
+  const { loading, flag, name } = labels[lang] || labels.en;
+
+  const overlay = document.createElement('div');
+  overlay.id    = 'rp-lang-loader';
+  overlay.innerHTML = `
+    <div class="rp-lang-loader-box">
+      <div class="rp-lang-spinner"></div>
+      <div class="rp-lang-flag">${flag}</div>
+      <p class="rp-lang-name">${name}</p>
+      <p class="rp-lang-label">${loading}</p>
+      <div class="rp-lang-bar"><div class="rp-lang-bar-fill"></div></div>
+    </div>
+  `;
+
+  // Inline styles — no dependency on external CSS
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(10, 26, 58, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rpLangFadeIn 0.18s ease;
+  `;
+
+  const box = overlay.querySelector('.rp-lang-loader-box');
+  box.style.cssText = `
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.2rem 2.8rem;
+    text-align: center;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+    min-width: 220px;
+    animation: rpLangSlideUp 0.22s cubic-bezier(.22,.68,0,1.2);
+  `;
+
+  const spinner = overlay.querySelector('.rp-lang-spinner');
+  spinner.style.cssText = `
+    width: 44px;
+    height: 44px;
+    border: 4px solid #e8eef6;
+    border-top-color: #0a1a3a;
+    border-radius: 50%;
+    margin: 0 auto 0.6rem;
+    animation: rpLangSpin 0.7s linear infinite;
+  `;
+
+  const flagEl = overlay.querySelector('.rp-lang-flag');
+  flagEl.style.cssText = `
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+    animation: rpLangPop 0.3s cubic-bezier(.22,.68,0,1.4) 0.1s both;
+  `;
+
+  const nameEl = overlay.querySelector('.rp-lang-name');
+  nameEl.style.cssText = `
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0a1a3a;
+    margin: 0 0 0.15rem;
+    letter-spacing: 0.01em;
+  `;
+
+  const labelEl = overlay.querySelector('.rp-lang-label');
+  labelEl.style.cssText = `
+    font-size: 0.82rem;
+    color: #6b7b96;
+    margin: 0 0 1rem;
+  `;
+
+  const bar = overlay.querySelector('.rp-lang-bar');
+  bar.style.cssText = `
+    height: 4px;
+    background: #e8eef6;
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
+  const fill = overlay.querySelector('.rp-lang-bar-fill');
+  fill.style.cssText = `
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0a1a3a, #c9a227);
+    border-radius: 4px;
+    animation: rpLangProgress 1.2s cubic-bezier(.4,0,.2,1) forwards;
+  `;
+
+  document.body.appendChild(overlay);
+}
 
 // ── Toast notification ──
 function showToast(message, type = 'success') {
@@ -214,9 +384,14 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// ── CSS animations ──
+// ── CSS animations (injected once) ──
 const style = document.createElement('style');
 style.textContent = `
-  @keyframes slideUp { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+  @keyframes slideUp       { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+  @keyframes rpLangFadeIn  { from { opacity:0; } to { opacity:1; } }
+  @keyframes rpLangSlideUp { from { transform:translateY(30px) scale(0.95); opacity:0; } to { transform:translateY(0) scale(1); opacity:1; } }
+  @keyframes rpLangSpin    { to   { transform:rotate(360deg); } }
+  @keyframes rpLangPop     { from { transform:scale(0.4); opacity:0; } to { transform:scale(1); opacity:1; } }
+  @keyframes rpLangProgress{ 0%{width:0%} 40%{width:55%} 80%{width:85%} 100%{width:98%} }
 `;
 document.head.appendChild(style);
