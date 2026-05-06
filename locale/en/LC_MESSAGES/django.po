@@ -655,3 +655,36 @@ msgstr "Our mission is to make quality poultry products affordable and easy to o
 
 msgid "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
 msgstr "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
+
+msgid "%(name)s added to cart."
+msgstr "%(name)s added to cart."
+
+msgid "Valid code! %(pct)s%% discount — TSH %(amt)s"
+msgstr "Valid code! %(pct)s%% discount — TSH %(amt)s"
+
+msgid "Invalid or expired code."
+msgstr "Invalid or expired code."
+
+msgid "Your cart is empty."
+msgstr "Your cart is empty."
+
+msgid "Please fill in all required fields (*}."
+msgstr "Please fill in all required fields (*}."
+
+msgid "Invalid promo code, continuing without discount."
+msgstr "Invalid promo code, continuing without discount."
+
+msgid "Order not found. Please check your order number and phone."
+msgstr "Order not found. Please check your order number and phone."
+
+msgid "70/30 Deposit — Pay 30% on delivery"
+msgstr "70/30 Deposit — Pay 30% on delivery"
+
+msgid "Unpaid"
+msgstr "Unpaid"
+
+msgid "Deposit Paid (70%)"
+msgstr "Deposit Paid (70%)"
+
+msgid "Paid"
+msgstr "Paid"

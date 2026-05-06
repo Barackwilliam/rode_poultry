@@ -32,14 +32,14 @@ class Order(models.Model):
         ('tigopesa', _('Tigo Pesa')),
         ('airtelmoney', _('Airtel Money')),
         ('halopesa', _('HaloPesa')),
-        ('cod', _('Lipa ukipokea mzigo (Cash on Delivery)')),
-        ('deposit', _('Amana 70% — Lipa 30% siku ya kupokea')),
+        ('cod', _('Cash on Delivery')),
+        ('deposit', _('70/30 Deposit — Pay 30% on delivery')),
     ]
 
     PAYMENT_STATUS_CHOICES = [
-        ('unpaid', _('Hakulipa')),
-        ('deposit_paid', _('Amana imelipwa (70%)')),
-        ('paid', _('Amelipa')),
+        ('unpaid', _('Unpaid')),
+        ('deposit_paid', _('Deposit Paid (70%)')),
+        ('paid', _('Paid')),
     ]
 
     # Customer info

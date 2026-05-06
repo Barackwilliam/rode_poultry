@@ -655,3 +655,36 @@ msgstr "Dhamira yetu ni kufanya bidhaa bora za kuku ziwe za bei nafuu na rahisi 
 
 msgid "We believe in transparency and integrity — every product you receive from Rode Poultry is raised with care, and our online ordering system makes it easy to get products delivered directly from the farm to your door."
 msgstr "Tunaamini katika uwazi na uaminifu — kila bidhaa unayopata kutoka Rode Poultry imezalishwa kwa heshima, na mfumo wetu wa kuagiza mtandaoni unafanya iwe rahisi kupata bidhaa moja kwa moja kutoka shambani hadi mlangoni kwako."
+
+msgid "%(name)s added to cart."
+msgstr "%(name)s imeongezwa kwenye Cart."
+
+msgid "Valid code! %(pct)s%% discount — TSH %(amt)s"
+msgstr "Kodi sahihi! Punguzo la %(pct)s%% — TSH %(amt)s"
+
+msgid "Invalid or expired code."
+msgstr "Kodi si sahihi au imekwisha."
+
+msgid "Your cart is empty."
+msgstr "Cart yako iko tupu."
+
+msgid "Please fill in all required fields (*}."
+msgstr "Tafadhali jaza sehemu zote zinazohitajika (*)."
+
+msgid "Invalid promo code, continuing without discount."
+msgstr "Kodi ya punguzo si sahihi, inaendelea bila punguzo."
+
+msgid "Order not found. Please check your order number and phone."
+msgstr "Oda haikupatikana. Angalia namba ya oda na simu yako."
+
+msgid "70/30 Deposit — Pay 30% on delivery"
+msgstr "Amana 70% — Lipa 30% siku ya kupokea"
+
+msgid "Unpaid"
+msgstr "Hakulipa"
+
+msgid "Deposit Paid (70%)"
+msgstr "Amana imelipwa (70%)"
+
+msgid "Paid"
+msgstr "Amelipa"

@@ -24,8 +24,8 @@ def cart_add(request, product_id):
     override = request.POST.get('override', False)
     cart.add(product=product, quantity=quantity, override_quantity=bool(override))
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'cart_count': len(cart), 'message': f'{product.name} imeongezwa kwenye Cart.', 'success': True})
-    messages.success(request, f'{product.name} imeongezwa kwenye Cart.')
+        return JsonResponse({'cart_count': len(cart), 'message': str(_('%(name)s added to cart.') % {'name': product.name}), 'success': True})
+    messages.success(request, _('%(name)s added to cart.') % {'name': product.name})
     return redirect('orders:cart')
 
 
@@ -49,17 +49,17 @@ def validate_promo(request):
                 'valid': True,
                 'percent': promo.discount_percent,
                 'discount': discount,
-                'message': f'Kodi sahihi! Punguzo la {promo.discount_percent}% — TSH {discount:,.0f}'
+                'message': str(_('Valid code! %(pct)s%% discount — TSH %(amt)s') % {'pct': promo.discount_percent, 'amt': f'{discount:,.0f}'})
             })
         except PromoCode.DoesNotExist:
-            return JsonResponse({'valid': False, 'message': 'Kodi si sahihi au imekwisha.'})
+            return JsonResponse({'valid': False, 'message': str(_('Invalid or expired code.'))})
     return JsonResponse({'valid': False})
 
 
 def checkout(request):
     cart = Cart(request)
     if len(cart) == 0:
-        messages.warning(request, 'Cart yako iko tupu.')
+        messages.warning(request, _('Your cart is empty.'))
         return redirect('products:list')
 
     if request.method == 'POST':
@@ -73,7 +73,7 @@ def checkout(request):
         promo_code = request.POST.get('promo_code', '').strip().upper()
 
         if not all([full_name, phone, address]):
-            messages.error(request, 'Tafadhali jaza sehemu zote zinazohitajika (*).')
+            messages.error(request, _('Please fill in all required fields (*}.'))
             return render(request, 'orders/checkout.html', {'cart': cart})
 
         subtotal = cart.get_total_price()
@@ -86,7 +86,7 @@ def checkout(request):
                 promo = PromoCode.objects.get(code=promo_code, is_active=True)
                 discount_amount = round(float(subtotal) * promo.discount_percent / 100, 2)
             except PromoCode.DoesNotExist:
-                messages.warning(request, 'Kodi ya punguzo si sahihi, inaendelea bila punguzo.')
+                messages.warning(request, _('Invalid promo code, continuing without discount.'))
                 promo_code = ''
 
         total = float(subtotal) + delivery_fee - discount_amount
@@ -126,6 +126,9 @@ def checkout(request):
 
         cart.clear()
 
+        # Store in session for order_success security check
+        request.session['last_order_id'] = order.pk
+
         # Notify admin
         try:
             items_text = '\n'.join(
@@ -162,6 +165,11 @@ def checkout(request):
 
 
 def order_success(request, order_id):
+    # Security: only allow access if this order was just placed in this session
+    last_order_id = request.session.get('last_order_id')
+    if str(last_order_id) != str(order_id):
+        from django.http import Http404
+        raise Http404
     order = get_object_or_404(Order, pk=order_id)
     return render(request, 'orders/success.html', {'order': order})
 
@@ -174,6 +182,6 @@ def order_tracking(request):
         try:
             order = Order.objects.get(pk=order_id, phone=phone)
         except Order.DoesNotExist:
-            messages.error(request, 'Oda haikupatikana. Angalia namba ya oda na simu yako.')
+            messages.error(request, _('Order not found. Please check your order number and phone.'))
     return render(request, 'orders/tracking.html', {'order': order})
 

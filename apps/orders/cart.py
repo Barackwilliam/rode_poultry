@@ -12,13 +12,17 @@ class Cart:
         self.cart = cart
 
     def add(self, product, quantity=1, override_quantity=False):
+        from django.utils.translation import get_language
         product_id = str(product.id)
         if product_id not in self.cart:
+            lang = get_language() or 'en'
+            name = product.name_sw if (lang == 'sw' and product.name_sw) else product.name
+            unit = product.unit_sw if (lang == 'sw' and product.unit_sw) else product.unit
             self.cart[product_id] = {
                 'quantity': 0,
-                'price': str(product.price),
-                'name': product.name,
-                'unit': product.unit,
+                'price': str(product.display_price),  # uses offer_price if active
+                'name': name,
+                'unit': unit,
             }
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
